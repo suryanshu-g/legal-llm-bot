@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Scrape cache: third-party page markup, regenerable with
+#   python scripts/scrape_acts.py
+# The statutory text extracted from it is committed as *_sections.json.
+data/raw/*/devgan_chapter_*.html
+data/raw/case_law/*.html
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

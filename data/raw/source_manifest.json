@@ -1,0 +1,602 @@
+{
+  "bns/devgan_chapter_01.html": {
+    "bytes": 28195,
+    "retrieved": "2026-09-07",
+    "sha256": "d7a8c9e18be8b08a1124955e80b805dcd18f41a2ccd87d34d14b75ee1d23d1e0",
+    "url": "https://devgan.in/bns/chapter_01.php"
+  },
+  "bns/devgan_chapter_02.html": {
+    "bytes": 18545,
+    "retrieved": "2026-09-07",
+    "sha256": "19fab8b4d2be9518280e16b7cf3873220f87a44af6109f62d862df62e1b0b88e",
+    "url": "https://devgan.in/bns/chapter_02.php"
+  },
+  "bns/devgan_chapter_03.html": {
+    "bytes": 37656,
+    "retrieved": "2026-09-07",
+    "sha256": "6c68fe5ec3c000c36d1443a0c745271d0f1d1089f2f32044ecc315f2a5c85116",
+    "url": "https://devgan.in/bns/chapter_03.php"
+  },
+  "bns/devgan_chapter_04.html": {
+    "bytes": 32599,
+    "retrieved": "2026-09-07",
+    "sha256": "098dcb57e3ac4c27d80caa33da84972199cc872193a0ae0b370a8cc8ec93fe80",
+    "url": "https://devgan.in/bns/chapter_04.php"
+  },
+  "bns/devgan_chapter_05.html": {
+    "bytes": 55754,
+    "retrieved": "2026-09-07",
+    "sha256": "4416194706490b9fee45dde23a922195cdb174d2663d0a1ce3221be6e99fee14",
+    "url": "https://devgan.in/bns/chapter_05.php"
+  },
+  "bns/devgan_chapter_06.html": {
+    "bytes": 82114,
+    "retrieved": "2026-09-07",
+    "sha256": "f46043e93354c5374f51e412292463e882c683fae1ca8a3b63759f9760d07b9f",
+    "url": "https://devgan.in/bns/chapter_06.php"
+  },
+  "bns/devgan_chapter_07.html": {
+    "bytes": 18012,
+    "retrieved": "2026-09-07",
+    "sha256": "955ffd08608789b6726178eda982b9ad53846a58c40ec34c23b0f8f0af94d468",
+    "url": "https://devgan.in/bns/chapter_07.php"
+  },
+  "bns/devgan_chapter_08.html": {
+    "bytes": 15112,
+    "retrieved": "2026-09-07",
+    "sha256": "0459f99d1cec99920eafb929f83c631524398f10850752978dbe0e60e4084235",
+    "url": "https://devgan.in/bns/chapter_08.php"
+  },
+  "bns/devgan_chapter_09.html": {
+    "bytes": 14837,
+    "retrieved": "2026-09-07",
+    "sha256": "d4b436abe58fbf2914f8ad03e0092c7f8ec96a7dcc51253345943d5cb7c5dfaa",
+    "url": "https://devgan.in/bns/chapter_09.php"
+  },
+  "bns/devgan_chapter_10.html": {
+    "bytes": 19592,
+    "retrieved": "2026-09-07",
+    "sha256": "273e40d99d334a1f9d1ec202a11c4d77505e71bcf7ce93898383e54ee1052efc",
+    "url": "https://devgan.in/bns/chapter_10.php"
+  },
+  "bns/devgan_chapter_11.html": {
+    "bytes": 22578,
+    "retrieved": "2026-09-07",
+    "sha256": "d3637627578a0f4f06c132bdc54b86bf31df2e05c1be46aa5907fd2e18d25500",
+    "url": "https://devgan.in/bns/chapter_11.php"
+  },
+  "bns/devgan_chapter_12.html": {
+    "bytes": 15418,
+    "retrieved": "2026-09-07",
+    "sha256": "0416fbbee297e6a946c74f56a465f4a33b0ef5f6009595e547c7bd06af22002d",
+    "url": "https://devgan.in/bns/chapter_12.php"
+  },
+  "bns/devgan_chapter_13.html": {
+    "bytes": 31811,
+    "retrieved": "2026-09-07",
+    "sha256": "755e444221947147ac851fdbbb9596aa4e4a8560050124385aebaf5050b62de7",
+    "url": "https://devgan.in/bns/chapter_13.php"
+  },
+  "bns/devgan_chapter_14.html": {
+    "bytes": 58517,
+    "retrieved": "2026-09-07",
+    "sha256": "0383bf60d11fdc566737a773620f4ad2b0705b7ceab4f439f58ecb591c710a2e",
+    "url": "https://devgan.in/bns/chapter_14.php"
+  },
+  "bns/devgan_chapter_15.html": {
+    "bytes": 32349,
+    "retrieved": "2026-09-07",
+    "sha256": "9d06e1bc869fc2d957ba2c85a6de278727a582e515c3da7a7c09cfc546e6a3ae",
+    "url": "https://devgan.in/bns/chapter_15.php"
+  },
+  "bns/devgan_chapter_16.html": {
+    "bytes": 11703,
+    "retrieved": "2026-09-07",
+    "sha256": "f059a329930590497794f17fb897acbf66cf84b5bc13bb34cb97c979aa831ad6",
+    "url": "https://devgan.in/bns/chapter_16.php"
+  },
+  "bns/devgan_chapter_17.html": {
+    "bytes": 68991,
+    "retrieved": "2026-09-07",
+    "sha256": "42e4b421c770bf9d4d4e3e775d0ca8f0e456f90fd11fe2b56717f74a9152f6cf",
+    "url": "https://devgan.in/bns/chapter_17.php"
+  },
+  "bns/devgan_chapter_18.html": {
+    "bytes": 32412,
+    "retrieved": "2026-09-07",
+    "sha256": "3a21117a508f99d0abd352b98e709b1c90281507d3ec01333426ca0243ce21a2",
+    "url": "https://devgan.in/bns/chapter_18.php"
+  },
+  "bns/devgan_chapter_19.html": {
+    "bytes": 25505,
+    "retrieved": "2026-09-07",
+    "sha256": "4beda78358bf560dd1404fa49d5fe9b157d6adfd0710c69fcf30f93be259be32",
+    "url": "https://devgan.in/bns/chapter_19.php"
+  },
+  "bns/devgan_chapter_20.html": {
+    "bytes": 8617,
+    "retrieved": "2026-09-07",
+    "sha256": "71d9eb7c9ad4735dd88aab056744679d5adb992d0c37a0c805d5072e501a0520",
+    "url": "https://devgan.in/bns/chapter_20.php"
+  },
+  "crpc/civictech_crpc.json": {
+    "bytes": 565522,
+    "retrieved": "2026-09-07",
+    "sha256": "e51cb0feaaa97958212a9d59b84af0dd2125f3cdb003216ca508ce85905f42df",
+    "url": "https://raw.githubusercontent.com/civictech-India/Indian-Law-Penal-Code-Json/main/crpc.json"
+  },
+  "crpc/devgan_chapter_01.html": {
+    "bytes": 18534,
+    "retrieved": "2026-09-07",
+    "sha256": "fdb9e1df83746bd754158d4bfe47ee17540d327ba12eb0762cde5952600d3763",
+    "url": "https://devgan.in/crpc/chapter_01.php"
+  },
+  "crpc/devgan_chapter_02.html": {
+    "bytes": 33441,
+    "retrieved": "2026-09-07",
+    "sha256": "b213a85c9163efe03f3af897389a21824527da0e10cdcf97c8469f51dde05da5",
+    "url": "https://devgan.in/crpc/chapter_02.php"
+  },
+  "crpc/devgan_chapter_03.html": {
+    "bytes": 15880,
+    "retrieved": "2026-09-07",
+    "sha256": "f56b653401883c447e5ab5b17875bb507fa2751411e0f4623bc6b51b7f1ea100",
+    "url": "https://devgan.in/crpc/chapter_03.php"
+  },
+  "crpc/devgan_chapter_04.html": {
+    "bytes": 14403,
+    "retrieved": "2026-09-07",
+    "sha256": "4414bc12eb5863005605588036923dea6ca318012aa49bfec241a0815e003245",
+    "url": "https://devgan.in/crpc/chapter_04.php"
+  },
+  "crpc/devgan_chapter_05.html": {
+    "bytes": 35808,
+    "retrieved": "2026-09-07",
+    "sha256": "ef921e154b1b33e1ad13e41d94645af1c040a08042c69f21ce9bbb51c74092f8",
+    "url": "https://devgan.in/crpc/chapter_05.php"
+  },
+  "crpc/devgan_chapter_06.html": {
+    "bytes": 32788,
+    "retrieved": "2026-09-07",
+    "sha256": "4974787f78b30214afec05d2039f9fc836d701a54a78b9f0af7cae779278718f",
+    "url": "https://devgan.in/crpc/chapter_06.php"
+  },
+  "crpc/devgan_chapter_07.html": {
+    "bytes": 27181,
+    "retrieved": "2026-09-07",
+    "sha256": "347d61ab99276d221907a27658796e7f92431aae42e8d5767f83e68bd07fb804",
+    "url": "https://devgan.in/crpc/chapter_07.php"
+  },
+  "crpc/devgan_chapter_08.html": {
+    "bytes": 33041,
+    "retrieved": "2026-09-07",
+    "sha256": "d39f1cfb7d8db8db892c53994b2b76e1509c3c84e640e1e5a61c895e367259d2",
+    "url": "https://devgan.in/crpc/chapter_08.php"
+  },
+  "crpc/devgan_chapter_09.html": {
+    "bytes": 17024,
+    "retrieved": "2026-09-07",
+    "sha256": "f22b9064e5d8176958d10b58f78dcbddeafa047ed4a814a054f1eb4f24d45b1a",
+    "url": "https://devgan.in/crpc/chapter_09.php"
+  },
+  "crpc/devgan_chapter_10.html": {
+    "bytes": 37489,
+    "retrieved": "2026-09-07",
+    "sha256": "e6990e5ff47f6466f1dac1a97c762eb26035cb4082bf6f224838ffe3a73d6b04",
+    "url": "https://devgan.in/crpc/chapter_10.php"
+  },
+  "crpc/devgan_chapter_11.html": {
+    "bytes": 9967,
+    "retrieved": "2026-09-07",
+    "sha256": "7bed6e7916e8580d3b5a72a13d8180a2bf3ae92bd7a844209565e51ed655ac89",
+    "url": "https://devgan.in/crpc/chapter_11.php"
+  },
+  "crpc/devgan_chapter_12.html": {
+    "bytes": 58386,
+    "retrieved": "2026-09-07",
+    "sha256": "c7260388d2c49b8c04fa375450c5dd0938fb16f8fd4ddc3a3a9bed72730cca97",
+    "url": "https://devgan.in/crpc/chapter_12.php"
+  },
+  "crpc/devgan_chapter_13.html": {
+    "bytes": 17457,
+    "retrieved": "2026-09-07",
+    "sha256": "efe3e93ae7441a127c4d029d1b4cc9de40b539dc73e94ea2f0024bc27f535676",
+    "url": "https://devgan.in/crpc/chapter_13.php"
+  },
+  "crpc/devgan_chapter_14.html": {
+    "bytes": 28607,
+    "retrieved": "2026-09-07",
+    "sha256": "45388f6c599faafe08e402911b32adb0bdceb7e69f2ab2550d8c64f951d54ddf",
+    "url": "https://devgan.in/crpc/chapter_14.php"
+  },
+  "crpc/devgan_chapter_15.html": {
+    "bytes": 11126,
+    "retrieved": "2026-09-07",
+    "sha256": "9139fcdb54663bf1ddbcd33ec79a9bc99c6fbd5ceaddec20fd46677bf8b4bf7b",
+    "url": "https://devgan.in/crpc/chapter_15.php"
+  },
+  "crpc/devgan_chapter_16.html": {
+    "bytes": 16447,
+    "retrieved": "2026-09-07",
+    "sha256": "3b6b1584ada19a57f3ae0f04833bc1e03b5b5ce3ecc53c312cf4179fdec91aa7",
+    "url": "https://devgan.in/crpc/chapter_16.php"
+  },
+  "crpc/devgan_chapter_17.html": {
+    "bytes": 32020,
+    "retrieved": "2026-09-07",
+    "sha256": "c507540507427cbfe979d39a63e93fba0378cd1555d33f0fde35e04399b5cd79",
+    "url": "https://devgan.in/crpc/chapter_17.php"
+  },
+  "crpc/devgan_chapter_18.html": {
+    "bytes": 16542,
+    "retrieved": "2026-09-07",
+    "sha256": "6ab72a50d9ede783c1c79fd5a4a3c37d51edf2420bbbca3653b925b1dac769dc",
+    "url": "https://devgan.in/crpc/chapter_18.php"
+  },
+  "crpc/devgan_chapter_19.html": {
+    "bytes": 19611,
+    "retrieved": "2026-09-07",
+    "sha256": "c7eec40eb3c9bd192d285c9d729c5d54d4cf256eb8254beac8df010cd7595691",
+    "url": "https://devgan.in/crpc/chapter_19.php"
+  },
+  "crpc/devgan_chapter_20.html": {
+    "bytes": 13748,
+    "retrieved": "2026-09-07",
+    "sha256": "f950d7765993bf6d80f3679fa1d0c3ee58a9d410104288dffbe43ad6f9e4b287",
+    "url": "https://devgan.in/crpc/chapter_20.php"
+  },
+  "crpc/devgan_chapter_21.html": {
+    "bytes": 12077,
+    "retrieved": "2026-09-07",
+    "sha256": "bd32fbe757025b833576e8af027beae50bc98addd5660c571c00ff9555c7c264",
+    "url": "https://devgan.in/crpc/chapter_21.php"
+  },
+  "crpc/devgan_chapter_22.html": {
+    "bytes": 13127,
+    "retrieved": "2026-09-07",
+    "sha256": "2d4430e5f0dddf6fcfe18b875429f1e265705884f710202b1df1e63d8af10de1",
+    "url": "https://devgan.in/crpc/chapter_22.php"
+  },
+  "crpc/devgan_chapter_23.html": {
+    "bytes": 33642,
+    "retrieved": "2026-09-07",
+    "sha256": "ee3c9369ed12b2ea8f6740d945ad383c3510bd4990d37371c057a1c36ddeb562",
+    "url": "https://devgan.in/crpc/chapter_23.php"
+  },
+  "crpc/devgan_chapter_24.html": {
+    "bytes": 53687,
+    "retrieved": "2026-09-07",
+    "sha256": "471e4558bf769d55d76687f7921deb0808c7904f16b02bef8419f13452913156",
+    "url": "https://devgan.in/crpc/chapter_24.php"
+  },
+  "crpc/devgan_chapter_25.html": {
+    "bytes": 24285,
+    "retrieved": "2026-09-07",
+    "sha256": "9c49fe67e26337b65db3932cc54bac2bc88bb4a4a9529af5ea7d96e8c830e06a",
+    "url": "https://devgan.in/crpc/chapter_25.php"
+  },
+  "crpc/devgan_chapter_26.html": {
+    "bytes": 20645,
+    "retrieved": "2026-09-07",
+    "sha256": "46ae76038165fe029ea6d61723f225b988e6dee2ad3e4a50cc890cec7b89050c",
+    "url": "https://devgan.in/crpc/chapter_26.php"
+  },
+  "crpc/devgan_chapter_27.html": {
+    "bytes": 31756,
+    "retrieved": "2026-09-07",
+    "sha256": "ce196152b540b31551aa46d907c6592c6ce848494c2d72750a3faaa3e4c85c14",
+    "url": "https://devgan.in/crpc/chapter_27.php"
+  },
+  "crpc/devgan_chapter_28.html": {
+    "bytes": 10825,
+    "retrieved": "2026-09-07",
+    "sha256": "df5a2b8ed062145198203e500ccde0bc15bb51a87293a81b043d9364c7b8b6fb",
+    "url": "https://devgan.in/crpc/chapter_28.php"
+  },
+  "crpc/devgan_chapter_29.html": {
+    "bytes": 32273,
+    "retrieved": "2026-09-07",
+    "sha256": "8bdbbc4fc44b5e9bb9f5ccf69d6c596f3c24a590ff2969500a07bc013b0e7229",
+    "url": "https://devgan.in/crpc/chapter_29.php"
+  },
+  "crpc/devgan_chapter_30.html": {
+    "bytes": 17869,
+    "retrieved": "2026-09-07",
+    "sha256": "54fbacb257f6009dc597c2ee302658a0168dcd7e25acef4376d1004cc9d84436",
+    "url": "https://devgan.in/crpc/chapter_30.php"
+  },
+  "crpc/devgan_chapter_31.html": {
+    "bytes": 15728,
+    "retrieved": "2026-09-07",
+    "sha256": "67a78fcac2efb54d39751ef1330da7646eee26c1a81a1c311999be36402545dd",
+    "url": "https://devgan.in/crpc/chapter_31.php"
+  },
+  "crpc/devgan_chapter_32.html": {
+    "bytes": 29869,
+    "retrieved": "2026-09-07",
+    "sha256": "86f647f27498ec0dc1adce25af082ebca903af5810ca33c078f512e7a466d114",
+    "url": "https://devgan.in/crpc/chapter_32.php"
+  },
+  "crpc/devgan_chapter_33.html": {
+    "bytes": 32345,
+    "retrieved": "2026-09-07",
+    "sha256": "6da3910c8fb592f4d75dece5c9ae53be23b253638eb3c5e74582429ee7d2a592",
+    "url": "https://devgan.in/crpc/chapter_33.php"
+  },
+  "crpc/devgan_chapter_34.html": {
+    "bytes": 16384,
+    "retrieved": "2026-09-07",
+    "sha256": "fa3e372e864ca84186295a2e7489f3ae3597cc46e707780d6a652d05f7d0db2e",
+    "url": "https://devgan.in/crpc/chapter_34.php"
+  },
+  "crpc/devgan_chapter_35.html": {
+    "bytes": 13911,
+    "retrieved": "2026-09-07",
+    "sha256": "4217379afbf70b2e4f951f2e4f56cb5de87420f2f169df522688c7217162f3a8",
+    "url": "https://devgan.in/crpc/chapter_35.php"
+  },
+  "crpc/devgan_chapter_36.html": {
+    "bytes": 13206,
+    "retrieved": "2026-09-07",
+    "sha256": "6959c10346c2368232693fce3b7c156d5701ead1ed1f07a82d07b148b9b52c9d",
+    "url": "https://devgan.in/crpc/chapter_36.php"
+  },
+  "crpc/devgan_chapter_37.html": {
+    "bytes": 16178,
+    "retrieved": "2026-09-07",
+    "sha256": "eb6a06d71b6b8dfcd19a37ca15a75aab5d714b3f012b5abcc9b3f0d2162068d7",
+    "url": "https://devgan.in/crpc/chapter_37.php"
+  },
+  "crpc/devgan_chapter_38.html": {
+    "bytes": 253753,
+    "retrieved": "2026-09-07",
+    "sha256": "99e3edc077455b4b14d6bf80936f4fe1adbaa56cd0b76cbd66094e360adc48cf",
+    "url": "https://devgan.in/crpc/chapter_38.php"
+  },
+  "crpc/devgan_chapter_39.html": {
+    "bytes": 98870,
+    "retrieved": "2026-09-07",
+    "sha256": "f9aebafd3d084f7998837cdbcb30a0a30cf07887f66ff293b60c28131bb9041d",
+    "url": "https://devgan.in/crpc/chapter_39.php"
+  },
+  "evidence_act/civictech_iea.json": {
+    "bytes": 110959,
+    "retrieved": "2026-09-07",
+    "sha256": "cc799202bea82658ff55e83bb6c6622e7047e4068e20314213944a1bc2f481ee",
+    "url": "https://raw.githubusercontent.com/civictech-India/Indian-Law-Penal-Code-Json/main/iea.json"
+  },
+  "evidence_act/devgan_chapter_01.html": {
+    "bytes": 13856,
+    "retrieved": "2026-09-07",
+    "sha256": "94101ac05d5d854d3cc1a4075c1e2f4602a49724be47d44b0c6046cd75e7c1c9",
+    "url": "https://devgan.in/iea/chapter_01.php"
+  },
+  "evidence_act/devgan_chapter_02.html": {
+    "bytes": 70993,
+    "retrieved": "2026-09-07",
+    "sha256": "b2aa00961e6f02bb638bca391560516c33e0f9c362f09056e84a62479122992c",
+    "url": "https://devgan.in/iea/chapter_02.php"
+  },
+  "evidence_act/devgan_chapter_03.html": {
+    "bytes": 11041,
+    "retrieved": "2026-09-07",
+    "sha256": "d32152ae583184d5e5aa88e391b6ceb1798535f91a9d02d75366ce316dee9a9f",
+    "url": "https://devgan.in/iea/chapter_03.php"
+  },
+  "evidence_act/devgan_chapter_04.html": {
+    "bytes": 8964,
+    "retrieved": "2026-09-07",
+    "sha256": "8b65358260912bd59373fd979f44cd23e8f93776d7be0dd0adcdb38caf280d42",
+    "url": "https://devgan.in/iea/chapter_04.php"
+  },
+  "evidence_act/devgan_chapter_05.html": {
+    "bytes": 41104,
+    "retrieved": "2026-09-07",
+    "sha256": "6a2ab4e0b3de891ecb2b3b07756d23d4adecaaf33ff593f0c96b33204ae05d00",
+    "url": "https://devgan.in/iea/chapter_05.php"
+  },
+  "evidence_act/devgan_chapter_06.html": {
+    "bytes": 19523,
+    "retrieved": "2026-09-07",
+    "sha256": "1eb0783a4be4e273dd1e7345604bc9b2a6b6fdc277f06d84ca9cb2befb904572",
+    "url": "https://devgan.in/iea/chapter_06.php"
+  },
+  "evidence_act/devgan_chapter_07.html": {
+    "bytes": 23730,
+    "retrieved": "2026-09-07",
+    "sha256": "b64effa8a13fc2d3d82be9f2f62802798303ca3939e0b9bb363df4aa9e42b04b",
+    "url": "https://devgan.in/iea/chapter_07.php"
+  },
+  "evidence_act/devgan_chapter_08.html": {
+    "bytes": 9525,
+    "retrieved": "2026-09-07",
+    "sha256": "769fdce9117dbe225269f3ae21f0c2d18d773b82c7659d12bfcb5f8f3153599b",
+    "url": "https://devgan.in/iea/chapter_08.php"
+  },
+  "evidence_act/devgan_chapter_09.html": {
+    "bytes": 18318,
+    "retrieved": "2026-09-07",
+    "sha256": "e5d6a9a7fa85d16824727a8402b39fe71470a6b3a0ee604d7cacebad73fd057d",
+    "url": "https://devgan.in/iea/chapter_09.php"
+  },
+  "evidence_act/devgan_chapter_10.html": {
+    "bytes": 32437,
+    "retrieved": "2026-09-07",
+    "sha256": "4f3e34e2fdb6f5705aa6810b9faa31e7e35fba27fb36d0614b5a5a1106a691c0",
+    "url": "https://devgan.in/iea/chapter_10.php"
+  },
+  "evidence_act/devgan_chapter_11.html": {
+    "bytes": 7983,
+    "retrieved": "2026-09-07",
+    "sha256": "0a045ecca0ff06ab1e915764add7168448645aef4b5a87e2a4b96a707a328b61",
+    "url": "https://devgan.in/iea/chapter_11.php"
+  },
+  "ipc/civictech_ipc.json": {
+    "bytes": 328291,
+    "retrieved": "2026-09-07",
+    "sha256": "3940646ce396cf5313d5449523847671415be04934e295fdf9889bbe81b41988",
+    "url": "https://raw.githubusercontent.com/civictech-India/Indian-Law-Penal-Code-Json/main/ipc.json"
+  },
+  "ipc/devgan_chapter_01.html": {
+    "bytes": 9422,
+    "retrieved": "2026-09-07",
+    "sha256": "33044f91ba71d2c76bbedcaeaacf5aaa515a4b5f5e13732889259b0951fdaef2",
+    "url": "https://devgan.in/ipc/chapter_01.php"
+  },
+  "ipc/devgan_chapter_02.html": {
+    "bytes": 32681,
+    "retrieved": "2026-09-07",
+    "sha256": "6468e901889c5d348c7c5e738dcd7dacbdb20e8dd9cfbce9e6ea5798abcb2e38",
+    "url": "https://devgan.in/ipc/chapter_02.php"
+  },
+  "ipc/devgan_chapter_03.html": {
+    "bytes": 21593,
+    "retrieved": "2026-09-07",
+    "sha256": "0c007d573bd58940f85442ff695aa787ed91129cc1be3efc8d4f36cc687a4fcd",
+    "url": "https://devgan.in/ipc/chapter_03.php"
+  },
+  "ipc/devgan_chapter_04.html": {
+    "bytes": 33977,
+    "retrieved": "2026-09-07",
+    "sha256": "eb927dbe9d763cb0baaa61779645c5d220019ea1c8d74f306afd1f97ea72715c",
+    "url": "https://devgan.in/ipc/chapter_04.php"
+  },
+  "ipc/devgan_chapter_05.html": {
+    "bytes": 28038,
+    "retrieved": "2026-09-07",
+    "sha256": "e8f927216df3db563cccb43de2339be47c06f5559a571a93a4f838b7b9b73fe7",
+    "url": "https://devgan.in/ipc/chapter_05.php"
+  },
+  "ipc/devgan_chapter_06.html": {
+    "bytes": 15087,
+    "retrieved": "2026-09-07",
+    "sha256": "932c8c3639024adf4c6e6293a0047f9a1e1e76f1340c12cbbb6f47ed004a4ffd",
+    "url": "https://devgan.in/ipc/chapter_06.php"
+  },
+  "ipc/devgan_chapter_07.html": {
+    "bytes": 13457,
+    "retrieved": "2026-09-07",
+    "sha256": "c20b8f2c7701672f2ecd59e5a7d60eb645b56d76be8b63590ea0486a56b609fc",
+    "url": "https://devgan.in/ipc/chapter_07.php"
+  },
+  "ipc/devgan_chapter_08.html": {
+    "bytes": 22941,
+    "retrieved": "2026-09-07",
+    "sha256": "5acb45b054541f2cc065a7c4950da54ec7a4e48ed60b774c5ed945e72e373d87",
+    "url": "https://devgan.in/ipc/chapter_08.php"
+  },
+  "ipc/devgan_chapter_09.html": {
+    "bytes": 14126,
+    "retrieved": "2026-09-07",
+    "sha256": "8346aaff7108a34371b3fe9e6995ee0079b3c52cc4cbd7a7651311430ca59dae",
+    "url": "https://devgan.in/ipc/chapter_09.php"
+  },
+  "ipc/devgan_chapter_10.html": {
+    "bytes": 25686,
+    "retrieved": "2026-09-07",
+    "sha256": "1c9ae4dccad25a3f4a463912bd78f249d0fa375e31de3ef3bbe4ea02b48863af",
+    "url": "https://devgan.in/ipc/chapter_10.php"
+  },
+  "ipc/devgan_chapter_11.html": {
+    "bytes": 50974,
+    "retrieved": "2026-09-07",
+    "sha256": "3cb6a1982d3da5d87f6b27a2b9a0772dbd02ff9358b2a038b1ec991e22ba1cd9",
+    "url": "https://devgan.in/ipc/chapter_11.php"
+  },
+  "ipc/devgan_chapter_12.html": {
+    "bytes": 29386,
+    "retrieved": "2026-09-07",
+    "sha256": "8e3fd6c7f4fc8f7533ea76b873c83591025f6488cd99c95eee1a37e1a68f55b9",
+    "url": "https://devgan.in/ipc/chapter_12.php"
+  },
+  "ipc/devgan_chapter_13.html": {
+    "bytes": 9252,
+    "retrieved": "2026-09-07",
+    "sha256": "c6ed038744561421428792c4c030b404e5912798f017d2d2623f13d68a7d305f",
+    "url": "https://devgan.in/ipc/chapter_13.php"
+  },
+  "ipc/devgan_chapter_14.html": {
+    "bytes": 25567,
+    "retrieved": "2026-09-07",
+    "sha256": "ce0d07da14abfc13dbae8e9408fe2428c48986bfc3a266cb13dfeff41e76410a",
+    "url": "https://devgan.in/ipc/chapter_14.php"
+  },
+  "ipc/devgan_chapter_15.html": {
+    "bytes": 10416,
+    "retrieved": "2026-09-07",
+    "sha256": "199a9a98bb63cfe7420f841f7e338836afae2879e432da901f0241cb0e80bb9d",
+    "url": "https://devgan.in/ipc/chapter_15.php"
+  },
+  "ipc/devgan_chapter_16.html": {
+    "bytes": 97150,
+    "retrieved": "2026-09-07",
+    "sha256": "b65967d0628bbc44a14d2ce4899fb72bec974b34ab27eb2b032b28a63ee59ecc",
+    "url": "https://devgan.in/ipc/chapter_16.php"
+  },
+  "ipc/devgan_chapter_17.html": {
+    "bytes": 73112,
+    "retrieved": "2026-09-07",
+    "sha256": "6dd1f65d9ad37b3ef50428c73df9d00876400baa2afc375ece364e8de7b6b95c",
+    "url": "https://devgan.in/ipc/chapter_17.php"
+  },
+  "ipc/devgan_chapter_18.html": {
+    "bytes": 34789,
+    "retrieved": "2026-09-07",
+    "sha256": "d0cdcfe2e4a855549d4a0a3af0f5e9823afbc160395b4a4f4dbb4de48b714855",
+    "url": "https://devgan.in/ipc/chapter_18.php"
+  },
+  "ipc/devgan_chapter_19.html": {
+    "bytes": 8635,
+    "retrieved": "2026-09-07",
+    "sha256": "a0b9f1bde44d849a8361ac059971454228393c5b4e212caaaac62d6d02aa4b7e",
+    "url": "https://devgan.in/ipc/chapter_19.php"
+  },
+  "ipc/devgan_chapter_20.html": {
+    "bytes": 11183,
+    "retrieved": "2026-09-07",
+    "sha256": "aa754eec1e93684d7ecd58ac13100d8678d6a597c69734447d468085c0c4bdf7",
+    "url": "https://devgan.in/ipc/chapter_20.php"
+  },
+  "ipc/devgan_chapter_21.html": {
+    "bytes": 17569,
+    "retrieved": "2026-09-07",
+    "sha256": "07f2d96408a1dc3f96004e193cf1a7d6bb6c0ecf51f74aba0d1c10391c85904f",
+    "url": "https://devgan.in/ipc/chapter_21.php"
+  },
+  "ipc/devgan_chapter_22.html": {
+    "bytes": 15060,
+    "retrieved": "2026-09-07",
+    "sha256": "a5852b5428de83a2b7b5c2aa30399e78693050bd9b633849322fb4eed4cbcdef",
+    "url": "https://devgan.in/ipc/chapter_22.php"
+  },
+  "ipc/devgan_chapter_23.html": {
+    "bytes": 8549,
+    "retrieved": "2026-09-07",
+    "sha256": "39621df9e50887399ccede6466b4dd550fdca687d5f71eca7b6928a03378e107",
+    "url": "https://devgan.in/ipc/chapter_23.php"
+  },
+  "mapping/bprd_bns_to_ipc.pdf": {
+    "bytes": 716640,
+    "retrieved": "2026-09-07",
+    "sha256": "3ad875b6162deb9d6a722244c537b1ffa72ee20e025f08a32d272f2612cf9a25",
+    "url": "https://bprd.nic.in/uploads/pdf/COMPARISON%20SUMMARY%20BNS%20to%20IPC%20.pdf"
+  },
+  "mapping/bprd_bnss_to_crpc.pdf": {
+    "bytes": 674648,
+    "retrieved": "2026-09-07",
+    "sha256": "aa3e49147cf88141a8471a614246270ab4730cd3a4099e06de7a69792d80d33b",
+    "url": "https://bprd.nic.in/uploads/pdf/Comparison%20summary%20BNSS%20to%20CrPC.pdf"
+  },
+  "mapping/bprd_bsa_to_iea.pdf": {
+    "bytes": 403032,
+    "retrieved": "2026-09-07",
+    "sha256": "7693f293acb11ae55d8787a27093c2daa23a08e1a1f5673770ac6486b7c58c87",
+    "url": "https://bprd.nic.in/uploads/pdf/Comparison%20Summary%20BSA%20to%20IEA.pdf"
+  },
+  "mapping/uppolice_bns_ipc.pdf": {
+    "bytes": 1093015,
+    "retrieved": "2026-09-07",
+    "sha256": "ba55600b1835ccd6f1e3b5fe6cfae0936b4f2042ca8f0ff92549a4f5846ec43f",
+    "url": "https://uppolice.gov.in/site/writereaddata/siteContent/Three%20New%20Major%20Acts/202406281710564823BNS_IPC_Comparative.pdf"
+  }
+}
