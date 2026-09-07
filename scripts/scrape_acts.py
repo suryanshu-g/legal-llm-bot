@@ -92,6 +92,9 @@ NOISE = re.compile(
     re.I,
 )
 
+# The schedules that follow the last enacting section.
+SCHEDULE = re.compile(r"^THE\s+(?:FIRST|SECOND|THIRD)?\s*SCHEDULE(?![A-Za-z])", re.I)
+
 
 # ------------------------------------------------------------- PDF act parse
 
@@ -161,6 +164,7 @@ def parse_act_pdf(path: str, act: str, expected: int, source_url: str) -> list[d
     sections: list[dict] = []
     pending_heads: list[dict] = []
     chapter_no, chapter_title = None, None
+    in_schedules = False
     expect = 1
     cur: dict | None = None
 
@@ -178,6 +182,17 @@ def parse_act_pdf(path: str, act: str, expected: int, source_url: str) -> list[d
             for ln in body:
                 text = ln.text.strip()
                 if not text or NOISE.match(text):
+                    continue
+
+                # --- end of the enacting sections ---------------------------
+                # The schedules follow the last section. Without this guard the
+                # final section absorbs all of them - the BNSS First Schedule
+                # alone runs to well over a hundred thousand characters.
+                if SCHEDULE.match(text):
+                    cur = None
+                    in_schedules = True
+                    continue
+                if in_schedules:
                     continue
 
                 # --- chapter boundaries -------------------------------------
@@ -266,6 +281,12 @@ def parse_devgan(slug: str, n_chapters: int, force: bool = False) -> list[dict]:
             num = parts[i]
             chunk = parts[i + 1]
             # The chunk opens with the section number still inside the anchor.
+            # Trust that displayed number over the anchor's name attribute: the
+            # IPC pages give both section 29 and section 29A the anchor "s29",
+            # which would otherwise collapse the two into one record.
+            nm = re.match(r"\s*([0-9]+[A-Za-z]{0,2})\s*</a>", chunk)
+            if nm:
+                num = nm.group(1)
             tm = re.match(r"[^<]*</a>\s*(?::-|&#8211;|&ndash;|–|-)?\s*(.*?)</h2>", chunk, re.S)
             title = strip_html(tm.group(1)) if tm else ""
             bm = re.search(r"""<div class=["']sectxt["'][^>]*>(.*?)</div>""", chunk, re.S)

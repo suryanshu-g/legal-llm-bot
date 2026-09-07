@@ -1,0 +1,144 @@
+{
+  "failures": [],
+  "warnings": [
+    "BNS: 2 sections without a heading in the gazette margin: ['191', '340']",
+    "BNSS: 2 sections without a heading in the gazette margin: ['169', '489']",
+    "BSA: 1 sections without a heading in the gazette margin: ['162']",
+    "2 chunks under 80 characters: ['ipc_13', 'ipc_15']"
+  ],
+  "stats": {
+    "sections": {
+      "BNS": {
+        "extracted": 358,
+        "expected": 358,
+        "missing": [],
+        "duplicates": [],
+        "untitled": [
+          "191",
+          "340"
+        ],
+        "empty_text": []
+      },
+      "BNSS": {
+        "extracted": 531,
+        "expected": 531,
+        "missing": [],
+        "duplicates": [],
+        "untitled": [
+          "169",
+          "489"
+        ],
+        "empty_text": []
+      },
+      "BSA": {
+        "extracted": 170,
+        "expected": 170,
+        "missing": [],
+        "duplicates": [],
+        "untitled": [
+          "162"
+        ],
+        "empty_text": []
+      },
+      "IPC": {
+        "devgan": 561,
+        "civictech": 575,
+        "agreeing_section_numbers": 559,
+        "devgan_only": 2,
+        "civictech_only": 16
+      },
+      "CRPC": {
+        "devgan": 510,
+        "civictech": 525,
+        "agreeing_section_numbers": 500,
+        "devgan_only": 10,
+        "civictech_only": 25
+      },
+      "IEA": {
+        "devgan": 181,
+        "civictech": 184,
+        "agreeing_section_numbers": 181,
+        "devgan_only": 0,
+        "civictech_only": 3
+      }
+    },
+    "mapping": {
+      "rows": 1324,
+      "types": {
+        "merged": 253,
+        "direct": 964,
+        "split": 10,
+        "new_provision": 21,
+        "removed": 76
+      },
+      "disagreements": {
+        "partial_overlap": 12
+      },
+      "total_disagreements": 12
+    },
+    "corpus": {
+      "chunks": 2486,
+      "by_type": {
+        "statute": 2311,
+        "case_law": 174,
+        "reference": 1
+      },
+      "median_chars": 682,
+      "max_chars": 13433,
+      "with_equivalents": 2391
+    },
+    "finetune": {
+      "pairs": 13252,
+      "by_qa_type": {
+        "old_to_new": 2444,
+        "section_text": 4614,
+        "punishment": 1150,
+        "new_to_old": 2076,
+        "section_lookup": 2279,
+        "new_provision": 42,
+        "transition": 78,
+        "removed": 152,
+        "scope": 10,
+        "case_law": 407
+      },
+      "median_answer_chars": 221
+    },
+    "case_law": {
+      "cases": 201,
+      "topics": 30,
+      "per_topic": {
+        "murder": 8,
+        "culpable_homicide": 7,
+        "theft": 8,
+        "robbery_dacoity": 6,
+        "cheating": 7,
+        "criminal_breach_trust": 8,
+        "cruelty_498a": 6,
+        "dowry_death": 6,
+        "rape": 5,
+        "hurt": 8,
+        "criminal_intimidation": 7,
+        "defamation": 7,
+        "abetment_suicide": 8,
+        "criminal_conspiracy": 8,
+        "forgery": 5,
+        "cheating_personation": 5,
+        "unlawful_assembly": 7,
+        "criminal_trespass": 5,
+        "extortion": 8,
+        "mischief": 6,
+        "anticipatory_bail": 6,
+        "regular_bail": 4,
+        "fir_registration": 7,
+        "quashing": 6,
+        "default_bail": 8,
+        "electronic_evidence": 7,
+        "confession_police": 7,
+        "dying_declaration": 8,
+        "burden_of_proof": 6,
+        "circumstantial_evidence": 7
+      },
+      "thin_topics": []
+    }
+  }
+}

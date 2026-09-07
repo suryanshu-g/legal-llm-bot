@@ -84,6 +84,32 @@ def fetch(url: str, dest: str, *, binary: bool = False, force: bool = False) -> 
 
 
 import urllib.parse  # noqa: E402  (kept next to its only use above)
+import urllib.robotparser  # noqa: E402
+
+_robots: dict[str, object] = {}
+
+
+def robots_allows(url: str) -> bool:
+    """Check a URL against its site's robots.txt, caching one parser per host.
+
+    Indian Kanoon's robots.txt is mostly a long list of individual judgment IDs
+    it does not want crawled (takedown requests), so this has to be consulted
+    per document rather than once per site.
+    """
+    parts = urllib.parse.urlsplit(url)
+    host = f"{parts.scheme}://{parts.netloc}"
+    rp = _robots.get(host)
+    if rp is None:
+        rp = urllib.robotparser.RobotFileParser()
+        try:
+            req = urllib.request.Request(host + "/robots.txt",
+                                         headers={"User-Agent": USER_AGENT})
+            with urllib.request.urlopen(req, timeout=60) as resp:
+                rp.parse(resp.read().decode("utf-8", "replace").splitlines())
+        except Exception:  # noqa: BLE001 - no robots.txt means no restrictions
+            rp.parse([])
+        _robots[host] = rp
+    return rp.can_fetch("*", url)
 
 
 # ---------------------------------------------------------------- PDF layout
@@ -196,8 +222,30 @@ def roman_to_int(s: str) -> int | None:
 
 # ------------------------------------------------------------ text cleaning
 
+def _repair_stripped_cp1252(s: str) -> str:
+    """Restore punctuation that reached us as C0 control characters.
+
+    Some judgment texts on Indian Kanoon carry Windows-1252 punctuation with the
+    high bit lost, so an em dash (0x97) arrives as 0x17 and a left double quote
+    (0x93) as 0x13. Adding the bit back and decoding as cp1252 recovers the
+    intended character; anything that still will not decode is dropped.
+    """
+    out = []
+    for ch in s:
+        o = ord(ch)
+        if o in (9, 10, 13) or o >= 32:
+            out.append(ch)
+            continue
+        try:
+            out.append(bytes([o + 0x80]).decode("cp1252"))
+        except UnicodeDecodeError:
+            pass
+    return "".join(out)
+
+
 def clean_text(s: str) -> str:
     """Normalise whitespace and the typographic characters the gazette uses."""
+    s = _repair_stripped_cp1252(s)
     s = s.replace("\u2019", "'").replace("\u2018", "'")
     s = s.replace("\u201c", '"').replace("\u201d", '"')
     s = s.replace("\u2014\u2014", "\u2014")
