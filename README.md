@@ -1,5 +1,7 @@
 # legal-llm-bot
 
+https://github.com/suryanshu-g/legal-llm-bot
+
 A retrieval-grounded assistant for Indian criminal law, built around the
 1 July 2024 transition from the colonial-era codes to the new ones.
 

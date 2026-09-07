@@ -71,6 +71,10 @@ redistributable. Where a third-party site was used as a convenience source, we
 store the extracted statutory text rather than redistributing that site's page
 markup.
 
+## Repository
+
+https://github.com/suryanshu-g/legal-llm-bot
+
 ## Phases
 
 - **Phase 1 (complete):** repo setup and two clean, documented datasets — a
