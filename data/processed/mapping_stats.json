@@ -1,0 +1,40 @@
+{
+  "counts": {
+    "merged": 253,
+    "direct": 964,
+    "split": 10,
+    "new_provision": 21,
+    "removed": 76
+  },
+  "per_act": {
+    "BNS": {
+      "table_rows": 529,
+      "unparsed_rows": 13,
+      "new_sections_covered": 358,
+      "old_sections_mapped": 523,
+      "removed": 55
+    },
+    "BNSS": {
+      "table_rows": 558,
+      "unparsed_rows": 37,
+      "new_sections_covered": 531,
+      "old_sections_mapped": 523,
+      "removed": 12
+    },
+    "BSA": {
+      "table_rows": 189,
+      "unparsed_rows": 3,
+      "new_sections_covered": 170,
+      "old_sections_mapped": 176,
+      "removed": 9
+    }
+  },
+  "cross_checks": {
+    "uppolice": 348,
+    "devgan": 65
+  },
+  "disagreements": 12,
+  "disagreement_kinds": {
+    "partial_overlap": 12
+  }
+}

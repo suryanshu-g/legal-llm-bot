@@ -1,0 +1,13 @@
+new_act,new_section,bprd_old_sections,other_source,other_old_sections,kind,resolution
+BNS,2,8|9|10|11|12|17|19|20|21|22|23C|24|25|26|28|29|29A|30|31|33|39|40|41|42|43|44|45|46|47|48|49|51|52|52A,uppolice,8|9|10|11|12|17|19|20|21|22|23|24|25|26|28|29|30|31|33|39|40|41|42|43|44|45|46|47|48|49|51|52|52A,partial_overlap,kept BPRD (official MHA source); flagged for review
+BNS,8,63|64|65|66|67|68|69|70,devgan,63,partial_overlap,kept BPRD (official MHA source); flagged for review
+BNS,70,376D|376DB,uppolice,376D|376DA,partial_overlap,kept BPRD (official MHA source); flagged for review
+BNS,70,376D|376DB,devgan,376D,partial_overlap,kept BPRD (official MHA source); flagged for review
+BNS,155,127,uppolice,126|127,partial_overlap,kept BPRD (official MHA source); flagged for review
+BNS,178,230|246|255|489A,uppolice,230|231|246,partial_overlap,kept BPRD (official MHA source); flagged for review
+BNS,179,237|250|251|254|258|260|489B,uppolice,237,partial_overlap,kept BPRD (official MHA source); flagged for review
+BNS,180,242|243|252|253|259|489C,uppolice,242,partial_overlap,kept BPRD (official MHA source); flagged for review
+BNS,181,233|234|235|256|257|489D,uppolice,233,partial_overlap,kept BPRD (official MHA source); flagged for review
+BNS,189,141|142|144|145|150|151|157|158,uppolice,141|143|144|145|150|151|157|158,partial_overlap,kept BPRD (official MHA source); flagged for review
+BNS,319,416|419,uppolice,419,partial_overlap,kept BPRD (official MHA source); flagged for review
+BNS,325,428|429,uppolice,428,partial_overlap,kept BPRD (official MHA source); flagged for review
