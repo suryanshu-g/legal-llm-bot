@@ -7,7 +7,7 @@ says.
 
 Question families
 -----------------
-Ten families, each asked in several phrasings so the model sees the same
+Eleven families, each asked in several phrasings so the model sees the same
 underlying fact worded differently (this is the augmentation the project claims
 as a contribution). Coverage is spread across sections rather than piled onto a
 few, so a section contributes a handful of pairs at most.
@@ -21,6 +21,7 @@ few, so a section contributes a handful of pairs at most.
   removed          old provisions with no counterpart
   transition       which code applies to an offence on a given date
   case_law         what a court held on a provision
+  offence_classification  cognizable, bailable, and which court tries it
   scope            the limits of what this assistant will do
 
 The `scope` family is not padding. The brief forbids the bot from giving legal
@@ -44,7 +45,7 @@ import sys
 from collections import defaultdict
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from lawlib import PROCESSED, RAW, clean_text, write_jsonl
+from lawlib import PROCESSED, RAW, clean_text, load_old_act, write_jsonl
 
 ACT_FULL = {
     "BNS": "Bharatiya Nyaya Sanhita, 2023",
@@ -86,15 +87,12 @@ def strip_leading_number(text: str, section: str) -> str:
 
 def load_sections() -> dict[str, list[dict]]:
     out: dict[str, list[dict]] = {}
-    for act, folder, fname in [
-        ("BNS", "bns", "sections.json"), ("BNSS", "bnss", "sections.json"),
-        ("BSA", "bsa", "sections.json"), ("IPC", "ipc", "devgan_sections.json"),
-        ("CRPC", "crpc", "devgan_sections.json"), ("IEA", "evidence_act", "devgan_sections.json"),
-    ]:
-        blob = json.load(open(os.path.join(RAW, folder, fname), encoding="utf-8"))
-        fallback = {}
+    for act, folder in [("BNS", "bns"), ("BNSS", "bnss"), ("BSA", "bsa")]:
+        blob = json.load(open(os.path.join(RAW, folder, "sections.json"), encoding="utf-8"))
+        # The gazette margin lost a couple of headings; devgan supplies those.
         alt = os.path.join(RAW, folder, "devgan_sections.json")
-        if fname != "devgan_sections.json" and os.path.exists(alt):
+        fallback = {}
+        if os.path.exists(alt):
             fallback = {s["section"]: s["title"]
                         for s in json.load(open(alt, encoding="utf-8"))["sections"]}
         secs = []
@@ -103,6 +101,9 @@ def load_sections() -> dict[str, list[dict]]:
             s["title"] = s["title"] or fallback.get(str(s["section"]), "")
             secs.append(s)
         out[act] = secs
+
+    for act in ("IPC", "CRPC", "IEA"):
+        out[act] = load_old_act(act)
     return out
 
 
@@ -302,8 +303,11 @@ def qa_transition(rng):
                 f"{old} or the {new}?",
                 f"Which applies to conduct on {date} - the {old} or the {new}?",
             ]
+            # One group per (date, code pair): the two phrasings of the same
+            # question are paraphrases of a single fact and must not be split.
+            group = f"transition_{date.replace(' ', '-')}_{new.lower()}"
             for q in rng.sample(phrasings, 2):
-                pairs.append((q, "", answer, "transition", "transition_commencement"))
+                pairs.append((q, "", answer, "transition", group))
 
     general = [
         ("When did the BNS, BNSS and BSA come into force?",
@@ -330,14 +334,23 @@ def qa_transition(rng):
          "The Bharatiya Sakshya Adhiniyam, 2023 (Act 47 of 2023) replaced the Indian "
          "Evidence Act, 1872, with effect from 1 July 2024."),
     ]
-    for q, a in general:
-        pairs.append((q, "", a, "transition", "transition_commencement"))
+    for n, (q, a) in enumerate(general, start=1):
+        pairs.append((q, "", a, "transition", f"transition_general_{n:02d}"))
     return pairs
 
 
 def qa_case_law(cases, rng):
+    """Pairs about reported decisions.
+
+    The group key is the judgment itself, taken from its Indian Kanoon document
+    id, not the topic-case pairing. Twenty-two judgments answer to more than one
+    topic, and keying on the pairing would let two questions about the same
+    judgment fall on opposite sides of a train/test split.
+    """
     pairs = []
     for i, c in enumerate(cases, start=1):
+        doc_id = re.search(r"/doc/(\d+)", c["source_url"])
+        group = f"case_{doc_id.group(1)}" if doc_id else f"case_{i:03d}"
         secs = ", ".join(f"{ACT_SHORT[c['old_act']]} {s}" for s in c["old_sections"])
         new = ", ".join(c["new_sections"][:3])
         answer = (f"In {c['case_name']} ({c['court']}, {c['year']}), on {secs}"
@@ -350,14 +363,89 @@ def qa_case_law(cases, rng):
             f"What is the significance of {c['case_name']} for {c['topic_label'].lower()}?",
         ]
         for q in rng.sample(phrasings, 2):
-            pairs.append((q, "", answer, "case_law", f"case_{c['topic']}_{i:03d}"))
+            pairs.append((q, "", answer, "case_law", group))
 
         pairs.append((
             f"Name a reported case on {c['topic_label'].lower()} under {secs}.",
             "",
             f"{c['case_name']} ({c['court']}, {c['year']}) concerns {c['topic_label'].lower()} "
             f"under {secs}" + (f", now {new}" if new else "") + f". Source: {c['source_url']}",
-            "case_law", f"case_{c['topic']}_{i:03d}"))
+            "case_law", group))
+    return pairs
+
+
+def load_schedule() -> dict[str, list[dict]]:
+    """BNSS First Schedule entries, grouped by BNS base section."""
+    path = os.path.join(PROCESSED, "bnss_schedule.csv")
+    if not os.path.exists(path):
+        return {}
+    by_sec: dict[str, list[dict]] = defaultdict(list)
+    for r in csv.DictReader(open(path, encoding="utf-8")):
+        if r["part"] != "I":
+            continue
+        m = re.match(r"^(\d+[A-Z]?)", r["section_ref"])
+        if m:
+            by_sec[m.group(1)].append(r)
+    return by_sec
+
+
+def _describe(entries: list[dict], field: str) -> str:
+    """State a classification, distinguishing the entries when they differ."""
+    values = {e[field] for e in entries}
+    if len(values) == 1:
+        return next(iter(values))
+    return "; ".join(f"{e['offence_description'].rstrip('.')} - {e[field]}"
+                     for e in entries)
+
+
+def qa_offence_classification(schedule, sections, rng):
+    """Cognizability, bailability and trying court, from the First Schedule.
+
+    The classification lives in the BNSS First Schedule rather than in the BNS
+    section text, so these facts are not answerable from the section-text pairs
+    at all - "is theft bailable" is a question the rest of the dataset simply
+    cannot answer.
+    """
+    titles = {str(s["section"]): s["title"] for s in sections["BNS"]}
+    pairs = []
+    for sec, entries in schedule.items():
+        title = titles.get(sec, "")
+        subject = (title[0].lower() + title[1:]) if title else \
+            entries[0]["offence_description"].rstrip(".").lower()
+        named = f"BNS Section {sec}" + (f" ({title})" if title else "")
+
+        cog, bail, court = (_describe(entries, f)
+                            for f in ("cognizable", "bailable", "triable_by"))
+
+        for field_q, answer in (
+            ([f"Is an offence under BNS Section {sec} cognizable?",
+              f"Is {subject} under the BNS a cognizable offence?",
+              f"Under the BNSS First Schedule, is BNS Section {sec} cognizable "
+              f"or non-cognizable?"],
+             f"Under the First Schedule to the BNSS, an offence under {named} is: {cog}."),
+            ([f"Is an offence under BNS Section {sec} bailable?",
+              f"Is {subject} under the BNS bailable or non-bailable?",
+              f"Can a person accused under BNS Section {sec} get bail as of right?"],
+             f"Under the First Schedule to the BNSS, an offence under {named} is: {bail}."),
+            ([f"Which court tries an offence under BNS Section {sec}?",
+              f"Which court has jurisdiction to try {subject} under the BNS?",
+              f"Before which court is an offence under BNS Section {sec} triable?"],
+             f"Under the First Schedule to the BNSS, an offence under {named} is triable "
+             f"by: {court}."),
+        ):
+            for q in rng.sample(field_q, 1):
+                pairs.append((q, "", answer, "offence_classification", f"bns_{sec.lower()}"))
+
+        # One combined question per section, which is how the classification is
+        # actually used in practice.
+        if len({e["cognizable"] for e in entries}) == 1 and \
+                len({e["bailable"] for e in entries}) == 1:
+            pairs.append((
+                f"How is the offence under BNS Section {sec} classified under the BNSS "
+                f"First Schedule?",
+                "",
+                f"An offence under {named} is {cog}, {bail}, and triable by {court}.",
+                "offence_classification", f"bns_{sec.lower()}"))
     return pairs
 
 
@@ -405,7 +493,8 @@ def qa_scope():
          "summaries of reported decisions. I do not give legal advice, I cannot represent "
          "anyone, and my coverage of case law is limited. " + DISCLAIMER),
     ]
-    return [(q, "", a, "scope", "scope_policy") for q, a in refusals]
+    return [(q, "", a, "scope", f"scope_{n:02d}")
+            for n, (q, a) in enumerate(refusals, start=1)]
 
 
 # ------------------------------------------------------------ dedup + write
@@ -419,6 +508,7 @@ def main() -> None:
     sections = load_sections()
     mapping = load_mapping()
     cases = load_cases()
+    schedule = load_schedule()
 
     families = [
         qa_section_text(sections, rng),
@@ -428,6 +518,7 @@ def main() -> None:
         qa_new_and_removed(mapping, rng),
         qa_transition(rng),
         qa_case_law(cases, rng),
+        qa_offence_classification(schedule, sections, rng),
         qa_scope(),
     ]
     raw = [p for fam in families for p in fam]

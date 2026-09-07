@@ -73,12 +73,19 @@ markup.
 
 ## Phases
 
-- **Phase 1 (this repository, complete):** repo setup and two clean, documented
-  datasets — a fine-tuning instruction/QA dataset and a retrieval corpus — plus
-  an old-to-new section concordance. See `data/DATA_REPORT.md`.
-- **Phase 2:** fine-tuning Flan-T5 on Colab.
-- **Phase 3:** retrieval layer, evaluation against a generic LLM baseline, video
-  and paper.
+- **Phase 1 (complete):** repo setup and two clean, documented datasets — a
+  fine-tuning instruction/QA dataset and a retrieval corpus — plus an
+  old-to-new section concordance.
+- **Phase 1.5 (complete):** the BNSS First Schedule (classification of offences:
+  cognizable, bailable, trying court), and leakage-safe train/validation/test
+  splits plus a held-out confusion set for the Phase 4 comparison.
+- **Phase 2:** fine-tuning Flan-T5 on Colab, from `train.jsonl` / `val.jsonl`.
+- **Phase 3:** the FAISS retrieval layer over `retrieval_corpus.jsonl`.
+- **Phase 4:** running `confusion_test_set.jsonl` against both this bot and a
+  general-purpose LLM to test the differentiator claim; video and paper.
+
+See `data/DATA_REPORT.md` for what was collected, how it was verified and what
+is wrong with it.
 
 ## Phase 1 objective (as specified)
 

@@ -25,13 +25,16 @@ prosecutors and courts sits squarely inside public administration.
 
 ## Status
 
-**Phase 1 (data) is complete.** No model has been trained yet.
+**Phases 1 and 1.5 (data) are complete.** No model has been trained yet.
 
 | Deliverable | |
 |---|---|
-| Fine-tuning QA pairs | 13,252 |
-| Retrieval chunks | 2,486 |
+| Fine-tuning QA pairs | 14,524 |
+| Train / validation / test | 11,751 / 1,369 / 676 (leakage-safe, group-level) |
+| Confusion test set | 44 held-out old-vs-new questions |
+| Retrieval chunks | 2,819 |
 | Concordance rows | 1,324 |
+| BNSS First Schedule | 465 rows over 288 BNS sections |
 | Case summaries | 201 records over 174 judgments, 30 topics |
 | Section coverage | BNS 358/358 · BNSS 531/531 · BSA 170/170 |
 
@@ -39,9 +42,11 @@ Read [`data/DATA_REPORT.md`](data/DATA_REPORT.md) for how this was verified and
 what is wrong with it. [`PROJECT_BRIEF.md`](PROJECT_BRIEF.md) holds the full
 project context.
 
-- **Phase 2** — fine-tune Flan-T5-base on Colab (T4, ≤25 epochs).
-- **Phase 3** — FAISS retrieval layer, evaluation against a generic LLM
-  baseline, paper and video.
+- **Phase 2** — fine-tune Flan-T5-base on Colab (T4, ≤25 epochs) using
+  `train.jsonl` and `val.jsonl`.
+- **Phase 3** — FAISS retrieval layer over `retrieval_corpus.jsonl`.
+- **Phase 4** — run `confusion_test_set.jsonl` against both this bot and a
+  general-purpose LLM to test the core claim; paper and video.
 
 ## Layout
 
@@ -54,9 +59,14 @@ data/
   processed/
     mapping_table.csv           old -> new section concordance
     mapping_disagreements.csv   where the sources disagree, and why
+    bnss_schedule.csv           First Schedule: cognizable / bailable / court
+    bnss_schedule_disagreements.csv
     finetune_dataset.jsonl      instruction / input / output
     finetune_dataset_index.jsonl  aligned qa_type + provenance
-    retrieval_corpus.jsonl      one chunk per section or judgment
+    train.jsonl / val.jsonl / test.jsonl   group-level split, no fact straddles
+    confusion_test_set.jsonl    held-out old-vs-new questions for Phase 4
+    retrieval_corpus.jsonl      one chunk per section, schedule entry or judgment
+    split_report.json           split sizes and qa_type balance
     validation_report.json      output of the validation run
   DATA_REPORT.md
 scripts/
@@ -64,8 +74,10 @@ scripts/
   scrape_acts.py            fetch and parse the six acts
   scrape_case_law.py        harvest case summaries from Indian Kanoon
   build_mapping_table.py    build and cross-check the concordance
+  build_bnss_schedule.py    parse the BNSS First Schedule
   build_finetune_dataset.py build the QA dataset
   build_retrieval_corpus.py build the RAG corpus
+  build_splits.py           group-level splits + confusion set
   validate_data.py          checks; non-zero exit on failure
 notebooks/                  Phase 2 onward
 ```
@@ -78,8 +90,10 @@ pip install -r requirements.txt
 python scripts/scrape_acts.py           # acts + concordance PDFs
 python scripts/scrape_case_law.py       # ~15 min, rate limited
 python scripts/build_mapping_table.py
+python scripts/build_bnss_schedule.py
 python scripts/build_retrieval_corpus.py
 python scripts/build_finetune_dataset.py
+python scripts/build_splits.py
 python scripts/validate_data.py
 ```
 

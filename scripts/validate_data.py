@@ -295,6 +295,137 @@ def check_cases():
                          "per_topic": dict(per_topic), "thin_topics": thin}
 
 
+def check_schedule():
+    print("\n[6] BNSS First Schedule")
+    path = os.path.join(PROCESSED, "bnss_schedule.csv")
+    if not os.path.exists(path):
+        warn("no schedule found - run scripts/build_bnss_schedule.py")
+        return
+    rows = list(csv.DictReader(open(path, encoding="utf-8")))
+    part1 = [r for r in rows if r["part"] == "I"]
+    part2 = [r for r in rows if r["part"] == "II"]
+
+    ok(f"{len(part1)} Part I entries, {len(part2)} Part II entries")
+
+    for field in ("section_ref", "offence_description", "cognizable", "bailable",
+                  "triable_by"):
+        blank = [r["section_ref"] for r in part1 if not str(r[field]).strip()]
+        if blank:
+            fail(f"{len(blank)} Part I rows with an empty '{field}': {blank[:5]}")
+        else:
+            ok(f"every Part I row has a '{field}'")
+
+    # A classification column must open with a known term; anything else means
+    # a column boundary went wrong.
+    for field, pat in (("cognizable", r"^(Cognizable|Non-cognizable|According)"),
+                       ("bailable", r"^(Bailable|Non-bailable|According)"),
+                       ("triable_by", r"^(Court|Magistrate|Any|According|The)")):
+        odd = [(r["section_ref"], r[field][:40]) for r in part1
+               if not re.match(pat, r[field])]
+        if odd:
+            fail(f"{len(odd)} rows whose '{field}' does not start with a known term: {odd[:3]}")
+        else:
+            ok(f"every '{field}' value is well formed")
+
+    known = {str(s["section"]) for s in json.load(
+        open(os.path.join(RAW, "bns", "sections.json"), encoding="utf-8"))["sections"]}
+    bases = {re.match(r"^(\d+[A-Z]?)", r["section_ref"]).group(1) for r in part1
+             if re.match(r"^(\d+[A-Z]?)", r["section_ref"])}
+    unknown = sorted(bases - known)
+    if unknown:
+        fail(f"schedule references BNS sections that do not exist: {unknown[:8]}")
+    else:
+        ok(f"all {len(bases)} BNS sections referenced by the schedule exist in the Act")
+
+    dpath = os.path.join(PROCESSED, "bnss_schedule_disagreements.csv")
+    if os.path.exists(dpath):
+        dis = list(csv.DictReader(open(dpath, encoding="utf-8")))
+        ok(f"{len(dis)} disagreements against devgan.in's independent classification")
+    stats["schedule"] = {"part1": len(part1), "part2": len(part2),
+                         "distinct_sections": len(bases)}
+
+
+def check_splits():
+    print("\n[7] Train / validation / test splits")
+    paths = {n: os.path.join(PROCESSED, f"{n}.jsonl") for n in ("train", "val", "test")}
+    if not all(os.path.exists(p) for p in paths.values()):
+        warn("splits not built - run scripts/build_splits.py")
+        return
+
+    import csv as _csv
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from build_splits import build_groups
+
+    rows = read_jsonl(os.path.join(PROCESSED, "finetune_dataset.jsonl"))
+    index = read_jsonl(os.path.join(PROCESSED, "finetune_dataset_index.jsonl"))
+    mapping = list(_csv.DictReader(
+        open(os.path.join(PROCESSED, "mapping_table.csv"), encoding="utf-8")))
+    group_of = build_groups(index, mapping)
+    group_by_instruction = {r["instruction"]: group_of[m["source_chunk_id"]]
+                            for r, m in zip(rows, index)}
+
+    splits = {n: read_jsonl(p) for n, p in paths.items()}
+    total = sum(len(v) for v in splits.values())
+    groups = {n: {group_by_instruction[r["instruction"]] for r in v}
+              for n, v in splits.items()}
+
+    ok(f"{total} rows: " + ", ".join(
+        f"{n} {len(v)} ({100.0 * len(v) / total:.1f}%)" for n, v in splits.items()))
+
+    clean = True
+    for a, b in (("train", "val"), ("train", "test"), ("val", "test")):
+        shared = groups[a] & groups[b]
+        if shared:
+            clean = False
+            fail(f"{len(shared)} groups appear in both {a} and {b}: {sorted(shared)[:5]}")
+    if clean:
+        ok("no group appears in more than one split - splits are leakage-safe")
+
+    seen: dict[str, str] = {}
+    cross = 0
+    for n, v in splits.items():
+        for r in v:
+            if seen.get(r["instruction"], n) != n:
+                cross += 1
+            seen[r["instruction"]] = n
+    if cross:
+        fail(f"{cross} instructions appear in more than one split")
+    else:
+        ok("no instruction appears in more than one split")
+
+    cpath = os.path.join(PROCESSED, "confusion_test_set.jsonl")
+    if os.path.exists(cpath):
+        conf = read_jsonl(cpath)
+        cg = {group_of.get(k, k) for e in conf for k in e["group_keys"]}
+        leaked = cg & (groups["train"] | groups["val"] | groups["test"])
+        if leaked:
+            fail(f"{len(leaked)} confusion-set groups also appear in a split: "
+                 f"{sorted(leaked)[:5]}")
+        else:
+            ok(f"confusion set ({len(conf)} entries, {len(cg)} groups) is held out of "
+               f"all three splits")
+        shared_q = {e["instruction"] for e in conf} & set(seen)
+        if shared_q:
+            fail(f"{len(shared_q)} confusion questions also appear in a split")
+        else:
+            ok("no confusion question appears in any split")
+        kinds = Counter(e["mapping_type"] for e in conf)
+        ok(f"confusion set by kind: {dict(kinds)}")
+        for e in conf:
+            for f in ("why_confusing", "output", "mapping_type"):
+                if not str(e.get(f, "")).strip():
+                    fail(f"a confusion entry is missing '{f}'")
+                    break
+            else:
+                continue
+            break
+        else:
+            ok("every confusion entry documents its answer and why it is confusing")
+        stats["confusion"] = {"entries": len(conf), "by_kind": dict(kinds)}
+
+    stats["splits"] = {n: len(v) for n, v in splits.items()}
+
+
 def main() -> None:
     print("Validating processed datasets")
     check_sections()
@@ -302,6 +433,8 @@ def main() -> None:
     check_corpus()
     check_finetune()
     check_cases()
+    check_schedule()
+    check_splits()
 
     print(f"\n{'=' * 60}")
     print(f"{len(failures)} failures, {len(warnings)} warnings")

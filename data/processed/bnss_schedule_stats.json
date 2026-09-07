@@ -1,0 +1,12 @@
+{
+  "column_leaks_repaired": 1,
+  "part1_entries": 462,
+  "part2_entries": 3,
+  "distinct_bns_sections": 288,
+  "unrecognised_column1_values": 0,
+  "cross_check": {
+    "sections_compared": 201,
+    "reference_sections": 201
+  },
+  "disagreements": 4
+}

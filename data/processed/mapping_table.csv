@@ -770,43 +770,43 @@ sans heading."
 IPC,120B,Punishment of criminal conspiracy,BNS,61,Criminal conspiracy,merged,"61(1): IPC section is included as sub-section in BNS. 61(2): IPC section is included as sub-section in BNS,
 sans heading."
 IPC,511,Punishment for attempting to commit offences punishable with imprisonment for life or other imprisonment,BNS,62,Punishment for attempting to commit offences punishable with imprisonment for life or other imprisonment,direct,62: No change.
-IPC,375,Rape1,BNS,63,Rape,direct,"63: Age of Consent: 15 years is replaced by 18
+IPC,375,Rape,BNS,63,Rape,direct,"63: Age of Consent: 15 years is replaced by 18
 years in BNS. Exception 2 of Section 63 states
 that ""sexual intercourse or acts by a man with
 his wife, the wife not being under 18 years of
 age, is not rape""."
-IPC,376,Punishment for rape1,BNS,64,Punishment for rape,split,"64: Word ""military"" is replaced with ""army""."
-IPC,376,Punishment for rape1,BNS,65,Punishment for rape in certain cases,split,"65(1): No change. 65(2): Section is included as sub-section in BNS sans
+IPC,376,Punishment for rape,BNS,64,Punishment for rape,split,"64: Word ""military"" is replaced with ""army""."
+IPC,376,Punishment for rape,BNS,65,Punishment for rape in certain cases,split,"65(1): No change. 65(2): Section is included as sub-section in BNS sans
 h eading."
-IPC,376AB,Punishment for rape on woman under twelve years of age2,BNS,65,Punishment for rape in certain cases,merged,"65(1): No change. 65(2): Section is included as sub-section in BNS sans
+IPC,376AB,Punishment for rape on woman under twelve years of age,BNS,65,Punishment for rape in certain cases,merged,"65(1): No change. 65(2): Section is included as sub-section in BNS sans
 h eading."
-IPC,376A,Punishment for causing death or resulting in persistent vegetative state of victim1,BNS,66,Punishment for causing death or resulting in persistent vegetative state of victim,direct,66: No change.
+IPC,376A,Punishment for causing death or resulting in persistent vegetative state of victim,BNS,66,Punishment for causing death or resulting in persistent vegetative state of victim,direct,66: No change.
 IPC,376B,Sexual intercourse by husband upon his wife during separation,BNS,67,Sexual intercourse by husband upon his wife during separation,direct,67: No change.
-IPC,376C,Sexual intercourse by person in authority1,BNS,68,Sexual intercourse by a person in authority,direct,68: No change.
-IPC,376D,Gang rape1,BNS,70,Gang rape,merged,"70(1): No Change except IPC section is included as
+IPC,376C,Sexual intercourse by person in authority,BNS,68,Sexual intercourse by a person in authority,direct,68: No change.
+IPC,376D,Gang rape,BNS,70,Gang rape,merged,"70(1): No Change except IPC section is included as
 subsection in BNS. 70(2): In 376DB IPC, the age of the victim is 12
 years, and punishment is the death penalty. In
 70(2) BNS, the age of the victim is under 18
 years, and punishment is the death penalty.
 Section is included as a sub-section in BNS,
 sans heading."
-IPC,376DB,Punishment for gang rape on woman under twelve years of age2,BNS,70,Gang rape,merged,"70(1): No Change except IPC section is included as
+IPC,376DB,Punishment for gang rape on woman under twelve years of age,BNS,70,Gang rape,merged,"70(1): No Change except IPC section is included as
 subsection in BNS. 70(2): In 376DB IPC, the age of the victim is 12
 years, and punishment is the death penalty. In
 70(2) BNS, the age of the victim is under 18
 years, and punishment is the death penalty.
 Section is included as a sub-section in BNS,
 sans heading."
-IPC,376E,Punishment for repeat offenders1,BNS,71,Punishment for repeat offenders,direct,71: No change.
+IPC,376E,Punishment for repeat offenders,BNS,71,Punishment for repeat offenders,direct,71: No change.
 IPC,228A,"Disclosure of identity of the victim of certain offences, etc",BNS,72,"Disclosure of identity of victim of certain offences, etc",split,"72: Word ""minor' is replaced by 'child'."
 IPC,228A,"Disclosure of identity of the victim of certain offences, etc",BNS,73,Printing or publishing any matter relating to Court proceedings without permission,split,"73: Sub-section of IPC is treated as individual
 section in BNS with heading."
 IPC,354,Assault or criminal force to woman with intent to outrage her modesty,BNS,74,Assault or use of criminal force to woman with intent to outrage her modesty,direct,74: No change.
-IPC,354A,Sexual harassment and punishment for sexual harassment1,BNS,75,Sexual harassment,direct,75: No change.
-IPC,354B,Assault or use of criminal force to woman with intent to disrobe1,BNS,76,Assault or use of criminal force to woman with intent to disrobe,direct,"76: Words ""Any man who"" is replaced by
+IPC,354A,Sexual harassment and punishment for sexual harassment,BNS,75,Sexual harassment,direct,75: No change.
+IPC,354B,Assault or use of criminal force to woman with intent to disrobe,BNS,76,Assault or use of criminal force to woman with intent to disrobe,direct,"76: Words ""Any man who"" is replaced by
 ""Whoever""."
-IPC,354C,Voyeurism1,BNS,77,Voyeurism,direct,77: Ditto.
-IPC,354D,Stalking1,BNS,78,Stalking,direct,78: No change.
+IPC,354C,Voyeurism,BNS,77,Voyeurism,direct,77: Ditto.
+IPC,354D,Stalking,BNS,78,Stalking,direct,78: No change.
 IPC,509,"Word, gesture or act intended to insult the modesty of a woman",BNS,79,"Word, gesture or act intended to insult modesty of a woman",direct,79: No change.
 IPC,304B,Dowry death,BNS,80,Dowry death,direct,80: No change.
 IPC,493,Cohabitation caused by a man deceitfully inducing a belief of lawful marriage,BNS,81,Cohabitation caused by man deceitfully inducing belief of lawful marriage,direct,81: No change.
@@ -822,8 +822,8 @@ IPC,496,Marriage ceremony fraudulently gone through without lawful marriage,BNS,
 IPC,498,Enticing or taking away or detaining with criminal intent a married woman,BNS,84,Enticing or taking away or detaining with criminal intent a married woman,direct,"84: The words ""from that man or from any person
 having the care of her on behalf of that man""
 are excluded."
-IPC,498A,Counterfeiting currency-notes or bank-notes,BNS,85,Husband or relative of husband of a woman subjecting her to cruelty,split,85: No change.
-IPC,498A,Counterfeiting currency-notes or bank-notes,BNS,86,Cruelty defined,split,"86: IPC Section 498A has been bifurcated into
+IPC,498A,Husband or relative of husband of a woman subjecting her to cruelty,BNS,85,Husband or relative of husband of a woman subjecting her to cruelty,split,85: No change.
+IPC,498A,Husband or relative of husband of a woman subjecting her to cruelty,BNS,86,Cruelty defined,split,"86: IPC Section 498A has been bifurcated into
 Sections 85 and 86. The IPC explanation part
 has been provided in Section 86 BNS under
 the heading Cruelty defined."
@@ -1240,8 +1240,8 @@ IPC,366B,Importation of girl from foreign country,BNS,141,Importation of girl or
 years"" added and ""she"" is replaced by ""girl or
 boy""."
 IPC,368,"Wrongfully concealing or keeping in confinement, kidnapped or abducted person",BNS,142,"Wrongfully concealing or keeping in confinement, kidnapped or abducted person",direct,142: No change.
-IPC,370,Trafficking of person1,BNS,143,Trafficking of person,direct,"143: Word ""minor"" is replaced by ""child""."
-IPC,370A,Exploitation of a trafficked person1,BNS,144,Exploitation of a trafficked person,direct,"144: The upper limit of imprisonment is increased
+IPC,370,Trafficking of person,BNS,143,Trafficking of person,direct,"143: Word ""minor"" is replaced by ""child""."
+IPC,370A,Exploitation of a trafficked person,BNS,144,Exploitation of a trafficked person,direct,"144: The upper limit of imprisonment is increased
 from seven years to ten years, and for sub-
 section (2), from five years to seven years.
 ""minor"" is replaced by ""child""."
@@ -1529,8 +1529,8 @@ false or misleading information, jeopardising
 the sovereignty, unity and integrity or security
 of India""."
 IPC,166,"Public servant disobeying law, with intent to cause injury to any person",BNS,198,"Public servant disobeying law, with intent to cause injury to any person",direct,198: No change.
-IPC,166A,Public Servant disobeying direction under Law1,BNS,199,Public servant disobeying direction under law,direct,199: No change.
-IPC,166B,Punishment for non treatment of victim1,BNS,200,Punishment for non- treatment of victim,direct,200: No change.
+IPC,166A,Public Servant disobeying direction under Law,BNS,199,Public servant disobeying direction under law,direct,199: No change.
+IPC,166B,Punishment for non treatment of victim,BNS,200,Punishment for non-treatment of victim,direct,200: No change.
 IPC,167,Public servant framing an incorrect document with intent to cause injury,BNS,201,Public servant framing an incorrect document with intent to cause injury,direct,201: No change.
 IPC,168,Public servant unlawfully engaging in trade,BNS,202,Public servant unlawfully engaging in trade,direct,"202: New punishment of ""community service"" is
 added."
@@ -1543,8 +1543,8 @@ two hundred to five thousand."
 IPC,172,Absconding to avoid service of summons or other proceeding,BNS,206,Absconding to avoid service of summons or other proceeding,direct,"206: The upper limit of the fine is increased from
 five hundred to five thousand rupees and one"
 IPC,173,"Preventing service of summons or other proceeding, or preventing publication thereof",BNS,207,"Preventing service of summons or other proceeding, or preventing publication thereof",direct,207: Ditto.
-IPC,174,Non-attendance in obedience to an order from public servant,BNS,208,Non- attendance in obedience to an order from public servant,direct,208: Ditto.
-IPC,174A,Non-appearance in response to a proclamation under section 82 of Act 2 of 1974,BNS,209,"Non- appearance in response to a proclamation under section 84 of Bharatiya Nagarik Suraksha Sanhita, 2023",direct,"209: New punishment of ""as with community
+IPC,174,Non-attendance in obedience to an order from public servant,BNS,208,Non-attendance in obedience to an order from public servant,direct,208: Ditto.
+IPC,174A,Non-appearance in response to a proclamation under section 82 of Act 2 of 1974,BNS,209,"Non-appearance in response to a proclamation under section 84 of Bharatiya Nagarik Suraksha Sanhita, 2023",direct,"209: New punishment of ""as with community
 service"" is added in regard to proclamation
 under section 84(1)BNSS [82(1) CrPC]."
 IPC,175,Omission to produce document to public servant by person legally bound to produce it,BNS,210,Omission to produce document or electronic record to public servant by person legally bound to produce it,direct,"210: The upper limit of the fine has been increased
@@ -2133,15 +2133,15 @@ rupees. 329 (4): The IPC section is included as a sub-section in
 the BNS sans heading. The upper limit of the
 fine has been increased from one thousand to
 five thousand rupees."
-IPC,443,Lurking house-trespass,BNS,330,House-trespass and house- breaking,merged,"330 (1): IPC section is included as a sub-section. 330 (2): The IPC section is included as a sub-section in
+IPC,443,Lurking house-trespass,BNS,330,House-trespass and house-breaking,merged,"330 (1): IPC section is included as a sub-section. 330 (2): The IPC section is included as a sub-section in
 the BNS sans heading. Words ""any of such six
 ways"" are replaced with ""in any of the
 following ways""."
-IPC,445,House-breaking,BNS,330,House-trespass and house- breaking,merged,"330 (1): IPC section is included as a sub-section. 330 (2): The IPC section is included as a sub-section in
+IPC,445,House-breaking,BNS,330,House-trespass and house-breaking,merged,"330 (1): IPC section is included as a sub-section. 330 (2): The IPC section is included as a sub-section in
 the BNS sans heading. Words ""any of such six
 ways"" are replaced with ""in any of the
 following ways""."
-IPC,453,Punishment for lurking house-trespass or house-breaking,BNS,331,Punishment for house-trespass or house- breaking,merged,"331 (1): IPC section is included as a sub-section.
+IPC,453,Punishment for lurking house-trespass or house-breaking,BNS,331,Punishment for house-trespass or house-breaking,merged,"331 (1): IPC section is included as a sub-section.
 ""Lurking"" is dropped from heading. 331 (2): IPC section is included as a sub-section in
 BNS sans heading. ""by night' is replaced by
 after ""sunset and before sunrise"". 331 (3): IPC section is included as a sub-section in
@@ -2153,7 +2153,7 @@ BNS sans heading. ""by night"" is replaced by
 BNS sans heading. 331 (8): IPC section is included as a sub-section in
 BNS sans heading. ""by night"" is replaced by
 ""after sunset and before sunrise""."
-IPC,454,Lurking house-trespass or house-breaking in order to commit offence punishable with imprisonment,BNS,331,Punishment for house-trespass or house- breaking,merged,"331 (1): IPC section is included as a sub-section.
+IPC,454,Lurking house-trespass or house-breaking in order to commit offence punishable with imprisonment,BNS,331,Punishment for house-trespass or house-breaking,merged,"331 (1): IPC section is included as a sub-section.
 ""Lurking"" is dropped from heading. 331 (2): IPC section is included as a sub-section in
 BNS sans heading. ""by night' is replaced by
 after ""sunset and before sunrise"". 331 (3): IPC section is included as a sub-section in
@@ -2165,7 +2165,7 @@ BNS sans heading. ""by night"" is replaced by
 BNS sans heading. 331 (8): IPC section is included as a sub-section in
 BNS sans heading. ""by night"" is replaced by
 ""after sunset and before sunrise""."
-IPC,455,"Lurking house-trespass or house-breaking after preparation for hurt, assault or wrongful restraint",BNS,331,Punishment for house-trespass or house- breaking,merged,"331 (1): IPC section is included as a sub-section.
+IPC,455,"Lurking house-trespass or house-breaking after preparation for hurt, assault or wrongful restraint",BNS,331,Punishment for house-trespass or house-breaking,merged,"331 (1): IPC section is included as a sub-section.
 ""Lurking"" is dropped from heading. 331 (2): IPC section is included as a sub-section in
 BNS sans heading. ""by night' is replaced by
 after ""sunset and before sunrise"". 331 (3): IPC section is included as a sub-section in
@@ -2177,7 +2177,7 @@ BNS sans heading. ""by night"" is replaced by
 BNS sans heading. 331 (8): IPC section is included as a sub-section in
 BNS sans heading. ""by night"" is replaced by
 ""after sunset and before sunrise""."
-IPC,456,Punishment for lurking house-trespass or house-breaking by night,BNS,331,Punishment for house-trespass or house- breaking,merged,"331 (1): IPC section is included as a sub-section.
+IPC,456,Punishment for lurking house-trespass or house-breaking by night,BNS,331,Punishment for house-trespass or house-breaking,merged,"331 (1): IPC section is included as a sub-section.
 ""Lurking"" is dropped from heading. 331 (2): IPC section is included as a sub-section in
 BNS sans heading. ""by night' is replaced by
 after ""sunset and before sunrise"". 331 (3): IPC section is included as a sub-section in
@@ -2189,7 +2189,7 @@ BNS sans heading. ""by night"" is replaced by
 BNS sans heading. 331 (8): IPC section is included as a sub-section in
 BNS sans heading. ""by night"" is replaced by
 ""after sunset and before sunrise""."
-IPC,457,Lurking house-trespass or house-breaking by night in order to commit offence punishable with imprisonment,BNS,331,Punishment for house-trespass or house- breaking,merged,"331 (1): IPC section is included as a sub-section.
+IPC,457,Lurking house-trespass or house-breaking by night in order to commit offence punishable with imprisonment,BNS,331,Punishment for house-trespass or house-breaking,merged,"331 (1): IPC section is included as a sub-section.
 ""Lurking"" is dropped from heading. 331 (2): IPC section is included as a sub-section in
 BNS sans heading. ""by night' is replaced by
 after ""sunset and before sunrise"". 331 (3): IPC section is included as a sub-section in
@@ -2201,7 +2201,7 @@ BNS sans heading. ""by night"" is replaced by
 BNS sans heading. 331 (8): IPC section is included as a sub-section in
 BNS sans heading. ""by night"" is replaced by
 ""after sunset and before sunrise""."
-IPC,458,"Lurking house-trespass or house-breaking by night after preparation for hurt, assault, or wrongful restraint",BNS,331,Punishment for house-trespass or house- breaking,merged,"331 (1): IPC section is included as a sub-section.
+IPC,458,"Lurking house-trespass or house-breaking by night after preparation for hurt, assault, or wrongful restraint",BNS,331,Punishment for house-trespass or house-breaking,merged,"331 (1): IPC section is included as a sub-section.
 ""Lurking"" is dropped from heading. 331 (2): IPC section is included as a sub-section in
 BNS sans heading. ""by night' is replaced by
 after ""sunset and before sunrise"". 331 (3): IPC section is included as a sub-section in
@@ -2213,7 +2213,7 @@ BNS sans heading. ""by night"" is replaced by
 BNS sans heading. 331 (8): IPC section is included as a sub-section in
 BNS sans heading. ""by night"" is replaced by
 ""after sunset and before sunrise""."
-IPC,459,Grievous hurt caused whilst committing lurking house-trespass or house-breaking,BNS,331,Punishment for house-trespass or house- breaking,merged,"331 (1): IPC section is included as a sub-section.
+IPC,459,Grievous hurt caused whilst committing lurking house-trespass or house-breaking,BNS,331,Punishment for house-trespass or house-breaking,merged,"331 (1): IPC section is included as a sub-section.
 ""Lurking"" is dropped from heading. 331 (2): IPC section is included as a sub-section in
 BNS sans heading. ""by night' is replaced by
 after ""sunset and before sunrise"". 331 (3): IPC section is included as a sub-section in
@@ -2225,7 +2225,7 @@ BNS sans heading. ""by night"" is replaced by
 BNS sans heading. 331 (8): IPC section is included as a sub-section in
 BNS sans heading. ""by night"" is replaced by
 ""after sunset and before sunrise""."
-IPC,460,All persons jointly concerned in lurking house-trespass or house-breaking by night punishable where death or grievous hurt caused by one of them,BNS,331,Punishment for house-trespass or house- breaking,merged,"331 (1): IPC section is included as a sub-section.
+IPC,460,All persons jointly concerned in lurking house-trespass or house-breaking by night punishable where death or grievous hurt caused by one of them,BNS,331,Punishment for house-trespass or house-breaking,merged,"331 (1): IPC section is included as a sub-section.
 ""Lurking"" is dropped from heading. 331 (2): IPC section is included as a sub-section in
 BNS sans heading. ""by night' is replaced by
 after ""sunset and before sunrise"". 331 (3): IPC section is included as a sub-section in
@@ -2479,10 +2479,10 @@ IPC,267,Making or selling false weight or measure,BNS,,,removed,No counterpart l
 IPC,309,Attempt to commit suicide,BNS,,,removed,No counterpart listed in the BPRD correspondence table.
 IPC,310,Thug,BNS,,,removed,No counterpart listed in the BPRD correspondence table.
 IPC,311,Punishment,BNS,,,removed,No counterpart listed in the BPRD correspondence table.
-IPC,376DA,Punishment for gang rape on woman under sixteen years of age2,BNS,,,removed,No counterpart listed in the BPRD correspondence table.
+IPC,376DA,Punishment for gang rape on woman under sixteen years of age,BNS,,,removed,No counterpart listed in the BPRD correspondence table.
 IPC,377,Unnatural offences,BNS,,,removed,No counterpart listed in the BPRD correspondence table.
-IPC,379A,Snatching1,BNS,,,removed,No counterpart listed in the BPRD correspondence table.
-IPC,379B,Punishment for Snatching1,BNS,,,removed,No counterpart listed in the BPRD correspondence table.
+IPC,379A,Snatching,BNS,,,removed,No counterpart listed in the BPRD correspondence table.
+IPC,379B,Punishment for Snatching,BNS,,,removed,No counterpart listed in the BPRD correspondence table.
 IPC,444,Lurking house-trespass by night,BNS,,,removed,No counterpart listed in the BPRD correspondence table.
 IPC,446,House-breaking by night,BNS,,,removed,No counterpart listed in the BPRD correspondence table.
 IPC,478,(Repealed) Trade Mark,BNS,,,removed,No counterpart listed in the BPRD correspondence table.
@@ -2555,7 +2555,7 @@ years."
 CRPC,32,Mode of conferring powers,BNSS,26,Mode of conferring powers,direct,26: No change.
 CRPC,33,Powers of officers appointed,BNSS,27,Powers of officers appointed,direct,27: Ditto.
 CRPC,34,Withdrawal of powers,BNSS,28,Withdrawal of powers,direct,28: Ditto.
-CRPC,35,Powers of Judges and Magistrates exercisable by their successors-in-office,BNSS,29,Powers of Judges and Magistrates exercisable by their successors-in- office,direct,"29: The words ""Additional or Assistant session Judge"" are
+CRPC,35,Powers of Judges and Magistrates exercisable by their successors-in-office,BNSS,29,Powers of Judges and Magistrates exercisable by their successors-in-office,direct,"29: The words ""Additional or Assistant session Judge"" are
 excluded."
 CRPC,36,Powers of superior officers of police,BNSS,30,Powers of superior officers of police,direct,30: No change.
 CRPC,37,Public when to assist Magistrates and police,BNSS,31,Public when to assist Magistrates and police,direct,"31: The words ""railway, canal, telegraph or"" are excluded
@@ -2696,17 +2696,17 @@ sections of Indian Evidence Act, 1872 are replaced by the
 sections of the Bharatiya Sakshya Adhiniyam, 2023 , word
 ""telegram is excluded."
 CRPC,92,Procedure as to letters and telegrams,BNSS,95,Procedure as to letters,direct,"95: ""telegram"" and ""or telegraph"" words are excluded."
-CRPC,93,When search-warrant may be issued,BNSS,96,When search- warrant may be issued,direct,"96: The words ""or telegraph"" are excluded."
+CRPC,93,When search-warrant may be issued,BNSS,96,When search-warrant may be issued,direct,"96: The words ""or telegraph"" are excluded."
 CRPC,94,"Search of place suspected to contain stolen property, forged documents, etc",BNSS,97,"Search of place suspected to contain stolen property, forged documents, etc",direct,"97: In clause (a) of subsection (2), ""the Metal Token Act, 1889
 (1 of 1889)"" is replaced by ""the Coinage Act, 2011 (11 of
 2011)."" BNS sections replace the corresponding ""IPC""
 s ections."
-CRPC,95,Power to declare certain publications forfeited and to issue search-warrants for the same,BNSS,98,Power to declare certain publications forfeited and to issue search- warrants for same,direct,98: BNS sections replace corresponding IPC Sections.
+CRPC,95,Power to declare certain publications forfeited and to issue search-warrants for the same,BNSS,98,Power to declare certain publications forfeited and to issue search-warrants for same,direct,98: BNS sections replace corresponding IPC Sections.
 CRPC,96,Application to High Court to set aside declaration of forfeiture,BNSS,99,Application to High Court to set aside declaration of forfeiture,direct,99: No change.
 CRPC,97,Search for persons wrongfully confined,BNSS,100,Search for persons wrongfully confined,direct,100: No change.
 CRPC,98,Power to compel restoration of abducted females,BNSS,101,Power to compel restoration of abducted females,direct,"101: The words ""under the age of eighteen years"" and ""husband""
 are excluded."
-CRPC,99,"Direction, etc., of search-warrants",BNSS,102,"Direction, etc., of search- warrants",direct,102: No change.
+CRPC,99,"Direction, etc., of search-warrants",BNSS,102,"Direction, etc., of search-warrants",direct,102: No change.
 CRPC,100,Persons in charge of closed place to allow search,BNSS,103,Persons in charge of closed place to allow search,direct,"103: In subsection (8) BNS sections replaces corresponding IPC
 sections."
 CRPC,101,Disposal of things found in search beyond jurisdiction,BNSS,104,Disposal of things found in search beyond jurisdiction,direct,104: No change.
@@ -2814,7 +2814,7 @@ made punishable for three years or more but less than seven
 years"".In subsection (4), the words ""failing which such
 aggrieved person may make an application to the
 Magistrate."" are added."
-CRPC,155,Information as to non-cognizable cases and investigation of such cases,BNSS,174,Information as to non- cognizable cases and investigation of such cases,direct,"174: Clause (ii) in subsection (1) is added regarding forwarding
+CRPC,155,Information as to non-cognizable cases and investigation of such cases,BNSS,174,Information as to non-cognizable cases and investigation of such cases,direct,"174: Clause (ii) in subsection (1) is added regarding forwarding
 the daily diary report of non-cognizable cases fortnightly to
 the Magistrate."
 CRPC,156,Police officer's power to investigate cognizable cases,BNSS,175,Police officer's power to investigate cognizable case,direct,"175: A new proviso to subsection (1) is added. Sub-section (4) is
@@ -2858,7 +2858,7 @@ electronic means. Subsection (5) of 185 of BNSS provides
 that the copies of record made under SubsSection (1) or
 (3) shall forthwith, but not later than 48 hours, be sent to
 Magistrate."
-CRPC,166,When officer in charge of police station may require another to issue search-warrant,BNSS,186,When officer in charge of police station may require another to issue search- warrant,direct,186: No change.
+CRPC,166,When officer in charge of police station may require another to issue search-warrant,BNSS,186,When officer in charge of police station may require another to issue search-warrant,direct,186: No change.
 CRPC,167,Procedure when investigation cannot be completed in twenty-four hours,BNSS,187,Procedure when investigation cannot be completed in twenty-four hours,direct,"187: A new insertion into Subsection (2) of Section 187 of BNSS
 provides that the Magistrate to whom an accused person is
 forwarded under this section may, irrespective of whether
@@ -2953,7 +2953,7 @@ replaces ""person under the age of 18 years"", ""is an idiot, or
 a lunatic"" is replaced by ""is of unsound mind or is having
 intellectual disability requiring higher support needs""."
 CRPC,198A,Prosecution of offences under section 498A of the Indian Penal Code,BNSS,220,"Prosecution of offences under section 85 of Bharatiya Nyaya Sanhita, 2023",direct,220: No change.
-CRPC,198B,Cognizance of offence1,BNSS,221,Cognizance of offence,direct,221: No change.
+CRPC,198B,Cognizance of offence,BNSS,221,Cognizance of offence,direct,221: No change.
 CRPC,199,Prosecution for defamation,BNSS,222,Prosecution for defamation,direct,"222: BNS Chapters and sections replace corresponding IPC
 Chapters and sections.
 ""child"" replaces ""under the age of eighteen years "" or is of
@@ -3104,7 +3104,7 @@ to be present"" are added.
 ""pleader"" is replaced by ""advocate""."
 CRPC,257,Withdrawal of complaint,BNSS,280,Withdrawal of complaint,direct,280: No change.
 CRPC,258,Power to stop proceedings in certain cases,BNSS,281,Power to stop proceedings in certain cases,direct,281: No change.
-CRPC,259,Power of Court to convert summons-cases into warrant cases,BNSS,282,Power of Court to convert summons- cases into warrant-cases,direct,282: No change.
+CRPC,259,Power of Court to convert summons-cases into warrant cases,BNSS,282,Power of Court to convert summons-cases into warrant-cases,direct,282: No change.
 CRPC,260,Power to try summarily,BNSS,283,Power to try summarily,direct,"283: BNS sections replace Corresponding IPC sections. Sub
 section (2) is newly added with a proviso to it for trial of
 offences punishable with three or less than three years in a
@@ -3137,7 +3137,7 @@ CRPC,265H,Power of the Court in plea bargaining,BNSS,296,Power of Court in plea 
 CRPC,265,Language of record and judgment,BNSS,297,Period of detention undergone by accused to be set off against sentence of imprisonment,split,297: No change.
 CRPC,265J,Savings,BNSS,298,Savings,direct,298: No change.
 CRPC,265K,Statements of accused not to be used,BNSS,299,Statements of accused not to be used,direct,299: No change.
-CRPC,265L,Non-application of the Chapter,BNSS,300,Non- application of Chapter,direct,300: No change.
+CRPC,265L,Non-application of the Chapter,BNSS,300,Non-application of Chapter,direct,300: No change.
 CRPC,266,Definitions,BNSS,301,Definitions,direct,301: No change.
 CRPC,267,Power to require attendance of prisoners,BNSS,302,Power to require attendance of prisoners,direct,"302: The words ""as the case may be"" are excluded."
 CRPC,268,Power of State Government to exclude certain persons from operation of section 267,BNSS,303,Power of State Government or Central Government to exclude certain persons from operation of section 302,direct,"303: ""or Central Government"" is added in the heading and other
@@ -3151,7 +3151,7 @@ CRPC,272,Language of Courts,BNSS,307,Language of Courts,direct,307: No change.
 CRPC,273,Evidence to be taken in presence of accused,BNSS,308,Evidence to be taken in presence of accused,direct,"308: The words ""through audio-video electronic means at the
 designated place to be notified by the State Government""
 are added."
-CRPC,274,Record in summons-cases and inquiries,BNSS,309,Record in summons- cases and inquiries,direct,309: No change.
+CRPC,274,Record in summons-cases and inquiries,BNSS,309,Record in summons-cases and inquiries,direct,309: No change.
 CRPC,275,Record in warrant-cases,BNSS,310,Record in warrant-cases,direct,310: No change.
 CRPC,276,Record in trial before Court of Session,BNSS,311,Record in trial before Court of Session,direct,311: No change.
 CRPC,277,Language of record of evidence,BNSS,312,Language of record of evidence,direct,312: No change.
@@ -3287,7 +3287,7 @@ CRPC,346,Procedure where Court considers that case should not be dealt with unde
 CRPC,347,When Registrar or Sub-Registrar to be deemed a Civil Court,BNSS,386,When Registrar or Sub-Registrar to be deemed a Civil Court,direct,386: No change.
 CRPC,348,Discharge of offender on submission of apology,BNSS,387,Discharge of offender on submission of apology,direct,387: No change.
 CRPC,349,Imprisonment or committal of person refusing to answer or produce document,BNSS,388,Imprisonment or committal of person refusing to answer or produce document,direct,388: No change.
-CRPC,350,Summary procedure for punishment for non-attendance by a witness in obedience to summons,BNSS,389,Summary procedure for punishment for non- attendance by a witness in obedience to summons,direct,"389: The fine increased to ""five hundred rupees"" from "" One
+CRPC,350,Summary procedure for punishment for non-attendance by a witness in obedience to summons,BNSS,389,Summary procedure for punishment for non-attendance by a witness in obedience to summons,direct,"389: The fine increased to ""five hundred rupees"" from "" One
 hundred rupees""."
 CRPC,351,"Appeals from convictions under sections 344, 345, 349 and 350",BNSS,390,"Appeals from convictions under sections 383, 384, 388 and 389",direct,390: No change.
 CRPC,352,Certain Judges and Magistrates not to try certain offences when committed before themselves,BNSS,391,Certain Judges and Magistrates not to try certain offences when committed before themselves,direct,391: No change.
@@ -3302,12 +3302,12 @@ CRPC,354,Language and contents of judgment,BNSS,393,Language and contents of jud
 CRPC,356,Order for notifying address of previously convicted offender,BNSS,394,Order for notifying address of previously convicted offender,direct,394: Reframing of phrases without any change in essence.
 CRPC,357,Order to pay compensation,BNSS,395,Order to pay compensation,direct,395: No change.
 CRPC,357A,Victim compensation scheme,BNSS,396,Victim compensation scheme,merged,396: No change.
-CRPC,357B,Compensation to be in addition to fine under Section 326A or Section 376D of Indian Penal Code1,BNSS,396,Victim compensation scheme,merged,396: No change.
-CRPC,357C,Treatment of victims1,BNSS,397,Treatment of victims,direct,"397: BNS sections replace corresponding IPC sections. ""under
+CRPC,357B,Compensation to be in addition to fine under Section 326A or Section 376D of Indian Penal Code,BNSS,396,Victim compensation scheme,merged,396: No change.
+CRPC,357C,Treatment of victims,BNSS,397,Treatment of victims,direct,"397: BNS sections replace corresponding IPC sections. ""under
 sections 4, 6, 8 or section 10 of the Protection of Children
 from Sexual Offences Act, 2012 "" is added."
 CRPC,358,Compensation to persons groundlessly arrested,BNSS,399,Compensation to persons groundlessly arrested,direct,399: No change.
-CRPC,359,Order to pay costs in non-cognizable cases,BNSS,400,Order to pay costs in non- cognizable cases,direct,"400: ""pleader"" is replaced by ""advocate""."
+CRPC,359,Order to pay costs in non-cognizable cases,BNSS,400,Order to pay costs in non-cognizable cases,direct,"400: ""pleader"" is replaced by ""advocate""."
 CRPC,360,Order to release on probation of good conduct or after admonition,BNSS,401,Order to release on probation of good conduct or after admonition,direct,"401: The words ""with or without sureties"" are excluded ""or bail
 bond"" are added. 'the Children Act 1960 (60 of 1960)"" is
 replaced by ""The Juvenile Justice (Care and Protection of
@@ -3467,7 +3467,7 @@ rupees""."
 CRPC,460,Irregularities which do not vitiate proceedings,BNSS,506,Irregularities which do not vitiate proceedings,direct,506: No change.
 CRPC,461,Irregularities which vitiate proceedings,BNSS,507,Irregularities which vitiate proceedings,direct,"507: The words ""or telegraph"" are excluded."
 CRPC,462,Proceedings in wrong place,BNSS,508,Proceedings in wrong place,direct,508: No change.
-CRPC,463,Non-compliance with provisions of section 164 or section 281,BNSS,509,Non- compliance with provisions of section 183 or section 316,direct,509: No change.
+CRPC,463,Non-compliance with provisions of section 164 or section 281,BNSS,509,Non-compliance with provisions of section 183 or section 316,direct,509: No change.
 CRPC,464,"Effect of omission to frame, or absence of, or error in, charge",BNSS,510,"Effect of omission to frame, or absence of, or error in, charge",direct,510: No change.
 CRPC,465,"Finding or sentence when reversible by reason of error, omission or irregularity",BNSS,511,"Finding or sentence when reversible by reason of error, omission or irregularity",direct,511: No change.
 CRPC,466,Defect or error not to make attachment unlawful,BNSS,512,Defect or error not to make attachment unlawful,direct,512: Ditto.
@@ -3503,7 +3503,7 @@ In sub-section (3), the word ""prescribed"" is replaced by
 ""specified"". The word ""old"" is replaced by ""said"" at many
 places in this section."
 ,,,BNSS,86,Identification and attachment of property of proclaimed person,new_provision,86: Newly added.
-,,,BNSS,105,Recording of search and seizure through audio- video electronic means,new_provision,"105: ""The process of conducting search of a place or taking
+,,,BNSS,105,Recording of search and seizure through audio-video electronic means,new_provision,"105: ""The process of conducting search of a place or taking
 possession of any property ,article or thing under this
 Chapter or under section 185, including preparation of the
 list of all things seized in the course of such search and
@@ -3779,7 +3779,7 @@ similar to the new explanation added in the
 preceding section."
 IEA,83,Presumption as to maps or plans made by authority of Government,BSA,82,Presumption as to maps or plans made by authority of Government,direct,82: No change.
 IEA,84,Presumption as to collections of laws and reports of decisions,BSA,83,Presumption as to collections of laws and reports of decisions,direct,83: No change.
-IEA,85,Presumption as to power-of-attorney,BSA,84,Presumption as to powers- of-attorney,direct,84: No change.
+IEA,85,Presumption as to power-of-attorney,BSA,84,Presumption as to powers-of-attorney,direct,84: No change.
 IEA,85A,Presumption as to electronic agreements,BSA,85,Presumption as to electronic agreements,direct,"85: The words ""or digitals"" are added."
 IEA,85B,Presumption as to electronic records and digital signatures,BSA,86,Presumption as to electronic records and electronic signatures,direct,86: No change.
 IEA,85C,Presumption as to Digital Signature Certificates,BSA,87,Presumption as to Electronic Signature Certificates,direct,87: No change.
@@ -3891,7 +3891,7 @@ IEA,138,Order of examinations,BSA,143,Order of examinations,direct,"143: Paragra
 (3), and word ""in-chief"" included.
 The words in paragraph heading ""Direction of re-
 examination"" are excluded."
-IEA,139,Cross-examination of person called to produce a document,BSA,144,Cross- examination of person called to produce a document,direct,144: No change.
+IEA,139,Cross-examination of person called to produce a document,BSA,144,Cross-examination of person called to produce a document,direct,144: No change.
 IEA,140,Witnesses to character,BSA,145,Witnesses to character,direct,145: No change.
 IEA,141,Leading questions,BSA,146,Leading questions,merged,"146(1): Section 141 IEA is included as subsection (1) of 146
 BSA. 146(2)
@@ -3909,8 +3909,8 @@ BSA. 146(2)
 (3) of 146 BSA. 146(4): Section 143 IEA is included as subsection (4) of 146
 BSA."
 IEA,144,Evidence as to matters in writing,BSA,147,Evidence as to matters in writing,direct,147: No change.
-IEA,145,Cross-examination as to previous statements in writing,BSA,148,Cross- examination as to previous statements in writing,direct,148: No change.
-IEA,146,Questions lawful in cross-examination,BSA,149,Questions lawful in cross- examination,direct,"149: Numbers (1), (2) and (3) are replaced by (a), (b) and
+IEA,145,Cross-examination as to previous statements in writing,BSA,148,Cross-examination as to previous statements in writing,direct,148: No change.
+IEA,146,Questions lawful in cross-examination,BSA,149,Questions lawful in cross-examination,direct,"149: Numbers (1), (2) and (3) are replaced by (a), (b) and
 (c ). IPC sections are replaced by corresponding
 BNS sections."
 IEA,147,When witness to be compelled to answer,BSA,150,When witness to be compelled to answer,direct,150: No change.

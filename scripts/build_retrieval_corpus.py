@@ -23,11 +23,12 @@ from __future__ import annotations
 import csv
 import json
 import os
+import re
 import sys
 from collections import defaultdict
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from lawlib import PROCESSED, RAW, clean_text, write_jsonl
+from lawlib import PROCESSED, RAW, clean_text, load_old_act, write_jsonl
 
 ACT_LONG = {
     "BNS": "BNS 2023", "BNSS": "BNSS 2023", "BSA": "BSA 2023",
@@ -36,6 +37,8 @@ ACT_LONG = {
 
 NEW_ACTS = {"BNS": "bns", "BNSS": "bnss", "BSA": "bsa"}
 OLD_ACTS = {"IPC": "ipc", "CRPC": "crpc", "IEA": "evidence_act"}
+
+MHA_BNSS_URL = ("https://www.mha.gov.in/sites/default/files/2024-04/250884_2_english_01042024.pdf")
 
 IN_FORCE_NOTE = ("The new criminal codes came into force on 1 July 2024. Offences "
                  "committed on or after that date are dealt with under the new codes; "
@@ -66,9 +69,11 @@ def statute_chunks(fwd, rev):
     rows = []
     for act, folder in list(NEW_ACTS.items()) + list(OLD_ACTS.items()):
         is_new = act in NEW_ACTS
-        fname = "sections.json" if is_new else "devgan_sections.json"
-        path = os.path.join(RAW, folder, fname)
-        blob = json.load(open(path, encoding="utf-8"))
+        if is_new:
+            blob = json.load(open(os.path.join(RAW, folder, "sections.json"),
+                                  encoding="utf-8"))
+        else:
+            blob = {"sections": load_old_act(act)}
         # For the new codes the gazette margin lost a couple of headings; take
         # those from the devgan pass so no chunk is left unlabelled.
         fallback = {}
@@ -172,6 +177,87 @@ def case_chunks():
     return rows
 
 
+def schedule_chunks():
+    """BNSS First Schedule rows, grouped one chunk per BNS section.
+
+    462 Part I entries cover 288 sections, because a section can be classified
+    several ways depending on the circumstances. Emitting one chunk per entry
+    would put near-identical chunks in the index and split an answer across
+    them, so all entries for a section travel together - the same reasoning
+    that merged multi-topic judgments into one chunk each.
+    """
+    path = os.path.join(PROCESSED, "bnss_schedule.csv")
+    if not os.path.exists(path):
+        print("  (no schedule yet - run scripts/build_bnss_schedule.py)")
+        return []
+
+    rows = list(csv.DictReader(open(path, encoding="utf-8")))
+    titles = {}
+    for s in json.load(open(os.path.join(RAW, "bns", "sections.json"),
+                            encoding="utf-8"))["sections"]:
+        titles[s["section"]] = s["title"]
+
+    by_section: dict[str, list[dict]] = defaultdict(list)
+    part2: list[dict] = []
+    for r in rows:
+        if r["part"] == "II":
+            part2.append(r)
+            continue
+        m = re.match(r"^(\d+[A-Z]?)", r["section_ref"])
+        if m:
+            by_section[m.group(1)].append(r)
+
+    out = []
+    for sec, entries in sorted(by_section.items(), key=lambda kv: int(re.match(r"\d+", kv[0]).group())):
+        title = titles.get(sec, "")
+        head = f"BNSS First Schedule - classification of the offence under BNS Section {sec}"
+        if title:
+            head += f" ({title})"
+        lines = [head, ""]
+        for e in entries:
+            lines.append(
+                f"Section {e['section_ref']} - {e['offence_description']} "
+                f"Punishment: {e['punishment']} "
+                f"{e['cognizable']}. {e['bailable']}. Triable by: {e['triable_by']}.")
+        out.append({
+            "chunk_id": f"schedule_bns_{sec.lower()}",
+            "doc_type": "schedule",
+            "source": f"BNSS 2023, First Schedule (BNS Section {sec})",
+            "act": "BNSS",
+            "section": sec,
+            "section_title": title,
+            "chapter_no": None,
+            "chapter_title": "First Schedule - Classification of Offences",
+            "in_force_from": "2024-07-01",
+            "status": "in force",
+            "equivalent_sections": [],
+            "text": clean_text("\n".join(lines)),
+            "source_url": MHA_BNSS_URL,
+        })
+
+    if part2:
+        lines = ["BNSS First Schedule, Part II - classification of offences against other laws",
+                 "",
+                 "Where an offence is created by an Act other than the Bharatiya Nyaya "
+                 "Sanhita, it is classified by the punishment it carries:"]
+        for e in part2:
+            lines.append(f"{e['offence_description']} {e['cognizable']}. "
+                         f"{e['bailable']}. Triable by: {e['triable_by']}.")
+        out.append({
+            "chunk_id": "schedule_other_laws",
+            "doc_type": "schedule",
+            "source": "BNSS 2023, First Schedule, Part II",
+            "act": "BNSS", "section": "", "section_title": "Offences against other laws",
+            "chapter_no": None,
+            "chapter_title": "First Schedule - Classification of Offences",
+            "in_force_from": "2024-07-01", "status": "in force",
+            "equivalent_sections": [],
+            "text": clean_text("\n".join(lines)),
+            "source_url": MHA_BNSS_URL,
+        })
+    return out
+
+
 def transition_chunks():
     """A handful of chunks about the transition itself.
 
@@ -202,7 +288,8 @@ def transition_chunks():
 
 def main() -> None:
     fwd, rev = load_equivalents()
-    rows = statute_chunks(fwd, rev) + case_chunks() + transition_chunks()
+    rows = (statute_chunks(fwd, rev) + schedule_chunks()
+            + case_chunks() + transition_chunks())
 
     out = os.path.join(PROCESSED, "retrieval_corpus.jsonl")
     n = write_jsonl(out, rows)

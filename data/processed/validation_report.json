@@ -77,31 +77,33 @@
       "total_disagreements": 12
     },
     "corpus": {
-      "chunks": 2486,
+      "chunks": 2819,
       "by_type": {
-        "statute": 2311,
+        "statute": 2355,
+        "schedule": 289,
         "case_law": 174,
         "reference": 1
       },
-      "median_chars": 682,
+      "median_chars": 643,
       "max_chars": 13433,
-      "with_equivalents": 2391
+      "with_equivalents": 2432
     },
     "finetune": {
-      "pairs": 13252,
+      "pairs": 14524,
       "by_qa_type": {
+        "section_text": 4702,
         "old_to_new": 2444,
-        "section_text": 4614,
-        "punishment": 1150,
-        "new_to_old": 2076,
-        "section_lookup": 2279,
-        "new_provision": 42,
+        "section_lookup": 2322,
+        "offence_classification": 1122,
         "transition": 78,
+        "new_to_old": 2076,
+        "case_law": 406,
         "removed": 152,
-        "scope": 10,
-        "case_law": 407
+        "punishment": 1170,
+        "new_provision": 42,
+        "scope": 10
       },
-      "median_answer_chars": 221
+      "median_answer_chars": 214
     },
     "case_law": {
       "cases": 201,
@@ -139,6 +141,26 @@
         "circumstantial_evidence": 7
       },
       "thin_topics": []
+    },
+    "schedule": {
+      "part1": 462,
+      "part2": 3,
+      "distinct_sections": 288
+    },
+    "confusion": {
+      "entries": 44,
+      "by_kind": {
+        "collision": 14,
+        "merged": 14,
+        "split": 5,
+        "removed": 10,
+        "transition": 1
+      }
+    },
+    "splits": {
+      "train": 11751,
+      "val": 1369,
+      "test": 676
     }
   }
 }

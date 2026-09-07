@@ -23,14 +23,15 @@ Usage:  python scripts/scrape_acts.py [--only bns,ipc,...] [--force]
 from __future__ import annotations
 
 import argparse
+import functools
 import json
 import os
 import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from lawlib import (RAW, clean_text, fetch, page_lines, render_smallcaps, roman_to_int,
-                    strip_html, write_json)
+from lawlib import (RAW, clean_text, fetch, join_wrapped, page_lines, render_smallcaps,
+                    roman_to_int, strip_html, write_json)
 
 # ---------------------------------------------------------------- source map
 
@@ -115,7 +116,8 @@ def _margin_blocks(margin_lines):
         else:
             blocks.append([ln])
     return [
-        {"top": b[0].top, "text": clean_text(" ".join(l.text for l in b))}
+        {"top": b[0].top,
+         "text": clean_text(functools.reduce(join_wrapped, (l.text for l in b), ""))}
         for b in blocks
     ]
 
@@ -259,6 +261,7 @@ def parse_devgan(slug: str, n_chapters: int, force: bool = False) -> list[dict]:
     anchors followed by a `<div class='sectxt'>` body.
     """
     sections: list[dict] = []
+    seen_nums: set[str] = set()
     folder = FOLDER.get(slug, slug)
     for ch in range(1, n_chapters + 1):
         url = f"https://devgan.in/{slug}/chapter_{ch:02d}.php"
@@ -280,15 +283,19 @@ def parse_devgan(slug: str, n_chapters: int, force: bool = False) -> list[dict]:
         for i in range(1, len(parts), 2):
             num = parts[i]
             chunk = parts[i + 1]
-            # The chunk opens with the section number still inside the anchor.
-            # Trust that displayed number over the anchor's name attribute: the
-            # IPC pages give both section 29 and section 29A the anchor "s29",
-            # which would otherwise collapse the two into one record.
+            # The chunk opens with the section number again, inside the anchor.
+            # The two disagree twice in the IPC and each field is wrong once:
+            # sections 29 and 29A share the anchor "s29", while 489A is
+            # displayed as "498A". Take the anchor, and fall back to the
+            # displayed number only when the anchor is already spoken for.
             nm = re.match(r"\s*([0-9]+[A-Za-z]{0,2})\s*</a>", chunk)
-            if nm:
+            if num in seen_nums and nm:
                 num = nm.group(1)
+            seen_nums.add(num)
             tm = re.match(r"[^<]*</a>\s*(?::-|&#8211;|&ndash;|–|-)?\s*(.*?)</h2>", chunk, re.S)
             title = strip_html(tm.group(1)) if tm else ""
+            # Footnote markers ride along on some headings ("Rape1").
+            title = re.sub(r"(?<=[a-z])\d$", "", title)
             bm = re.search(r"""<div class=["']sectxt["'][^>]*>(.*?)</div>""", chunk, re.S)
             body_html = bm.group(1) if bm else ""
 

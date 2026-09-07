@@ -203,6 +203,20 @@ def render_smallcaps(words) -> str:
     return " ".join(out)
 
 
+def join_wrapped(acc: str, piece: str) -> str:
+    """Append wrapped text, respecting a word broken across the wrap.
+
+    Both the margin headings and the First Schedule columns wrap, and a word
+    broken at the wrap keeps its hyphen. Joining with a space would yield
+    'non- treatment' where the gazette says 'non-treatment'.
+    """
+    if not acc:
+        return piece
+    if acc.endswith("-"):
+        return acc + piece
+    return acc + " " + piece
+
+
 ROMAN = {
     "I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000,
 }
@@ -266,6 +280,48 @@ def strip_html(s: str) -> str:
 
     s = _html.unescape(s)
     return clean_text(s)
+
+
+OLD_ACT_FOLDER = {"IPC": "ipc", "CRPC": "crpc", "IEA": "evidence_act"}
+
+
+def load_old_act(act: str) -> list[dict]:
+    """Sections of a repealed code, from both compilations.
+
+    devgan.in is the text of record because its section text is cleaner, but it
+    is not complete: it has no entry for IPC 120A and 120B (criminal
+    conspiracy), IPC 171A-171I, CrPC 105A-105L or a few others. Those gaps are
+    filled from the civictech-India JSON, and each section records which source
+    it came from so the provenance survives into the datasets.
+    """
+    folder = OLD_ACT_FOLDER[act]
+    out: dict[str, dict] = {}
+
+    dev = os.path.join(RAW, folder, "devgan_sections.json")
+    if os.path.exists(dev):
+        blob = json.load(open(dev, encoding="utf-8"))
+        for s in blob["sections"]:
+            s = dict(s)
+            s["source"] = "devgan.in"
+            out[str(s["section"]).upper()] = s
+
+    civ = os.path.join(RAW, folder, "civictech_sections.json")
+    if os.path.exists(civ):
+        blob = json.load(open(civ, encoding="utf-8"))
+        for s in blob["sections"]:
+            key = str(s["section"]).upper()
+            if key in out or not clean_text(str(s.get("text", ""))):
+                continue
+            s = dict(s)
+            s["source"] = "civictech-India"
+            s["source_url"] = blob.get("source_url", "")
+            out[key] = s
+
+    def sort_key(k: str):
+        m = re.match(r"^(\d+)([A-Z]*)$", k)
+        return (int(m.group(1)), m.group(2)) if m else (10 ** 9, k)
+
+    return [out[k] for k in sorted(out, key=sort_key)]
 
 
 def write_jsonl(path: str, rows) -> int:

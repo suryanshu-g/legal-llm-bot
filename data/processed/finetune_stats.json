@@ -1,17 +1,18 @@
 {
-  "total": 13252,
+  "total": 14524,
   "by_qa_type": {
+    "section_text": 4702,
     "old_to_new": 2444,
-    "section_text": 4614,
-    "punishment": 1150,
-    "new_to_old": 2076,
-    "section_lookup": 2279,
-    "new_provision": 42,
+    "section_lookup": 2322,
+    "offence_classification": 1122,
     "transition": 78,
+    "new_to_old": 2076,
+    "case_law": 406,
     "removed": 152,
-    "scope": 10,
-    "case_law": 407
+    "punishment": 1170,
+    "new_provision": 42,
+    "scope": 10
   },
-  "dropped_exact_duplicates": 208,
+  "dropped_exact_duplicates": 210,
   "dropped_duplicate_pairs": 0
 }

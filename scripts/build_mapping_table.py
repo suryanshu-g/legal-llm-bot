@@ -40,7 +40,7 @@ import sys
 from collections import defaultdict
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from lawlib import PROCESSED, RAW, clean_text
+from lawlib import PROCESSED, RAW, clean_text, load_old_act
 
 # file stem -> (new act, old act, column order after compacting empty cells)
 CONCORDANCES = {
@@ -214,30 +214,21 @@ def load_titles() -> dict[tuple[str, str], str]:
                 if s["title"] and not titles.get(key):
                     titles[key] = s["title"]
 
-    for act, folder in OLD_ACT_FOLDER.items():
-        for fname in ("devgan_sections.json", "civictech_sections.json"):
-            path = os.path.join(RAW, folder, fname)
-            if not os.path.exists(path):
-                continue
-            for s in json.load(open(path, encoding="utf-8"))["sections"]:
-                key = (act, str(s["section"]).upper())
-                if s["title"] and not titles.get(key):
-                    titles[key] = s["title"]
+    for act in OLD_ACT_FOLDER:
+        for s in load_old_act(act):
+            key = (act, str(s["section"]).upper())
+            if s["title"] and not titles.get(key):
+                titles[key] = s["title"]
     return titles
 
 
 def old_universe(act: str) -> set[str]:
     """Every section number the old act actually contains."""
-    folder = OLD_ACT_FOLDER[act]
     seen: set[str] = set()
-    for fname in ("devgan_sections.json", "civictech_sections.json"):
-        path = os.path.join(RAW, folder, fname)
-        if not os.path.exists(path):
-            continue
-        for s in json.load(open(path, encoding="utf-8"))["sections"]:
-            n = norm_section(str(s["section"]))
-            if n:
-                seen.add(n)
+    for s in load_old_act(act):
+        n = norm_section(str(s["section"]))
+        if n:
+            seen.add(n)
     return seen
 
 

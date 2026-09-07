@@ -1,0 +1,87 @@
+{
+  "seed": 20240701,
+  "ratio": {
+    "train": 0.85,
+    "val": 0.1,
+    "test": 0.05
+  },
+  "groups": {
+    "total": 1356,
+    "held_out": 41,
+    "splittable": 1315,
+    "per_split": {
+      "train": 1118,
+      "val": 132,
+      "test": 65
+    }
+  },
+  "rows": {
+    "train": 11751,
+    "val": 1369,
+    "test": 676
+  },
+  "row_share": {
+    "train": 85.18,
+    "val": 9.92,
+    "test": 4.9
+  },
+  "held_out_rows": 728,
+  "qa_type_by_split": {
+    "train": {
+      "punishment": 890,
+      "removed": 112,
+      "section_text": 3824,
+      "section_lookup": 1888,
+      "new_to_old": 1706,
+      "old_to_new": 1978,
+      "offence_classification": 895,
+      "case_law": 346,
+      "transition": 67,
+      "new_provision": 36,
+      "scope": 9
+    },
+    "val": {
+      "old_to_new": 230,
+      "section_lookup": 221,
+      "section_text": 446,
+      "punishment": 104,
+      "case_law": 40,
+      "offence_classification": 102,
+      "new_to_old": 202,
+      "removed": 12,
+      "new_provision": 4,
+      "transition": 7,
+      "scope": 1
+    },
+    "test": {
+      "section_text": 220,
+      "offence_classification": 50,
+      "old_to_new": 114,
+      "case_law": 20,
+      "punishment": 52,
+      "new_to_old": 100,
+      "section_lookup": 109,
+      "transition": 3,
+      "removed": 6,
+      "new_provision": 2
+    }
+  },
+  "qa_type_flags": [
+    [
+      "scope",
+      "test",
+      0.1,
+      0.0
+    ]
+  ],
+  "confusion_set": {
+    "size": 44,
+    "by_kind": {
+      "collision": 14,
+      "merged": 14,
+      "split": 5,
+      "removed": 10,
+      "transition": 1
+    }
+  }
+}
