@@ -43,7 +43,9 @@ what is wrong with it. [`PROJECT_BRIEF.md`](PROJECT_BRIEF.md) holds the full
 project context.
 
 - **Phase 2** — fine-tune Flan-T5-base on Colab (T4, ≤25 epochs) using
-  `train.jsonl` and `val.jsonl`.
+  `train.jsonl` and `val.jsonl`. Notebook ready at
+  [`notebooks/finetune_flan_t5.ipynb`](notebooks/finetune_flan_t5.ipynb);
+  set `REPO_URL` in its settings cell and run on a T4.
 - **Phase 3** — FAISS retrieval layer over `retrieval_corpus.jsonl`.
 - **Phase 4** — run `confusion_test_set.jsonl` against both this bot and a
   general-purpose LLM to test the core claim; paper and video.
@@ -66,6 +68,8 @@ data/
     train.jsonl / val.jsonl / test.jsonl   group-level split, no fact straddles
     confusion_test_set.jsonl    held-out old-vs-new questions for Phase 4
     retrieval_corpus.jsonl      one chunk per section, schedule entry or judgment
+    train_index.jsonl / val_index.jsonl / test_index.jsonl
+                                aligned qa_type per split row, for per-type metrics
     split_report.json           split sizes and qa_type balance
     validation_report.json      output of the validation run
   DATA_REPORT.md
@@ -79,7 +83,8 @@ scripts/
   build_retrieval_corpus.py build the RAG corpus
   build_splits.py           group-level splits + confusion set
   validate_data.py          checks; non-zero exit on failure
-notebooks/                  Phase 2 onward
+notebooks/
+  finetune_flan_t5.ipynb    Phase 2: fine-tune, evaluate, save the model
 ```
 
 ## Reproducing the datasets

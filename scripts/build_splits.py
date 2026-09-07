@@ -418,6 +418,14 @@ def main() -> None:
         rng.shuffle(buckets[split])
         write_jsonl(os.path.join(PROCESSED, f"{split}.jsonl"),
                     [rows[i] for i in buckets[split]])
+        # An aligned index per split, so evaluation can break metrics down by
+        # question type. The split files themselves stay at exactly the
+        # instruction/input/output schema a training loader expects.
+        write_jsonl(os.path.join(PROCESSED, f"{split}_index.jsonl"),
+                    [{"qa_type": index[i]["qa_type"],
+                      "source_chunk_id": index[i]["source_chunk_id"],
+                      "group": group_of[index[i]["source_chunk_id"]]}
+                     for i in buckets[split]])
 
     write_jsonl(os.path.join(PROCESSED, "confusion_test_set.jsonl"), confusion)
 

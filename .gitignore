@@ -15,6 +15,23 @@ env/
 data/raw/*/devgan_chapter_*.html
 data/raw/case_law/*.html
 
+# Model artefacts. Fine-tuned weights do not belong in git - a flan-t5-base
+# checkpoint is ~1GB and git stores every revision of it forever. The trained
+# model goes to the Hugging Face Hub or Google Drive instead; see
+# notebooks/finetune_flan_t5.ipynb.
+models/
+outputs/
+checkpoint-*/
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.ckpt
+*.h5
+*.onnx
+runs/
+wandb/
+
 # OS / editor
 .DS_Store
 Thumbs.db
