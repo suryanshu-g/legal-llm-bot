@@ -455,7 +455,7 @@ def main() -> None:
         index.append({"qa_type": kind, "source_chunk_id": src,
                       "instruction_chars": len(q), "output_chars": len(a)})
 
-    rng.shuffle_pairs = None
+    # Shuffle dataset and index together so the two files stay aligned.
     order = list(range(len(kept)))
     rng.shuffle(order)
     kept = [kept[i] for i in order]

@@ -272,7 +272,7 @@ substance of the data-validation work.
 
 ### Deduplication
 
-- **Fine-tuning set:** 210 exact-duplicate questions were dropped. Deduplication
+- **Fine-tuning set:** 208 exact-duplicate questions were dropped. Deduplication
   is on a normalised form (lowercased, punctuation stripped) of the instruction,
   and separately on the normalised instruction/answer pair, so the same question
   reached by two different question families is caught. 13,252 pairs survive,
