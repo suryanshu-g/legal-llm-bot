@@ -123,12 +123,23 @@ cell from Step 4. Those two together identify almost any problem immediately.
 
 Common ones:
 
+**Expected, not an error:** the training-setup cell prints a line like
+
+```
+  adapted: warmup_ratio -> warmup_steps
+```
+
+That is the notebook noticing it is running on transformers 5, where
+`warmup_ratio` was removed and `warmup_steps` now accepts a fraction meaning
+the same thing. It adapts automatically; nothing to do.
+
 | Symptom | Cause | Fix |
 |---|---|---|
 | `CUDA out of memory` | batch too large | In the training-arguments cell set `BATCH_SIZE = 4` and `GRAD_ACCUM = 4`. That keeps the effective batch at 16, so results are unchanged. |
 | Loss shows `nan` | fp16 with T5 | Should not happen — the notebook forces fp32 on T4. If it does, confirm `bf16: False` printed in the model cell. |
 | `NameError` on a variable | cells run out of order, or a restart wiped state | **Runtime → Restart and run all.** |
 | `git clone failed` | network hiccup | Re-run that cell. |
+| `TypeError: ... unexpected keyword argument` | a transformers API rename this notebook has not seen | Send me the argument name and the version-diagnostics output; the fix is one line in the alias table. |
 | Disconnects mid-training | idle timeout | Keep the tab in view; re-run from the top. |
 | Training is extremely slow | running on CPU | Step 2. Check `nvidia-smi` shows a T4. |
 
