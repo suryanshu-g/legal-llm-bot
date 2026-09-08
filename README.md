@@ -46,8 +46,9 @@ project context.
 
 - **Phase 2** — fine-tune Flan-T5-base on Colab (T4, ≤25 epochs) using
   `train.jsonl` and `val.jsonl`. Notebook ready at
-  [`notebooks/finetune_flan_t5.ipynb`](notebooks/finetune_flan_t5.ipynb);
-  set `REPO_URL` in its settings cell and run on a T4.
+  [`notebooks/finetune_flan_t5.ipynb`](notebooks/finetune_flan_t5.ipynb) —
+  step-by-step Colab instructions in
+  [`notebooks/COLAB_SETUP.md`](notebooks/COLAB_SETUP.md).
 - **Phase 3** — FAISS retrieval layer over `retrieval_corpus.jsonl`.
 - **Phase 4** — run `confusion_test_set.jsonl` against both this bot and a
   general-purpose LLM to test the core claim; paper and video.
@@ -87,6 +88,7 @@ scripts/
   validate_data.py          checks; non-zero exit on failure
 notebooks/
   finetune_flan_t5.ipynb    Phase 2: fine-tune, evaluate, save the model
+  COLAB_SETUP.md            step-by-step guide to running it on Colab
 ```
 
 ## Reproducing the datasets
