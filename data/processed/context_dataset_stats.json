@@ -1,0 +1,50 @@
+{
+  "seed": 20240701,
+  "mix": {
+    "positive": 0.7,
+    "distractor": 0.2,
+    "none": 0.1
+  },
+  "context_token_budget": 448,
+  "splits": {
+    "train": {
+      "rows": 11751,
+      "by_context_type": {
+        "positive": 8218,
+        "none": 1180,
+        "distractor": 2353
+      },
+      "unresolved_positive_targets": {
+        "scope": 9,
+        "old_to_new": 2
+      },
+      "distractor_lookup_failures": 0,
+      "context_tokens_median": 149,
+      "prompt_tokens": {
+        "median": 163,
+        "p95": 450,
+        "p99": 475,
+        "max": 495
+      }
+    },
+    "val": {
+      "rows": 1369,
+      "by_context_type": {
+        "positive": 957,
+        "distractor": 273,
+        "none": 139
+      },
+      "unresolved_positive_targets": {
+        "scope": 1
+      },
+      "distractor_lookup_failures": 0,
+      "context_tokens_median": 145,
+      "prompt_tokens": {
+        "median": 159,
+        "p95": 456,
+        "p99": 474,
+        "max": 484
+      }
+    }
+  }
+}

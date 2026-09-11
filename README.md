@@ -27,7 +27,7 @@ prosecutors and courts sits squarely inside public administration.
 
 ## Status
 
-**Phases 1 and 1.5 (data) are complete.** No model has been trained yet.
+**Phases 1, 1.5 and 2.5 (data + retrieval) are complete.** Training runs on Colab.
 
 | Deliverable | |
 |---|---|
@@ -39,6 +39,8 @@ prosecutors and courts sits squarely inside public administration.
 | BNSS First Schedule | 465 rows over 288 BNS sections |
 | Case summaries | 201 records over 174 judgments, 30 topics |
 | Section coverage | BNS 358/358 · BNSS 531/531 · BSA 170/170 |
+| Retrieval index | 2,819 chunks, bge-small-en-v1.5 + FAISS, 96% recall@3 |
+| Context-augmented training | 11,751 / 1,369 rows, 70% positive · 20% distractor · 10% none |
 
 Read [`data/DATA_REPORT.md`](data/DATA_REPORT.md) for how this was verified and
 what is wrong with it. [`PROJECT_BRIEF.md`](PROJECT_BRIEF.md) holds the full
@@ -49,7 +51,10 @@ project context.
   [`notebooks/finetune_flan_t5.ipynb`](notebooks/finetune_flan_t5.ipynb) —
   step-by-step Colab instructions in
   [`notebooks/COLAB_SETUP.md`](notebooks/COLAB_SETUP.md).
-- **Phase 3** — FAISS retrieval layer over `retrieval_corpus.jsonl`.
+- **Phase 2.5** — retrieval index built; a second notebook,
+  [`notebooks/finetune_flan_t5_contextaware.ipynb`](notebooks/finetune_flan_t5_contextaware.ipynb),
+  fine-tunes the model to read a retrieved passage.
+- **Phase 3** — wire the retriever and the context-aware model into one bot.
 - **Phase 4** — run `confusion_test_set.jsonl` against both this bot and a
   general-purpose LLM to test the core claim; paper and video.
 
@@ -73,6 +78,11 @@ data/
     retrieval_corpus.jsonl      one chunk per section, schedule entry or judgment
     train_index.jsonl / val_index.jsonl / test_index.jsonl
                                 aligned qa_type per split row, for per-type metrics
+    train_context.jsonl / val_context.jsonl
+                                context-augmented training data
+    retrieval_index.faiss       FAISS index over the corpus
+    retrieval_index_meta.jsonl  FAISS row -> chunk metadata
+    retrieval_index_config.json embedding model, dim, build checks
     split_report.json           split sizes and qa_type balance
     validation_report.json      output of the validation run
   DATA_REPORT.md
@@ -85,9 +95,15 @@ scripts/
   build_finetune_dataset.py build the QA dataset
   build_retrieval_corpus.py build the RAG corpus
   build_splits.py           group-level splits + confusion set
+  build_retrieval_index.py  embed the corpus, build the FAISS index
+  retrieve.py               reusable hybrid retriever (citations + dense)
+  build_context_dataset.py  positive / distractor / no-context training data
+  check_retrieval.py        retrieval recall@k, broken down by question type
   validate_data.py          checks; non-zero exit on failure
 notebooks/
   finetune_flan_t5.ipynb    Phase 2: fine-tune, evaluate, save the model
+  finetune_flan_t5_contextaware.ipynb
+                            Phase 2.5: same, trained to read retrieved context
   verify_model.ipynb        check a saved model and recover its metrics
   COLAB_SETUP.md            step-by-step guide to running it on Colab
 ```
@@ -105,6 +121,11 @@ python scripts/build_retrieval_corpus.py
 python scripts/build_finetune_dataset.py
 python scripts/build_splits.py
 python scripts/validate_data.py
+
+# Phase 2.5: retrieval
+python scripts/build_retrieval_index.py   # ~4 min on CPU
+python scripts/check_retrieval.py         # recall@k sanity check
+python scripts/build_context_dataset.py
 ```
 
 Every fetch is cached under `data/raw/`, so a rerun re-downloads nothing. Pass

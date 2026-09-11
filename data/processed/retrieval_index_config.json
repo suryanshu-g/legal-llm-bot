@@ -1,0 +1,13 @@
+{
+  "model": "BAAI/bge-small-en-v1.5",
+  "query_prefix": "Represent this sentence for searching relevant passages: ",
+  "passage_prefix": "",
+  "dim": 384,
+  "metric": "inner product over L2-normalised vectors (cosine)",
+  "index_type": "IndexFlatIP (exact)",
+  "chunks": 2819,
+  "max_seq_length": 512,
+  "truncated_chunks": 159,
+  "self_retrieval": "200/200",
+  "built": "2026-09-11"
+}

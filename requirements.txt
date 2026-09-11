@@ -1,2 +1,9 @@
+# Data pipeline (Phases 1 / 1.5)
 pdfplumber>=0.11
 pypdf>=4.2
+
+# Retrieval (Phase 2.5). Note: transformers 5.x requires torch >= 2.5; if your
+# torch is older, pin transformers<5 for these scripts.
+sentence-transformers>=5.0
+faiss-cpu>=1.9
+transformers>=4.44

@@ -84,7 +84,10 @@ https://github.com/suryanshu-g/legal-llm-bot
   cognizable, bailable, trying court), and leakage-safe train/validation/test
   splits plus a held-out confusion set for the Phase 4 comparison.
 - **Phase 2:** fine-tuning Flan-T5 on Colab, from `train.jsonl` / `val.jsonl`.
-- **Phase 3:** the FAISS retrieval layer over `retrieval_corpus.jsonl`.
+- **Phase 2.5 (complete):** the retrieval index (bge-small-en-v1.5 + FAISS,
+  hybrid with exact citation matching) and context-augmented training data, plus
+  a second notebook that fine-tunes the model to read a retrieved passage.
+- **Phase 3:** wire the retriever and the context-aware model into one bot.
 - **Phase 4:** running `confusion_test_set.jsonl` against both this bot and a
   general-purpose LLM to test the differentiator claim; video and paper.
 
