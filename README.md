@@ -88,6 +88,7 @@ scripts/
   validate_data.py          checks; non-zero exit on failure
 notebooks/
   finetune_flan_t5.ipynb    Phase 2: fine-tune, evaluate, save the model
+  verify_model.ipynb        check a saved model and recover its metrics
   COLAB_SETUP.md            step-by-step guide to running it on Colab
 ```
 

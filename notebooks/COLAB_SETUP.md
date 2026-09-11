@@ -145,6 +145,34 @@ the same thing. It adapts automatically; nothing to do.
 
 ---
 
+## If you lost the runtime but the model is on Drive
+
+Closing the laptop ends the Colab VM. Everything under `/content/` goes with it
+— `phase2_results.json`, the checkpoints, `/content/model-final`. What survives
+is whatever reached Drive, plus any cell outputs already saved into your Drive
+copy of the notebook.
+
+Run **[`verify_model.ipynb`](verify_model.ipynb)** instead of retraining. It:
+
+1. checks the saved model folder is complete (weights about 990 MB, config,
+   tokenizer) and loads it;
+2. compares a weight matrix against stock `flan-t5-base` to confirm the weights
+   really are fine-tuned rather than an untrained model saved by mistake;
+3. asks eight questions with known answers so you can read the output yourself;
+4. re-runs the full test-set and confusion-set evaluation from the saved
+   weights, using the same prompt template and metric code as training, so the
+   numbers are the ones that run produced;
+5. writes `phase2_results.json` **to Drive**, not `/content/`.
+
+15–25 minutes on a T4, versus about 90 to retrain.
+
+**The one thing it cannot recover is the training loss curve** — that lived in
+the trainer's history in memory and only the weights were saved. If your
+training notebook still shows the chart under the cell, save that copy now.
+Otherwise the curve needs a retrain; nothing else does.
+
+---
+
 ## What "good" looks like
 
 So you can tell success from failure when reading the output:
