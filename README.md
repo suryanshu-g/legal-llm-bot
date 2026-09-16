@@ -42,7 +42,13 @@ prosecutors and courts sits squarely inside public administration.
 | Retrieval index | 2,819 chunks, bge-small-en-v1.5 + FAISS, 96% recall@3 |
 | Context-augmented training | 11,751 / 1,369 rows, 70% positive · 20% distractor · 10% none |
 
-Read [`data/DATA_REPORT.md`](data/DATA_REPORT.md) for how this was verified and
+**Phase 2 result: the fine-tuned model failed.** Token F1 58.2% on the test set,
+but it got the old-to-new section correspondence right in **0 of 214** held-out
+questions — it learnt the answer format and almost none of the facts. That is a
+baseline to beat, and it is the clearest evidence yet for why retrieval is
+needed. See [`RESULTS.md`](RESULTS.md).
+
+Read [`data/DATA_REPORT.md`](data/DATA_REPORT.md) for how the data was verified and
 what is wrong with it. [`PROJECT_BRIEF.md`](PROJECT_BRIEF.md) holds the full
 project context.
 
