@@ -110,6 +110,9 @@ notebooks/
   finetune_flan_t5.ipynb    Phase 2: fine-tune, evaluate, save the model
   finetune_flan_t5_contextaware.ipynb
                             Phase 2.5: same, trained to read retrieved context
+  finetune_flan_t5_small_contextaware.ipynb
+                            Phase 2.5 light: flan-t5-small, resumes after a
+                            Colab disconnect - the one to run on free Colab
   verify_model.ipynb        check a saved model and recover its metrics
   COLAB_SETUP.md            step-by-step guide to running it on Colab
 ```
