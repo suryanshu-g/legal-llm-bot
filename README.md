@@ -27,7 +27,8 @@ prosecutors and courts sits squarely inside public administration.
 
 ## Status
 
-**Phases 1 through 3 are complete — the bot runs end to end.** Training runs on Colab.
+**Phases 1 through 3 are complete — the bot runs end to end.** Phase 3.5, a
+retrain, is built and awaiting a Colab run. Training runs on Colab.
 
 | Deliverable | |
 |---|---|
@@ -41,6 +42,7 @@ prosecutors and courts sits squarely inside public administration.
 | Section coverage | BNS 358/358 · BNSS 531/531 · BSA 170/170 |
 | Retrieval index | 2,819 chunks, bge-small-en-v1.5 + FAISS, 96% recall@3 |
 | Context-augmented training | 11,751 / 1,369 rows, 70% positive · 20% distractor · 10% none |
+| Context shape | up to 4 passages per prompt, assembled by `bot.py` itself |
 
 **Retrieval works.** On 676 held-out questions, the same fine-tuned model scores
 token F1 **58.4% without retrieval and 91.9% with it**. On the questions that
@@ -63,6 +65,9 @@ project context.
 - **Phase 3** — the retriever and the context-aware model are wired into one
   assistant, [`scripts/bot.py`](scripts/bot.py), driven by
   [`notebooks/run_bot.ipynb`](notebooks/run_bot.ipynb).
+- **Phase 3.5** — retrain on context shaped the way the bot serves it, using
+  [`notebooks/finetune_flan_t5_small_contextaware.ipynb`](notebooks/finetune_flan_t5_small_contextaware.ipynb).
+  Data rebuilt; the run itself is pending.
 - **Phase 4** — run `confusion_test_set.jsonl` against both this bot and a
   general-purpose LLM to test the core claim; paper and video.
 
@@ -83,6 +88,13 @@ barely helped the confusion set because 33 of its 44 answers name two or more
 provisions while the run supplied a single passage. Looking counterparts up in
 the concordance rather than hoping the embedder surfaces them takes context
 completeness on that set from **34% to 98%**.
+
+**It did not improve the answers, and Phase 3.5 is the fix.** Every
+context-augmented training example held one passage while the bot serves four, so
+the model read the first and ignored the rest. The training data is now generated
+by calling the bot's own assembly code, which makes the two impossible to drift
+apart. Rebuilt and verified; the retrain has not been run yet, and no results are
+claimed for it. Details in [`RESULTS.md`](RESULTS.md).
 
 ## Layout
 
@@ -133,8 +145,8 @@ notebooks/
   finetune_flan_t5_contextaware.ipynb
                             Phase 2.5: same, trained to read retrieved context
   finetune_flan_t5_small_contextaware.ipynb
-                            Phase 2.5 light: flan-t5-small, resumes after a
-                            Colab disconnect - the one to run on free Colab
+                            Phase 3.5: flan-t5-small on bot-shaped context,
+                            resumes after a Colab disconnect - run this one
   verify_model.ipynb        check a saved model and recover its metrics
   run_bot.ipynb             Phase 3: the assembled bot, demo questions,
                             scope checks, confusion-set comparison

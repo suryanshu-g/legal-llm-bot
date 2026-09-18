@@ -323,3 +323,110 @@ rewrite step, and neither belongs in Phase 3.
 [`notebooks/run_bot.ipynb`](notebooks/run_bot.ipynb) or the command line
 (`python scripts/bot.py --sources-only "…"` works with no model at all, and
 reports the law itself rather than composing an answer).
+
+### What the bot run actually showed
+
+Run on Colab against the Phase 2.5 model. The retrieval and safety halves hold
+up; the model half does not use what it is given.
+
+**The safety guard works.** All four out-of-scope questions were refused — "be my
+lawyer", "how can I avoid being convicted", "tell me a loophole", "should I plead
+guilty" — while "what does BNS Section 63 cover?" was answered normally. Every
+citation carried a `source_url`.
+
+**Five of the eight demo questions are right**, with correct sources: IPC 302 →
+BNS 103, BNSS 173 → CrPC 154, BNS 303 is non-bailable, BNS 103 is triable by
+Court of Session, and an offence on 15 August 2024 falls under the BNS.
+
+**The confusion set did not move at all.**
+
+| Context | token F1 | citation F1 | allCites |
+|---|---|---|---|
+| single passage (Phase 2.5 behaviour) | 38.6% | 63.5% | 23.3% |
+| bot context, with counterparts | 39.2% | 59.4% | **23.3%** |
+
+Context completeness went from 34% to 98% and the answers were unchanged. Two of
+them are confidently false in instructive ways:
+
+* *"IPC Section 124A corresponds to **BNS Section 105L** (Sedition)"* — **there
+  is no BNS 105L**; the section does not exist in the Act. The correct answer is
+  that sedition has no counterpart.
+* *"BNSS Section 482 … is a new provision; it has no equivalent in the CrPC"* —
+  wrong, **and the CrPC 482 passage was in the context it was handed**.
+* The BNS 103 answer bled two passages into each other, producing non-words
+  ("Cognizedable", "Punition") and a heading from an unrelated section.
+
+Note also that the 100% `allCites` on `removed` questions is an artifact. The
+metric asks only whether the gold citations are *present*, so the 124A answer
+passed while inventing BNS 105L. `citation_exact` is the column to read there,
+and it is reported from Phase 3.5 onward.
+
+### Diagnosis: a training/serving mismatch, and it was mine
+
+**Every one of the 10,571 context-augmented training examples held exactly one
+passage. The bot serves up to four**, separated by rules and each truncated to a
+quarter of the token budget. The model had never seen that shape.
+
+That single fact explains all three failures at once: reading only the first
+passage explains the BNSS 482 denial, blending explains the BNS 103 non-words,
+and neither is fixed by putting *more* correct law in front of it.
+
+The Phase 3 measurement was of context completeness, which was real and correct.
+It was not a measurement of whether the model could consume the thing being
+built, and I reported the first as though it implied the second.
+
+---
+
+## Phase 3.5 — training on the context the bot actually sends
+
+The fix is the same one that worked in Phase 2.5: make the training data look
+like what serving produces. `build_context_dataset.py` no longer assembles
+context of its own — it imports `Bot` and calls the same `select_chunks` and
+`build_context` methods that answer a live question, at the same
+`MAX_CONTEXT_CHUNKS = 4` and `CONTEXT_TOKEN_BUDGET = 430`, with the same
+tokenizer. Training and serving cannot drift apart again without the shared code
+path changing.
+
+### The regenerated data
+
+| | Phase 2.5 data | Phase 3.5 data |
+|---|---|---|
+| Passages per context | always 1 | 4 (8,825 rows) · 3 (1,746) · 0 (1,180) |
+| Assembled by | this script's own truncation | `bot.Bot.select_chunks` + `build_context` |
+| Positives holding the grounding passage | 8,218 / 8,218 | 8,218 / 8,218 |
+| Median prompt length | — | 389 tokens (p99 470, max 503) |
+
+The condition mix is unchanged at 70% positive / 20% distractor / 10% none
+(8,218 / 2,353 / 1,180 on train), and the seed is unchanged, so the split of
+rows across conditions is identical to Phase 2.5 — only the shape of the context
+differs.
+
+Two details matter for honesty about what the model is being taught:
+
+* **The grounding passage is not always first.** For 290 training rows the
+  embedder did not surface it inside the top four, so it is inserted at a varying
+  position rather than at the front. Otherwise the model could learn the shortcut
+  "the answer is in passage one" — which is close to the failure being fixed.
+* **Distractor contexts exclude every chunk about the provisions the gold answer
+  cites**, so a distractor is genuinely unhelpful rather than a near-miss that
+  happens to contain the answer.
+
+Prompts fit the 512-token encoder that `bot.py` truncates to, with the longest
+at 503, so nothing is silently dropped at serving time.
+
+### Evaluation changes with it
+
+`notebooks/finetune_flan_t5_small_contextaware.ipynb` now assembles its
+evaluation context through `Bot` as well, instead of pasting the single top-1
+passage, and reports the confusion set three ways — no context, single passage
+(the Phase 2.5 and Phase 3 condition), and the bot's real context — so the
+before-and-after is measured on identical questions with identical scoring.
+`citation_exact` is printed alongside `allCites` to close the loophole described
+above. The oracle "gold" column is now the same assembly with the grounding
+passage forced in, which bounds what better retrieval alone could buy.
+
+Artifacts go to `flan-t5-small-context-v2` on Drive, so the Phase 2.5 model and
+its `TRAINING_DONE.json` are left intact for comparison.
+
+**Status: data rebuilt and verified, notebook ready, not yet trained.** No
+results are claimed for this phase until the run finishes.

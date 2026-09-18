@@ -49,6 +49,12 @@ MAX_TARGET_LENGTH = 320
 # Leaves room for the question inside a 512-token encoder.
 CONTEXT_TOKEN_BUDGET = 430
 
+# How many passages the context may hold. Training data is generated at this
+# same value, by this same module, so the model is never served a shape it was
+# not trained on - Phase 3 shipped with training on one passage and serving on
+# four, and the model simply read the first one.
+MAX_CONTEXT_CHUNKS = 4
+
 DISCLAIMER = ("This is general information about the law, not legal advice. "
               "For advice on a specific matter, consult a qualified advocate.")
 
@@ -118,13 +124,17 @@ class Bot:
     """Retrieval-grounded assistant. The model is optional."""
 
     def __init__(self, model_dir: str | None = None, retriever: Retriever | None = None,
-                 device: str | None = None):
+                 device: str | None = None, tokenizer=None):
         self.retriever = retriever or Retriever(device=device)
         self.counterparts = load_counterparts()
         self.by_ref: dict[str, list[int]] = self.retriever.by_ref
+        self.row_of_chunk: dict[str, int] = {
+            m["chunk_id"]: i for i, m in enumerate(self.retriever.meta)}
 
         self.model = None
-        self.tokenizer = None
+        # A tokenizer may be supplied without a model, so that offline tooling
+        # truncates context exactly as serving does rather than estimating.
+        self.tokenizer = tokenizer
         if model_dir:
             import torch
             from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
@@ -139,7 +149,7 @@ class Bot:
     def _rows_for_ref(self, ref: str) -> list[int]:
         return self.by_ref.get(ref, [])
 
-    def select_chunks(self, question: str, k: int = 3) -> list[dict]:
+    def select_chunks(self, question: str, k: int = 3, hits=None) -> list[dict]:
         """The passages to show the model, most important first.
 
         Order matters, because the context is truncated to a token budget:
@@ -149,6 +159,10 @@ class Bot:
                the half of a correspondence that similarity search misses;
             3. similarity hits, to cover questions phrased by subject rather
                than by section number.
+
+        `hits` supplies pre-computed retrieval results, so that a caller
+        assembling context for thousands of questions can batch the encoder
+        while still going through this exact code path.
         """
         chosen: list[int] = []
 
@@ -164,14 +178,17 @@ class Bot:
             for other in self.counterparts.get(ref, []):
                 add(self._rows_for_ref(other))
 
-        for hit in self.retriever.retrieve(question, k=k):
-            add([i for i, m in enumerate(self.retriever.meta)
-                 if m["chunk_id"] == hit.chunk_id])
+        if hits is None:
+            hits = self.retriever.retrieve(question, k=k)
+        for hit in hits:
+            row = self.row_of_chunk.get(hit.chunk_id)
+            if row is not None:
+                add([row])
 
         return [self.retriever.meta[i] for i in chosen]
 
     def build_context(self, chunks: list[dict], budget: int = CONTEXT_TOKEN_BUDGET,
-                      max_chunks: int = 4) -> tuple[str, list[dict]]:
+                      max_chunks: int = MAX_CONTEXT_CHUNKS) -> tuple[str, list[dict]]:
         """Concatenate passages within a token budget.
 
         Each chunk opens with its own header - act, section, heading, and the
@@ -212,7 +229,8 @@ class Bot:
 
     # -- answering ----------------------------------------------------------
 
-    def ask(self, question: str, k: int = 3, max_chunks: int = 4) -> Answer:
+    def ask(self, question: str, k: int = 3,
+            max_chunks: int = MAX_CONTEXT_CHUNKS) -> Answer:
         if OUT_OF_SCOPE.search(question):
             return Answer(question=question, text=REFUSAL, refused=True)
 
