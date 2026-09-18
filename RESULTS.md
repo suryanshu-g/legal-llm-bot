@@ -11,11 +11,14 @@ retrieval was right **0 times out of 214**. With retrieval it is right **213 of
 214**. Overall citation accuracy on the test set is 92.9%, against 42.2% unaided.
 
 **Against ChatGPT on the 44 hardest questions, the totals are close and the
-failure modes are not.** ChatGPT gets 25 of 44, this project 27. But ChatGPT
-scores 92.9% on same-number collisions and **7.1% where several old sections were
-merged into one**, because naming every absorbed section requires the concordance
-rather than general knowledge. It answers confidently and incompletely. That — not
-a difference in totals — is what this project demonstrates.
+failure modes are opposite.** ChatGPT gets 25 of 44, this project 27 — no
+meaningful lead. But they disagree on 46.5% of the questions: ChatGPT wins
+same-number collisions 92.9% to 35.7%, because it knows what provisions are about,
+while the bot wins merged families 71.4% to 7.1%, because it has the official
+concordance and ChatGPT is guessing from memory. Where the correct answer is a
+*set* of provisions, ChatGPT was right on 1 of 19 and the bot on 10 of 19, and
+ChatGPT's wrong answers give no sign of being partial. **That is the claim this
+project supports** — not that a small model knows more law.
 
 Everything below is in the order it happened, including the runs that failed and
 what each one turned out to be wrong about.
@@ -786,17 +789,84 @@ It is worth stating plainly that this was found by reading the outputs rather th
 by trusting the numbers, and that the direction of the error flattered this
 project.
 
+### Per kind, both systems side by side
+
+The bot's column was re-measured with the corrected extractor, so this table is
+one metric throughout. Its overall numbers barely moved (token F1 76.5 → 77.0,
+everything else unchanged), which confirms the metric bug had only ever penalised
+ChatGPT.
+
+| Question kind | n | ChatGPT | this bot | winner |
+|---|---|---|---|---|
+| `collision` — same number, different subject | 14 | **92.9%** | 35.7% | ChatGPT, heavily |
+| `merged` — several old sections into one | 14 | 7.1% | **71.4%** | the bot, heavily |
+| `removed` — repealed, no counterpart | 10 | **100%** | **100%** | tie |
+| `split` — one old section across several | 5 | 0.0% | 20.0% | neither works |
+
+### The two systems fail on opposite axes
+
+`scripts/compare_phase4.py` compares them question by question. Of the 43
+confusion questions that cite a provision at all:
+
+| | Questions | |
+|---|---|---|
+| both correct | 15 | 34.9% |
+| **only the bot** | **11** | **25.6%** |
+| **only ChatGPT** | **9** | **20.9%** |
+| neither | 8 | 18.6% |
+
+**They disagree on 20 of 43 questions — 46.5%.** At least one of them is right on
+35 of 43, which is well above either alone. This is not two systems of similar
+quality; it is two systems that know different things.
+
+The mechanism is visible in the by-kind split. Of the 14 collisions, ChatGPT alone
+is right on 9 and the bot alone on 1. Of the 14 merged families, the bot alone is
+right on 9 and ChatGPT alone on **none**.
+
+**What ChatGPT has and the bot does not: knowledge of what provisions are about.**
+
+> *Does BNSS Section 482 deal with the same subject as CrPC Section 482?*
+> **ChatGPT:** "No; BNSS 482 corresponds to CrPC 438 (anticipatory bail), while
+> CrPC 482 (inherent powers of the High Court) corresponds to BNSS 528." — exactly
+> right, both directions.
+> **The bot:** got CrPC 482 right, then said "**BNSS Section 481** is a different
+> provision entirely" — an off-by-one slip on the very number in the question.
+
+**What the bot has and ChatGPT does not: the concordance.**
+
+> *Is voluntarily causing hurt still dealt with under IPC Section 323?*
+> **Needs:** BNS 115, IPC 321, IPC 323
+> **ChatGPT:** named BNS 115 and IPC 323, and missed IPC 321 — the other section
+> the new provision absorbed.
+> **The bot:** named all three, because the mapping table lists them.
+
+### What this supports, and what it does not
+
+**It does not support** "a fine-tuned small model beats ChatGPT on Indian criminal
+law". 27 against 25 is not a meaningful lead, and on same-number collisions the
+bot is beaten nearly three to one.
+
+**It does support** a narrower and more useful claim: **a frontier model answering
+from memory gives confident, incomplete answers about what a provision became, and
+retrieval over an official concordance fixes precisely that.** Where the answer is
+a set — every old section a new one absorbed, every new section an old one was
+split across — ChatGPT scored 1 of 19 and the bot 10 of 19. For a police officer
+or a prosecutor working out what to charge, an answer that names one of four
+merged provisions and does not say it is partial is the dangerous kind of wrong.
+
+It also suggests the obvious next system, which this project does not build: give
+the frontier model the retrieved concordance passage. The 81.4% either-one-correct
+figure is a rough ceiling for what that would buy.
+
 ### Outstanding before this goes in the paper
 
-1. **The bot's column needs re-scoring with the corrected extractor.** Its numbers
-   above were produced in Colab with the pre-fix version. The fix can only find
-   *more* citations, so they are a lower bound, and the bot's phrasing is the one
-   the old extractor handled well — but the final table should be measured with
-   one metric, not two. The notebook now imports `metrics.py` instead of carrying
-   its own copy, so a re-run settles it; training is skipped, since the model is
-   already saved.
-2. **The bot's per-kind breakdown is not yet measured**, so the decisive
-   comparison — whether the bot is strong on `merged` and `split` where the general
-   model collapses — is still unquantified. The notebook now computes and saves it.
-3. ~~Name and date the other model.~~ Done: ChatGPT, 19 September 2026, recorded
+1. ~~Re-score the bot with the corrected extractor.~~ Done. Token F1 76.5 → 77.0,
+   every other figure unchanged, confirming the metric bug had only penalised
+   ChatGPT.
+2. ~~Measure the bot's per-kind breakdown.~~ Done, and it is the finding: the bot
+   takes `merged` 71.4% to 7.1% while losing `collision` 35.7% to 92.9%.
+3. **The bot's `collision` weakness is worth one more look.** 35.7% is low given
+   that both provisions are in its context, and the BNSS 481-for-482 slip suggests
+   generation error rather than retrieval error. Not investigated.
+4. ~~Name and date the other model.~~ Done: ChatGPT, 19 September 2026, recorded
    above and in `data/processed/phase4_chatgpt_results.json`.
