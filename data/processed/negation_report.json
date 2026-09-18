@@ -1,0 +1,32 @@
+{
+  "seed": 20240701,
+  "quota": {
+    "collision": 700,
+    "merged": 300,
+    "no_single": 250
+  },
+  "val_share": 0.1,
+  "title_overlap_limit": 0.5,
+  "rows": {
+    "train": 755,
+    "val": 251
+  },
+  "by_qa_type": {
+    "collision": 700,
+    "merged": 212,
+    "no_single": 94
+  },
+  "groups": {
+    "train": 531,
+    "val": 133,
+    "blocked_held_out": 106
+  },
+  "skipped": {
+    "collision: same number IS the counterpart": 11,
+    "collision: held-out group": 70,
+    "collision: titles too similar to call it different": 15,
+    "merged: held-out group": 56,
+    "no_single: held-out group": 18
+  },
+  "split_questions_not_generated": "all 5 split families in the concordance are inside held-out groups; no_single teaches the same answer shape from many-to-one families instead"
+}

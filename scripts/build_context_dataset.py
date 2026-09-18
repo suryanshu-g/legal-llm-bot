@@ -173,6 +173,20 @@ def main() -> None:
         rows = load_jsonl(f"{split}.jsonl")
         index = load_jsonl(f"{split}_index.jsonl")
         assert len(rows) == len(index), f"{split}: split/index misaligned"
+
+        # Phase 3.6: the negation shapes, built by build_negation_dataset.py and
+        # kept in their own files so the original splits stay byte-for-byte as
+        # build_splits.py wrote them. Their leakage is checked at generation and
+        # again by validate_data.py.
+        neg = os.path.join(PROCESSED, f"negation_{split}.jsonl")
+        if os.path.exists(neg):
+            nrows = load_jsonl(f"negation_{split}.jsonl")
+            nindex = load_jsonl(f"negation_{split}_index.jsonl")
+            assert len(nrows) == len(nindex), f"negation_{split}: index misaligned"
+            rows, index = rows + nrows, index + nindex
+            print(f"[{split}] + {len(nrows)} negation rows "
+                  f"({dict(Counter(m['qa_type'] for m in nindex))})")
+
         if args.limit:
             rows, index = rows[:args.limit], index[:args.limit]
 

@@ -161,6 +161,26 @@
       "train": 11751,
       "val": 1369,
       "test": 676
+    },
+    "negation": {
+      "rows": {
+        "train": 755,
+        "val": 251
+      },
+      "by_qa_type": {
+        "train": {
+          "collision": 539,
+          "merged": 142,
+          "no_single": 74
+        },
+        "val": {
+          "collision": 161,
+          "merged": 70,
+          "no_single": 20
+        }
+      },
+      "negation_share_before_pct": 0.35,
+      "negation_share_after_pct": 6.36
     }
   }
 }

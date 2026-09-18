@@ -428,5 +428,184 @@ passage forced in, which bounds what better retrieval alone could buy.
 Artifacts go to `flan-t5-small-context-v2` on Drive, so the Phase 2.5 model and
 its `TRAINING_DONE.json` are left intact for comparison.
 
-**Status: data rebuilt and verified, notebook ready, not yet trained.** No
-results are claimed for this phase until the run finishes.
+### Results
+
+4 epochs, 59.6 minutes on a T4, best validation citation accuracy 89.9%. Raw
+numbers in `data/processed/phase3_5_results.json`.
+
+**The format fix worked on the test set.** Same 676 held-out questions, same
+model size, same metric code:
+
+| Context | token F1 | citation F1 | allCites | citation_exact | EM |
+|---|---|---|---|---|---|
+| none (no retrieval) | 58.3% | 59.7% | 42.2% | 41.8% | 0.0% |
+| **the bot's context** | **88.4%** | **95.5%** | **92.7%** | **92.0%** | **44.2%** |
+| oracle (grounding passage forced in) | 88.9% | 98.2% | 95.4% | 94.7% | 46.6% |
+
+Citation accuracy went from 86.8% (Phase 2.5) to 92.7%, and exact-match answers
+from 37.4% to 44.2%. **Retrieval is now within 0.5 F1 of its own oracle**, so
+almost nothing is left to gain from better retrieval — the remaining error is in
+the model and in truncation.
+
+### The two capabilities this project exists for are now essentially solved
+
+| qa_type | n | Phase 2.5 | Phase 3.5 |
+|---|---|---|---|
+| `old_to_new` — what did this section become? | 114 | 93.0% | **99.1%** |
+| `new_to_old` — what was it before? | 100 | 71.0% | **100%** |
+| `section_lookup` | 109 | 75.2% | 82.6% |
+| `offence_classification` | 50 | 92.0% | 96.0% |
+| `punishment` | 52 | 100% | 100% |
+| `case_law` | 20 | 30.0% | 25.0% |
+
+(citation accuracy; `removed` and `new_provision` remain at 100% on their small
+test slices.) Against the Phase 2 baseline, where the model was right in **0 of
+214** correspondence questions, it is now right in **213 of 214**.
+
+**Unaided performance is unchanged** at 58.3 F1 / 42.2% citations, against Phase
+2.5's 58.4 / 43.8 and Phase 2's 58.2 / 43.8. Three runs, three context regimes,
+the same score without context — the gains come from retrieval, not from the
+training rearrangement flattering the model.
+
+**The distractor condition held up**, which is what stops the model believing
+context blindly: 76.7% citation accuracy when handed a deliberately wrong
+passage, up from 73.3%.
+
+### The cost: verbatim wording
+
+| qa_type | n | Phase 2.5 F1 | Phase 3.5 F1 |
+|---|---|---|---|
+| `section_text` | 220 | 88.4% | **73.8%** |
+| `case_law` | 20 | 85.3% | 74.2% |
+
+Four passages share one 430-token budget, so each gets about 107 tokens and a
+long section is cut mid-text. Citation accuracy on `section_text` barely moved
+(96.8% → 94.5%): the model still identifies the provision correctly, but it
+paraphrases the wording instead of reproducing it. That is the trade the
+multi-passage context buys the correspondence questions with, and it should be
+reported as a trade rather than glossed as a win.
+
+### The confusion set still has not moved, and now we know why
+
+| Context | token F1 | citation F1 | allCites | citation_exact |
+|---|---|---|---|---|
+| none | 28.1% | 54.3% | 23.3% | **0.0%** |
+| single passage | 35.8% | 63.1% | 23.3% | **0.0%** |
+| the bot's context | 36.1% | 63.1% | 23.3% | **0.0%** |
+
+Identical across all three conditions, and `citation_exact` is zero everywhere.
+The Phase 3.5 hypothesis — that the multi-passage format was the blocker — is
+**refuted for this set**, even though it was correct for the test set.
+
+The cause is in the answer shapes:
+
+| | Answers opening with a negation ("No", "None", "There is no single one") |
+|---|---|
+| Training set | **41 / 11,751 — 0.3%** |
+| Confusion set | **43 / 44 — 97.7%** |
+
+**The model was never taught to say no.** It has seen "X corresponds to Y"
+eleven thousand times and almost never seen a question whose correct answer is
+that the correspondence does not hold, so that is what it produces — hence "BNS
+Section 105L" for sedition, and "no equivalent in the CrPC" for BNSS 482 with the
+CrPC 482 passage in front of it.
+
+The confusion set's composition makes this decisive: 33 of its 44 questions are
+`collision` (same number, different subject), `merged` (several old sections into
+one) or `split` (one old section across several new), and **the training data
+contains no question of those three shapes at all.** The `qa_type` mix is
+`section_text` 3,824, `old_to_new` 1,978, `section_lookup` 1,888, `new_to_old`
+1,706, `offence_classification` 895, `punishment` 890, `case_law` 346, `removed`
+112, `transition` 67, `new_provision` 36, `scope` 9. The confusion set is not a
+harder version of anything in there; it is a different task.
+
+This is a gap in the dataset I designed, not a limit of the architecture or of
+`flan-t5-small`. It is also the last thing standing between this project and the
+Phase 4 comparison, because the confusion set *is* the comparison.
+
+**Artifact:** `MyDrive/legal-llm-bot/flan-t5-small-context-v2` (not published to
+the Hub — no `HF_TOKEN` was set). Still `flan-t5-small` rather than
+`flan-t5-base`, for the compute reason recorded above.
+
+---
+
+## Phase 3.6 — teaching the model to say no
+
+`scripts/build_negation_dataset.py` adds the three question shapes the training
+data never contained, built from the same concordance, for provisions that are
+not in any held-out group.
+
+| Shape | Question | Families available | Rows |
+|---|---|---|---|
+| `collision` | Does BNSS 298 deal with the same subject as CrPC 298? | 926 | 700 |
+| `merged` | Is *voluntarily causing hurt* still dealt with under IPC 323? | 196 | 212 |
+| `no_single` | Which single IPC section corresponds to BNS 126? | 47 | 94 |
+
+1,006 rows in total, 755 to train and 251 to validation, which moves the share of
+training answers opening with a negation from **0.3% to 6.4%**. `collision` takes
+one phrasing per provision from a large pool; the two thinner shapes emit every
+phrasing of each family, with three phrasings written for collisions and two for
+the others so that the model learns the relation rather than one sentence pattern.
+
+### What is deliberately *not* generated
+
+**`split` questions, and this is a real limitation.** There are only five split
+families in the entire concordance and **all five are inside held-out groups** —
+the confusion set already consumed every one of them. Any split training example
+would leak. The `no_single` shape teaches the same "there is no single one" answer
+from many-to-one families instead, which is an honestly different relation
+(several old sections into one new, rather than one old across several new). Five
+of the 44 confusion questions therefore remain shape-novel at evaluation time.
+
+**`removed` questions.** Training already holds 112, they score 100% on the test
+set, and asserting that a provision was repealed needs the vetted allowlist rather
+than the mere absence of a row in a correspondence table.
+
+### Leakage discipline
+
+`test.jsonl` and `confusion_test_set.jsonl` are neither read for content nor
+written. The generator rebuilds the same union-find over the concordance that
+`build_splits.py` uses, so a group id means the same fact in both, and then:
+
+* a provision whose group is in the test set or the confusion set is **dropped** —
+  106 groups blocked, costing 70 collisions, 56 merges and 18 fan-ins;
+* a provision whose group is already in validation goes to validation, so the
+  existing split is respected rather than re-cut;
+* remaining groups split 90/10 at group level.
+
+`validate_data.py` gained a check group that re-verifies all of this from the
+files themselves, because the negation set and the splits can be regenerated
+independently. It also asserts that every generated answer actually opens with a
+negation, and prints the before/after share so the figure quoted here cannot
+drift from the data.
+
+### Correctness of the generated claims
+
+A collision is only asserted where the two provisions genuinely differ: the
+same-numbered section in the new code must not be the counterpart recorded in the
+concordance, and the two headings must share at most half their content words.
+That guard rejected 15 pairs whose titles were too similar to call different, and
+11 where the same number *is* the counterpart. Four collisions were spot-checked
+by hand against the gazette headings and all four were correct (CrPC 96 →
+BNSS 96, CrPC 468 → BNSS 468, IPC 193 → BNS 193, Evidence Act 50 → BSA 50).
+
+Two phrasing bugs were found and fixed by reading the output rather than trusting
+the templates. Asking whether a person can "still be charged" under a provision
+only makes sense where that provision creates an offence, so it is now restricted
+to sections titled as a punishment — it was producing "Can IPC Section 55 still be
+charged for commutation of sentence of imprisonment for life?". And five headings
+are clauses rather than noun phrases ("when they may be asked"), which read as
+nonsense in the subject slot; those fall back to a phrasing that needs no subject.
+
+### Caveat that belongs in the write-up
+
+**The confusion set's question templates now appear in training, on different
+provisions.** It remains held out at the level of fact — no provision in it, nor
+any provision sharing a concordance group with one, contributes a training row —
+but it is no longer novel in form. That is the correct trade (a model cannot be
+expected to answer a question shape it has never seen, and the comparison against
+a general-purpose LLM is about facts, not phrasing), and it should be stated
+plainly rather than left for a reader to discover.
+
+**Status: data built and verified, context set regenerated, not yet trained.** No
+results are claimed for this phase.

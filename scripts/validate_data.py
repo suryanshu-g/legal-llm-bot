@@ -426,6 +426,101 @@ def check_splits():
     stats["splits"] = {n: len(v) for n, v in splits.items()}
 
 
+def check_negation():
+    """The Phase 3.6 negation shapes must not touch the held-out sets.
+
+    These rows are generated from the concordance rather than cut out of the
+    splits, so nothing stops them naming a provision that the test set or the
+    confusion set already owns. That is checked here as well as at generation,
+    because the two files can be regenerated independently.
+    """
+    print("\n[8] Negation training shapes (Phase 3.6)")
+    paths = {s: os.path.join(PROCESSED, f"negation_{s}.jsonl") for s in ("train", "val")}
+    if not all(os.path.exists(p) for p in paths.values()):
+        warn("negation set not built - run scripts/build_negation_dataset.py")
+        return
+
+    import csv as _csv
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from build_splits import Union, entity
+
+    mapping = list(_csv.DictReader(
+        open(os.path.join(PROCESSED, "mapping_table.csv"), encoding="utf-8")))
+    u = Union()
+    for r in mapping:
+        if r["old_section"] and r["new_section"]:
+            u.union(entity(r["old_act"], r["old_section"]),
+                    entity(r["new_act"], r["new_section"]))
+
+    test_groups = {m["group"] for m in
+                   read_jsonl(os.path.join(PROCESSED, "test_index.jsonl"))}
+    conf = read_jsonl(os.path.join(PROCESSED, "confusion_test_set.jsonl"))
+    conf_groups = {u.find(k) for e in conf for k in e["group_keys"]}
+    conf_questions = {e["instruction"] for e in conf}
+    test_questions = {r["instruction"] for r in
+                      read_jsonl(os.path.join(PROCESSED, "test.jsonl"))}
+
+    rows, index, counts = {}, {}, {}
+    for split, path in paths.items():
+        rows[split] = read_jsonl(path)
+        index[split] = read_jsonl(os.path.join(PROCESSED, f"negation_{split}_index.jsonl"))
+        if len(rows[split]) != len(index[split]):
+            fail(f"negation_{split}: {len(rows[split])} rows but "
+                 f"{len(index[split])} index entries")
+            return
+        counts[split] = dict(Counter(m["qa_type"] for m in index[split]))
+        ok(f"negation_{split}: {len(rows[split])} rows {counts[split]}")
+
+    all_index = index["train"] + index["val"]
+    bad = [m["group"] for m in all_index
+           if m["group"] in test_groups or m["group"] in conf_groups]
+    if bad:
+        fail(f"{len(bad)} negation rows sit in a held-out group, e.g. {bad[0]}")
+    else:
+        ok(f"no negation row is in a test or confusion group "
+           f"({len(test_groups | conf_groups)} groups blocked)")
+
+    shared = ({m["group"] for m in index["train"]}
+              & {m["group"] for m in index["val"]})
+    if shared:
+        fail(f"{len(shared)} groups appear in both negation train and val")
+    else:
+        ok("negation train and val groups are disjoint")
+
+    for split in paths:
+        clash = {r["instruction"] for r in rows[split]} & (conf_questions | test_questions)
+        if clash:
+            fail(f"negation_{split}: {len(clash)} questions also appear in a "
+                 f"held-out set, e.g. {sorted(clash)[0]!r}")
+        else:
+            ok(f"no negation_{split} question appears in test or the confusion set")
+
+    # The point of the exercise: these rows must actually be negations. The same
+    # pattern list is used for the before/after share below, so the figure quoted
+    # in RESULTS.md and the one printed here cannot diverge.
+    NEG = ("no.", "none.", "there is no", "no single", "has no corresp",
+           "not carried")
+    for split in paths:
+        n = sum(1 for r in rows[split]
+                if any(p in r["output"][:60].lower() for p in NEG))
+        if n != len(rows[split]):
+            fail(f"negation_{split}: {len(rows[split]) - n} rows do not open "
+                 f"with a negation")
+        else:
+            ok(f"all {n} negation_{split} answers open with a negation")
+
+    # And they should shift the training mix, which was the whole diagnosis.
+    train = read_jsonl(os.path.join(PROCESSED, "train.jsonl"))
+    base = sum(1 for r in train if any(p in r["output"][:60].lower() for p in NEG))
+    before = 100 * base / len(train)
+    after = 100 * (base + len(rows["train"])) / (len(train) + len(rows["train"]))
+    ok(f"negations in the training mix: {before:.1f}% -> {after:.1f}%")
+    stats["negation"] = {"rows": {s: len(v) for s, v in rows.items()},
+                         "by_qa_type": counts,
+                         "negation_share_before_pct": round(before, 2),
+                         "negation_share_after_pct": round(after, 2)}
+
+
 def main() -> None:
     print("Validating processed datasets")
     check_sections()
@@ -435,6 +530,7 @@ def main() -> None:
     check_cases()
     check_schedule()
     check_splits()
+    check_negation()
 
     print(f"\n{'=' * 60}")
     print(f"{len(failures)} failures, {len(warnings)} warnings")
