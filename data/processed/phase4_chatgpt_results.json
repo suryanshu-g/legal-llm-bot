@@ -1,5 +1,5 @@
 {
-  "model": "chatgpt",
+  "model": "ChatGPT",
   "n": 44,
   "source_files": [
     "prompt_batch1_result.txt",
@@ -144,5 +144,7 @@
     "42": "CrPC Section 18, Code of Criminal Procedure, 1973, has no counterpart as a numbered section in the Bharatiya Nagarik Suraksha Sanhita, 2023; Special Metropolitan Magistrates were not separately re-enacted.",
     "43": "CrPC Section 19, Code of Criminal Procedure, 1973, has no counterpart as a numbered section in the Bharatiya Nagarik Suraksha Sanhita, 2023; separate subordination provisions for Metropolitan Magistrates were not re-enacted.",
     "44": "The charge should be framed under the IPC, Indian Penal Code, 1860, because the offence was committed before 1 July 2024, when the Bharatiya Nyaya Sanhita, 2023 came into force; the repeal-and-savings provision in BNS Section 358 preserves the application of the IPC to such offences."
-  }
+  },
+  "asked_on": "2026-09-19",
+  "note": "Unaided: no retrieval, no hint that the codes changed in 2024, two batches of 22 in separate fresh chats."
 }

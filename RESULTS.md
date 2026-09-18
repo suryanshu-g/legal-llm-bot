@@ -700,9 +700,10 @@ which is the comparison the whole project was built to make.
 
 ## Phase 4 — against a general-purpose LLM
 
-The 44 confusion questions, unaided, put to a general-purpose chatbot in two
-batches of 22 fresh chats, scored by `scripts/metrics.py` — the same code that
-scores this project's model. The other model was told to name the sections,
+The 44 confusion questions, unaided, put to **ChatGPT on 19 September 2026** in
+two batches of 22, each in a fresh chat, scored by `scripts/metrics.py` — the same
+code that scores this project's model. The exact date matters for reproducibility:
+these systems are updated continually, and a later version may answer differently. The other model was told to name the sections,
 because that is what the metric measures, but was not told that the codes changed
 in 2024 nor which answers were negative.
 
@@ -781,6 +782,5 @@ project.
 2. **The bot's per-kind breakdown is not yet measured**, so the decisive
    comparison — whether the bot is strong on `merged` and `split` where the general
    model collapses — is still unquantified. The notebook now computes and saves it.
-3. **Name and date the other model.** Which chatbot answered, and on what date,
-   belongs in the write-up: these systems change weekly, and the result is not
-   reproducible without it.
+3. ~~Name and date the other model.~~ Done: ChatGPT, 19 September 2026, recorded
+   above and in `data/processed/phase4_chatgpt_results.json`.
