@@ -242,3 +242,84 @@ Hub — no `HF_TOKEN` was set).
 base model was the intention; free Colab sessions kept timing out before the run
 finished, and the brief names small as the sanctioned fallback when compute is
 constrained. It should be reported as such, not glossed over.
+
+---
+
+## Phase 3 — the assembled bot
+
+`scripts/bot.py` is the whole assistant: assemble context, build the prompt the
+model was fine-tuned on, generate, cite. The one substantive addition over Phase
+2.5 is the fix that section identified — the counterparts of a provision are
+looked up deliberately in `mapping_table.csv` rather than hoped for from the
+embedder.
+
+Context is assembled in priority order, because it is truncated to a token
+budget: provisions the question names outright, then those provisions'
+counterparts, then similarity hits for questions phrased by subject rather than
+by section number. Each chunk opens with its own header (act, section, heading,
+counterpart), so truncating the tail of a long passage keeps the part that
+identifies the provision — which is what makes sharing one 430-token budget
+across up to four passages workable.
+
+### Did it close the gap? (`scripts/check_bot_context.py`)
+
+Whether every provision the gold answer cites is actually present in the
+assembled context:
+
+| Context assembly | Confusion set (44) | Test set (676) |
+|---|---|---|
+| similarity only, 1 passage | 15 / 44 — 34.1% | 93.6% |
+| similarity only, 3 passages | 35 / 44 — 79.5% | — |
+| similarity only, 5 passages | 38 / 44 — 86.4% | — |
+| **citations + concordance counterparts** | **43 / 44 — 97.7%** | **95.1%** |
+
+**The confusion set goes from 34% to 98% context completeness.** That was the
+one measured blocker Phase 2.5 left open, and it is closed. Both halves of a
+correspondence now appear together — for the BNSS 482 question the context
+carries `bnss_482`, `crpc_482` and `bnss_528`, which no similarity ranking was
+going to assemble on its own.
+
+This measures *context*, not answers. Whether the model uses what it is now
+shown is what `notebooks/run_bot.ipynb` reports.
+
+### Scope enforcement
+
+The project forbids the assistant from giving legal advice, suggesting ways to
+evade liability, or posing as an advocate. The model was trained to refuse, but
+a trained refusal is a tendency rather than a guarantee, so `bot.py` checks the
+question against a pattern list before it ever reaches the model. Verified
+locally: "be my lawyer", "how can I avoid being convicted", "tell me a
+loophole" and "should I plead guilty" are all refused, while "what does BNS
+Section 63 cover?" is answered normally. Every citation returned carries a
+`source_url`.
+
+### Known limitation: subject-phrased questions
+
+Asking by subject rather than by section number can surface a neighbouring
+provision. "Is theft bailable under the new law?" returns BNS 304 (*Snatching*),
+BNS 309 (*Robbery*) and IPC 378 — but not the First Schedule row that actually
+answers it. The cause is in the corpus rather than the code: BNS 304 opens
+"**Theft** is snatching if, in order to commit theft, the offender suddenly …",
+so on wording alone it is a better match for "theft" than BNS 303 (*Theft*),
+which reaches rank 5.
+
+Naming the provision fixes it completely — "Is an offence under BNS Section 303
+bailable?" pulls both `bns_303` and `schedule_bns_303`, because a citation match
+returns every chunk for that reference. All 50 `offence_classification`
+questions in the test set are phrased with the section number, which is why this
+does not show up in the table above.
+
+Two things were tried and rejected. An intent-aware boost preferring First
+Schedule chunks when a question mentions bailable/cognizable/triable does not
+help, because the schedule chunk is not in the candidate set at all — the
+mis-ranking happens one step earlier, between two section chunks. Widening to
+five passages was measured and gains +0.8% on test (95.1% → 95.9%) and nothing
+on the confusion set, while cutting each passage's share from ~107 to ~86
+tokens — the wrong trade for a model whose `section_text` score depends on
+reproducing statutory wording. The honest fix is a better embedder or a query
+rewrite step, and neither belongs in Phase 3.
+
+**Artifact:** `scripts/bot.py`, run from
+[`notebooks/run_bot.ipynb`](notebooks/run_bot.ipynb) or the command line
+(`python scripts/bot.py --sources-only "…"` works with no model at all, and
+reports the law itself rather than composing an answer).

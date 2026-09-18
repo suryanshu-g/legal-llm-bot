@@ -27,7 +27,7 @@ prosecutors and courts sits squarely inside public administration.
 
 ## Status
 
-**Phases 1, 1.5 and 2.5 (data + retrieval) are complete.** Training runs on Colab.
+**Phases 1 through 3 are complete — the bot runs end to end.** Training runs on Colab.
 
 | Deliverable | |
 |---|---|
@@ -60,9 +60,29 @@ project context.
 - **Phase 2.5** — retrieval index built; a second notebook,
   [`notebooks/finetune_flan_t5_contextaware.ipynb`](notebooks/finetune_flan_t5_contextaware.ipynb),
   fine-tunes the model to read a retrieved passage.
-- **Phase 3** — wire the retriever and the context-aware model into one bot.
+- **Phase 3** — the retriever and the context-aware model are wired into one
+  assistant, [`scripts/bot.py`](scripts/bot.py), driven by
+  [`notebooks/run_bot.ipynb`](notebooks/run_bot.ipynb).
 - **Phase 4** — run `confusion_test_set.jsonl` against both this bot and a
   general-purpose LLM to test the core claim; paper and video.
+
+### Asking it something
+
+```bash
+python scripts/bot.py "Which BNS section replaced IPC Section 302?"
+python scripts/bot.py --sources-only "Is an offence under BNS Section 303 bailable?"
+```
+
+Point `--model-dir` (or `$LEGAL_BOT_MODEL`) at the fine-tuned model to get a
+composed answer; without one the bot runs in sources-only mode and returns the
+retrieved law itself rather than inventing prose. Either way every answer carries
+its citations and the informational-only disclaimer.
+
+**The counterpart lookup is the Phase 3 result.** Phase 2.5 found retrieval
+barely helped the confusion set because 33 of its 44 answers name two or more
+provisions while the run supplied a single passage. Looking counterparts up in
+the concordance rather than hoping the embedder surfaces them takes context
+completeness on that set from **34% to 98%**.
 
 ## Layout
 
@@ -105,6 +125,8 @@ scripts/
   retrieve.py               reusable hybrid retriever (citations + dense)
   build_context_dataset.py  positive / distractor / no-context training data
   check_retrieval.py        retrieval recall@k, broken down by question type
+  bot.py                    the assistant: retrieve, answer, cite
+  check_bot_context.py      is the answer's law actually in the bot's context?
   validate_data.py          checks; non-zero exit on failure
 notebooks/
   finetune_flan_t5.ipynb    Phase 2: fine-tune, evaluate, save the model
@@ -114,6 +136,8 @@ notebooks/
                             Phase 2.5 light: flan-t5-small, resumes after a
                             Colab disconnect - the one to run on free Colab
   verify_model.ipynb        check a saved model and recover its metrics
+  run_bot.ipynb             Phase 3: the assembled bot, demo questions,
+                            scope checks, confusion-set comparison
   COLAB_SETUP.md            step-by-step guide to running it on Colab
 ```
 
@@ -135,6 +159,10 @@ python scripts/validate_data.py
 python scripts/build_retrieval_index.py   # ~4 min on CPU
 python scripts/check_retrieval.py         # recall@k sanity check
 python scripts/build_context_dataset.py
+
+# Phase 3: the bot
+python scripts/check_bot_context.py --compare   # is the answer's law in context?
+python scripts/bot.py --sources-only            # interactive, no model needed
 ```
 
 Every fetch is cached under `data/raw/`, so a rerun re-downloads nothing. Pass
