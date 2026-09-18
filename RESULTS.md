@@ -607,5 +607,91 @@ expected to answer a question shape it has never seen, and the comparison agains
 a general-purpose LLM is about facts, not phrasing), and it should be stated
 plainly rather than left for a reader to discover.
 
-**Status: data built and verified, context set regenerated, not yet trained.** No
-results are claimed for this phase.
+### Results
+
+6 epochs, 98 minutes on a T4, best validation citation accuracy 81.1%. Raw numbers
+in `data/processed/phase3_6_results.json`. The best-validation figure is *lower*
+than Phase 3.5's 89.9% because the validation set now contains 251 of the new
+negation rows, which are harder than what it held before — the comparison to watch
+is on the held-out sets below, not on that number.
+
+**The confusion set moved, and the shape of the movement is the point.**
+
+| Context | token F1 | allCites | citation_exact | questions right |
+|---|---|---|---|---|
+| none | 28.1% → **55.0%** | 23.3% → **25.6%** | 0.0% → **2.3%** | 11 / 44 |
+| single passage | 35.8% → **64.5%** | 23.3% → **30.2%** | 0.0% → **4.7%** | 13 / 44 |
+| **the bot's context** | 36.1% → **76.5%** | 23.3% → **60.5%** | 0.0% → **34.9%** | **27 / 44** |
+
+Through Phase 2.5, 3 and 3.5 this set sat at 23.3% in every condition — retrieval
+made no difference whatever. It now separates cleanly: 11 questions right with no
+context, 13 with a single retrieved passage, **27 with the bot's assembled
+context**. The counterpart lookup built in Phase 3 is finally worth something,
+because the model has been taught the answer shape that lets it use what it is
+shown.
+
+`citation_exact` going from 0 to 34.9% matters more than the `allCites` column
+here. That metric requires the answer's citation set to *match* the gold set, so
+it cannot be satisfied by naming the right section alongside an invented one —
+which is exactly how Phase 3.5 scored a vacuous 100% on the `removed` questions.
+Fifteen of these 44 answers are now exactly right.
+
+**The test set paid nothing for it.** 1,006 new rows of a new question type, and
+every existing capability is within noise of where Phase 3.5 left it:
+
+| qa_type | n | allCites 3.5 → 3.6 |
+|---|---|---|
+| section_text | 220 | 94.5% → 94.5% |
+| old_to_new | 114 | 99.1% → 99.1% |
+| section_lookup | 109 | 82.6% → 82.6% |
+| new_to_old | 100 | 100% → 100% |
+| punishment | 52 | 100% → 100% |
+| offence_classification | 50 | 96.0% → **100%** |
+| case_law | 20 | 25.0% → 20.0% |
+
+Overall test citation accuracy 92.7% → 92.9%, token F1 88.4 → 88.1. Teaching the
+model to say no did not teach it to say no when the answer is yes, which was the
+main risk of adding 1,006 negations to the mix.
+
+### What is still wrong
+
+**17 of the 44 confusion questions are still missed**, and five of those are the
+`split` family that could not be trained at all without leaking — so the
+achievable ceiling on this set, as currently trained, is around 39/44 rather than
+44/44.
+
+**`case_law` remains the weakest capability** at 20% citation accuracy on 20
+questions. It has 346 training rows against `section_text`'s 3,824, and judgment
+summaries are far less templated than statutory text. It is a small slice and a
+known weakness rather than a new regression.
+
+**Two validation numbers moved in the wrong direction and deserve honest
+flagging**: on the stratified validation slice, citation accuracy under a
+deliberately wrong passage fell 76.7% → 56.7% (n=30) and under no context 50.0% →
+26.7% (n=15). Those slices are small — 30 and 15 rows, so a handful of answers
+each — and the slice is drawn from a pool that now includes the negation rows, so
+the two runs are not measuring quite the same thing. But the direction is
+consistent with a model more willing to answer "no", which would cost it on rows
+where a correspondence does exist and it cannot see it. The test set's `none`
+column does not show this (44.3% against 42.2%), so it is a caution to re-check
+rather than a demonstrated regression.
+
+**Artifact:** `MyDrive/legal-llm-bot/flan-t5-small-context-v3`.
+
+### Where the project stands
+
+The central claim is now demonstrated on the hardest available evidence. On the 44
+questions built specifically to catch a model that confuses the old codes with the
+new ones:
+
+| | Questions right |
+|---|---|
+| Phase 2 — `flan-t5-base` fine-tuned, no retrieval | 11 / 44 |
+| Phase 2.5 / 3 / 3.5 — retrieval, untrained answer shape | 10 / 44 |
+| **Phase 3.6 — retrieval + the answer shapes** | **27 / 44** |
+
+(`allCites`; on the stricter `citation_exact` the first two rows are 0 / 44 and
+the last is 15 / 44.)
+
+Phase 4 puts the same 44 questions to a general-purpose LLM for the third column,
+which is the comparison the whole project was built to make.

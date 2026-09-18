@@ -27,9 +27,10 @@ prosecutors and courts sits squarely inside public administration.
 
 ## Status
 
-**Phases 1 through 3.5 are complete.** Retrieval takes the old-to-new
-correspondence from 0% to 99% on held-out questions. Phase 3.6, which teaches the
-model to answer "no", is built and awaiting a Colab run.
+**Phases 1 through 3.6 are complete.** Retrieval takes the old-to-new
+correspondence from 0% to 99% on held-out questions, and the 44 hardest
+old-versus-new questions from 10 right to 27. Phase 4 is the comparison against a
+general-purpose LLM.
 
 | Deliverable | |
 |---|---|
@@ -52,12 +53,13 @@ questions that matter most — what a provision became after 1 July 2024 — it 
 right in **0 of 214** cases in Phase 2 and is now right in **213 of 214**.
 Retrieval is within 0.5 F1 of its own oracle, so little is left to gain there.
 
-**What still does not work is the confusion set**, stuck at 23.3% through three
-runs. The cause is now identified and is a gap in the data rather than the
-architecture: 97.7% of its answers open with a negation, against 0.3% of the
-training answers, and 33 of its 44 questions are shapes the training set did not
-contain at all. Phase 3.6 adds them. Full numbers, the costs and the caveats in
-[`RESULTS.md`](RESULTS.md).
+**And the confusion set finally moved.** It sat at 23.3% through three runs
+because 97.7% of its answers open with a negation against 0.3% of the training
+answers — 33 of its 44 questions were shapes the training data did not contain at
+all. Adding those shapes (Phase 3.6) took it to **60.5%**, and for the first time
+the context assembly earns its keep on this set: 11 questions right with no
+context, 13 with a single retrieved passage, **27 with the bot's context**. Full
+numbers, the costs and the caveats in [`RESULTS.md`](RESULTS.md).
 
 Read [`data/DATA_REPORT.md`](data/DATA_REPORT.md) for how the data was verified and
 what is wrong with it. [`PROJECT_BRIEF.md`](PROJECT_BRIEF.md) holds the full
@@ -79,7 +81,8 @@ project context.
   Data rebuilt; the run itself is pending.
 - **Phase 3.6** — add the negation question shapes the training data lacked
   ([`scripts/build_negation_dataset.py`](scripts/build_negation_dataset.py)) and
-  retrain. Data built; the run itself is pending.
+  retrain. Done: the confusion set went from 10 to 27 of 44, at no cost to any
+  other capability.
 - **Phase 4** — run `confusion_test_set.jsonl` against both this bot and a
   general-purpose LLM to test the core claim; paper and video.
 

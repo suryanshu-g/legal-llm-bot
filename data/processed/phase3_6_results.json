@@ -1,0 +1,436 @@
+{
+  "run": "phase3.6 context-aware + negation shapes (light: flan-t5-small, resumable)",
+  "model": "google/flan-t5-small",
+  "epochs_run": 6.0,
+  "best_val_loss": 0.7704143524169922,
+  "best_val_citation_exact": 81.08108108108108,
+  "training_minutes": 98.0,
+  "train_rows": 12506,
+  "context_mix": {
+    "positive": 8746,
+    "none": 1255,
+    "distractor": 2505
+  },
+  "validation_by_context_type": [
+    {
+      "set": "positive",
+      "n": 105,
+      "exact_match": 46.666666666666664,
+      "f1": 90.31080534179013,
+      "citation_f1": 95.91148315867216,
+      "all_citations_present": 92.23300970873787,
+      "citation_exact": 90.29126213592232,
+      "n_with_citations": 103
+    },
+    {
+      "set": "distractor",
+      "n": 30,
+      "exact_match": 13.333333333333334,
+      "f1": 75.48391350276589,
+      "citation_f1": 71.42785189022723,
+      "all_citations_present": 56.666666666666664,
+      "citation_exact": 56.666666666666664,
+      "n_with_citations": 30
+    },
+    {
+      "set": "none",
+      "n": 15,
+      "exact_match": 0.0,
+      "f1": 65.20357106918426,
+      "citation_f1": 53.86831275720164,
+      "all_citations_present": 26.666666666666668,
+      "citation_exact": 26.666666666666668,
+      "n_with_citations": 15
+    }
+  ],
+  "test_headline": {
+    "none": {
+      "set": "none",
+      "n": 676,
+      "exact_match": 0.2958579881656805,
+      "f1": 58.761898120959394,
+      "citation_f1": 61.278773054246926,
+      "all_citations_present": 44.27934621099554,
+      "citation_exact": 42.94205052005943,
+      "n_with_citations": 673
+    },
+    "retrieved": {
+      "set": "retrieved",
+      "n": 676,
+      "exact_match": 43.63905325443787,
+      "f1": 88.08253975644803,
+      "citation_f1": 95.51514244468503,
+      "all_citations_present": 92.86775631500743,
+      "citation_exact": 91.53046062407132,
+      "n_with_citations": 673
+    },
+    "gold": {
+      "set": "gold",
+      "n": 676,
+      "exact_match": 46.30177514792899,
+      "f1": 88.58023966358294,
+      "citation_f1": 98.14063636341821,
+      "all_citations_present": 95.69093610698366,
+      "citation_exact": 94.35364041604755,
+      "n_with_citations": 673
+    }
+  },
+  "test_by_qa_type_and_condition": {
+    "case_law": {
+      "none": {
+        "set": "case_law",
+        "n": 20,
+        "exact_match": 0.0,
+        "f1": 42.93623087624208,
+        "citation_f1": 2.8571428571428568,
+        "all_citations_present": 0.0,
+        "citation_exact": 0.0,
+        "n_with_citations": 20
+      },
+      "retrieved": {
+        "set": "case_law",
+        "n": 20,
+        "exact_match": 0.0,
+        "f1": 75.49577516778609,
+        "citation_f1": 63.20306370259667,
+        "all_citations_present": 20.0,
+        "citation_exact": 15.0,
+        "n_with_citations": 20
+      },
+      "gold": {
+        "set": "case_law",
+        "n": 20,
+        "exact_match": 0.0,
+        "f1": 80.11765737245905,
+        "citation_f1": 68.93194135432712,
+        "all_citations_present": 25.0,
+        "citation_exact": 20.0,
+        "n_with_citations": 20
+      }
+    },
+    "new_provision": {
+      "none": {
+        "set": "new_provision",
+        "n": 2,
+        "exact_match": 0.0,
+        "f1": 26.57142857142857,
+        "citation_f1": 66.66666666666667,
+        "all_citations_present": 100.0,
+        "citation_exact": 0.0,
+        "n_with_citations": 2
+      },
+      "retrieved": {
+        "set": "new_provision",
+        "n": 2,
+        "exact_match": 50.0,
+        "f1": 75.0,
+        "citation_f1": 85.71428571428571,
+        "all_citations_present": 100.0,
+        "citation_exact": 50.0,
+        "n_with_citations": 2
+      },
+      "gold": {
+        "set": "new_provision",
+        "n": 2,
+        "exact_match": 50.0,
+        "f1": 75.0,
+        "citation_f1": 85.71428571428571,
+        "all_citations_present": 100.0,
+        "citation_exact": 50.0,
+        "n_with_citations": 2
+      }
+    },
+    "new_to_old": {
+      "none": {
+        "set": "new_to_old",
+        "n": 100,
+        "exact_match": 0.0,
+        "f1": 68.36774029856372,
+        "citation_f1": 50.832786885245895,
+        "all_citations_present": 2.0,
+        "citation_exact": 2.0,
+        "n_with_citations": 100
+      },
+      "retrieved": {
+        "set": "new_to_old",
+        "n": 100,
+        "exact_match": 68.0,
+        "f1": 96.80057985875771,
+        "citation_f1": 100.0,
+        "all_citations_present": 100.0,
+        "citation_exact": 100.0,
+        "n_with_citations": 100
+      },
+      "gold": {
+        "set": "new_to_old",
+        "n": 100,
+        "exact_match": 68.0,
+        "f1": 96.80057985875771,
+        "citation_f1": 100.0,
+        "all_citations_present": 100.0,
+        "citation_exact": 100.0,
+        "n_with_citations": 100
+      }
+    },
+    "offence_classification": {
+      "none": {
+        "set": "offence_classification",
+        "n": 50,
+        "exact_match": 0.0,
+        "f1": 67.20559368962164,
+        "citation_f1": 64.0,
+        "all_citations_present": 64.0,
+        "citation_exact": 64.0,
+        "n_with_citations": 50
+      },
+      "retrieved": {
+        "set": "offence_classification",
+        "n": 50,
+        "exact_match": 74.0,
+        "f1": 93.91598494617611,
+        "citation_f1": 100.0,
+        "all_citations_present": 100.0,
+        "citation_exact": 100.0,
+        "n_with_citations": 50
+      },
+      "gold": {
+        "set": "offence_classification",
+        "n": 50,
+        "exact_match": 74.0,
+        "f1": 94.1060142716893,
+        "citation_f1": 100.0,
+        "all_citations_present": 100.0,
+        "citation_exact": 100.0,
+        "n_with_citations": 50
+      }
+    },
+    "old_to_new": {
+      "none": {
+        "set": "old_to_new",
+        "n": 114,
+        "exact_match": 0.0,
+        "f1": 76.97136811259574,
+        "citation_f1": 51.60777297351026,
+        "all_citations_present": 3.508771929824561,
+        "citation_exact": 3.508771929824561,
+        "n_with_citations": 114
+      },
+      "retrieved": {
+        "set": "old_to_new",
+        "n": 114,
+        "exact_match": 73.6842105263158,
+        "f1": 98.59338190665675,
+        "citation_f1": 99.56140350877193,
+        "all_citations_present": 99.12280701754386,
+        "citation_exact": 99.12280701754386,
+        "n_with_citations": 114
+      },
+      "gold": {
+        "set": "old_to_new",
+        "n": 114,
+        "exact_match": 73.6842105263158,
+        "f1": 98.59338190665675,
+        "citation_f1": 99.56140350877193,
+        "all_citations_present": 99.12280701754386,
+        "citation_exact": 99.12280701754386,
+        "n_with_citations": 114
+      }
+    },
+    "punishment": {
+      "none": {
+        "set": "punishment",
+        "n": 52,
+        "exact_match": 0.0,
+        "f1": 44.90704220693018,
+        "citation_f1": 98.53658536585365,
+        "all_citations_present": 100.0,
+        "citation_exact": 94.23076923076923,
+        "n_with_citations": 52
+      },
+      "retrieved": {
+        "set": "punishment",
+        "n": 52,
+        "exact_match": 11.538461538461538,
+        "f1": 89.0395884251113,
+        "citation_f1": 100.0,
+        "all_citations_present": 100.0,
+        "citation_exact": 100.0,
+        "n_with_citations": 52
+      },
+      "gold": {
+        "set": "punishment",
+        "n": 52,
+        "exact_match": 11.538461538461538,
+        "f1": 89.0395884251113,
+        "citation_f1": 100.0,
+        "all_citations_present": 100.0,
+        "citation_exact": 100.0,
+        "n_with_citations": 52
+      }
+    },
+    "removed": {
+      "none": {
+        "set": "removed",
+        "n": 6,
+        "exact_match": 0.0,
+        "f1": 66.67396214601068,
+        "citation_f1": 100.0,
+        "all_citations_present": 100.0,
+        "citation_exact": 100.0,
+        "n_with_citations": 6
+      },
+      "retrieved": {
+        "set": "removed",
+        "n": 6,
+        "exact_match": 100.0,
+        "f1": 100.0,
+        "citation_f1": 100.0,
+        "all_citations_present": 100.0,
+        "citation_exact": 100.0,
+        "n_with_citations": 6
+      },
+      "gold": {
+        "set": "removed",
+        "n": 6,
+        "exact_match": 100.0,
+        "f1": 100.0,
+        "citation_f1": 100.0,
+        "all_citations_present": 100.0,
+        "citation_exact": 100.0,
+        "n_with_citations": 6
+      }
+    },
+    "section_lookup": {
+      "none": {
+        "set": "section_lookup",
+        "n": 109,
+        "exact_match": 0.0,
+        "f1": 91.05465969620177,
+        "citation_f1": 0.45871559633027525,
+        "all_citations_present": 0.0,
+        "citation_exact": 0.0,
+        "n_with_citations": 109
+      },
+      "retrieved": {
+        "set": "section_lookup",
+        "n": 109,
+        "exact_match": 71.55963302752293,
+        "f1": 96.73298789870994,
+        "citation_f1": 83.94244748583746,
+        "all_citations_present": 82.56880733944953,
+        "citation_exact": 82.56880733944953,
+        "n_with_citations": 109
+      },
+      "gold": {
+        "set": "section_lookup",
+        "n": 109,
+        "exact_match": 87.1559633027523,
+        "f1": 98.50665355252511,
+        "citation_f1": 99.08256880733946,
+        "all_citations_present": 99.08256880733946,
+        "citation_exact": 99.08256880733946,
+        "n_with_citations": 109
+      }
+    },
+    "section_text": {
+      "none": {
+        "set": "section_text",
+        "n": 220,
+        "exact_match": 0.0,
+        "f1": 31.393140130353594,
+        "citation_f1": 95.85287884774255,
+        "all_citations_present": 90.9090909090909,
+        "citation_exact": 89.0909090909091,
+        "n_with_citations": 220
+      },
+      "retrieved": {
+        "set": "section_text",
+        "n": 220,
+        "exact_match": 6.363636363636363,
+        "f1": 73.9800036044671,
+        "citation_f1": 97.8750351815367,
+        "all_citations_present": 94.54545454545455,
+        "citation_exact": 91.36363636363636,
+        "n_with_citations": 220
+      },
+      "gold": {
+        "set": "section_text",
+        "n": 220,
+        "exact_match": 6.363636363636363,
+        "f1": 73.9800036044671,
+        "citation_f1": 97.8750351815367,
+        "all_citations_present": 94.54545454545455,
+        "citation_exact": 91.36363636363636,
+        "n_with_citations": 220
+      }
+    },
+    "transition": {
+      "none": {
+        "set": "transition",
+        "n": 3,
+        "exact_match": 66.66666666666667,
+        "f1": 90.90909090909092,
+        "citation_f1": null,
+        "all_citations_present": null,
+        "citation_exact": null,
+        "n_with_citations": 0
+      },
+      "retrieved": {
+        "set": "transition",
+        "n": 3,
+        "exact_match": 33.333333333333336,
+        "f1": 72.94117647058825,
+        "citation_f1": null,
+        "all_citations_present": null,
+        "citation_exact": null,
+        "n_with_citations": 0
+      },
+      "gold": {
+        "set": "transition",
+        "n": 3,
+        "exact_match": 66.66666666666667,
+        "f1": 86.66666666666667,
+        "citation_f1": null,
+        "all_citations_present": null,
+        "citation_exact": null,
+        "n_with_citations": 0
+      }
+    }
+  },
+  "retrieval_top1_accuracy": 80.3,
+  "grounding_passage_in_context": 95.9,
+  "max_context_chunks": 4,
+  "confusion": {
+    "none": {
+      "set": "none",
+      "n": 44,
+      "exact_match": 0.0,
+      "f1": 55.016691151109534,
+      "citation_f1": 50.80648738154024,
+      "all_citations_present": 25.58139534883721,
+      "citation_exact": 2.3255813953488373,
+      "n_with_citations": 43
+    },
+    "single passage": {
+      "set": "single passage",
+      "n": 44,
+      "exact_match": 0.0,
+      "f1": 64.45917604486796,
+      "citation_f1": 61.62667238477684,
+      "all_citations_present": 30.232558139534884,
+      "citation_exact": 4.651162790697675,
+      "n_with_citations": 43
+    },
+    "bot context": {
+      "set": "bot context",
+      "n": 44,
+      "exact_match": 4.545454545454546,
+      "f1": 76.48393357048413,
+      "citation_f1": 79.62720960961863,
+      "all_citations_present": 60.46511627906977,
+      "citation_exact": 34.883720930232556,
+      "n_with_citations": 43
+    }
+  },
+  "model_artifact": "/content/drive/MyDrive/legal-llm-bot/flan-t5-small-context-v3"
+}
