@@ -1,0 +1,222 @@
+[
+  {
+    "n": 1,
+    "instruction": "Does BSA Section 27 deal with the same subject as Indian Evidence Act Section 27?",
+    "mapping_type": "collision"
+  },
+  {
+    "n": 2,
+    "instruction": "Does BSA Section 101 deal with the same subject as Indian Evidence Act Section 101?",
+    "mapping_type": "collision"
+  },
+  {
+    "n": 3,
+    "instruction": "Does BNSS Section 482 deal with the same subject as CrPC Section 482?",
+    "mapping_type": "collision"
+  },
+  {
+    "n": 4,
+    "instruction": "Does BSA Section 32 deal with the same subject as Indian Evidence Act Section 32?",
+    "mapping_type": "collision"
+  },
+  {
+    "n": 5,
+    "instruction": "Does BNS Section 306 deal with the same subject as IPC Section 306?",
+    "mapping_type": "collision"
+  },
+  {
+    "n": 6,
+    "instruction": "Does BNSS Section 438 deal with the same subject as CrPC Section 438?",
+    "mapping_type": "collision"
+  },
+  {
+    "n": 7,
+    "instruction": "Does BSA Section 26 deal with the same subject as Indian Evidence Act Section 26?",
+    "mapping_type": "collision"
+  },
+  {
+    "n": 8,
+    "instruction": "Does BNS Section 147 deal with the same subject as IPC Section 147?",
+    "mapping_type": "collision"
+  },
+  {
+    "n": 9,
+    "instruction": "Does BNS Section 107 deal with the same subject as IPC Section 107?",
+    "mapping_type": "collision"
+  },
+  {
+    "n": 10,
+    "instruction": "Does BNSS Section 167 deal with the same subject as CrPC Section 167?",
+    "mapping_type": "collision"
+  },
+  {
+    "n": 11,
+    "instruction": "Does BSA Section 114 deal with the same subject as Indian Evidence Act Section 114?",
+    "mapping_type": "collision"
+  },
+  {
+    "n": 12,
+    "instruction": "Does BSA Section 102 deal with the same subject as Indian Evidence Act Section 102?",
+    "mapping_type": "collision"
+  },
+  {
+    "n": 13,
+    "instruction": "Does BNSS Section 437 deal with the same subject as CrPC Section 437?",
+    "mapping_type": "collision"
+  },
+  {
+    "n": 14,
+    "instruction": "Does BNS Section 320 deal with the same subject as IPC Section 320?",
+    "mapping_type": "collision"
+  },
+  {
+    "n": 15,
+    "instruction": "Is voluntarily causing hurt still dealt with under IPC Section 323?",
+    "mapping_type": "merged"
+  },
+  {
+    "n": 16,
+    "instruction": "Is mischief still dealt with under IPC Section 425?",
+    "mapping_type": "merged"
+  },
+  {
+    "n": 17,
+    "instruction": "Is voluntarily causing grievous hurt still dealt with under IPC Section 325?",
+    "mapping_type": "merged"
+  },
+  {
+    "n": 18,
+    "instruction": "Is mischief causing damage to the amount of fifty rupees still dealt with under IPC Section 427?",
+    "mapping_type": "merged"
+  },
+  {
+    "n": 19,
+    "instruction": "Is lurking house-trespass or house-breaking by night in order to commit offence punishable with imprisonment still dealt with under IPC Section 457?",
+    "mapping_type": "merged"
+  },
+  {
+    "n": 20,
+    "instruction": "Is criminal breach of trust still dealt with under IPC Section 406?",
+    "mapping_type": "merged"
+  },
+  {
+    "n": 21,
+    "instruction": "Is definition of criminal conspiracy still dealt with under IPC Section 120A?",
+    "mapping_type": "merged"
+  },
+  {
+    "n": 22,
+    "instruction": "Is forgery for purpose of cheating still dealt with under IPC Section 468?",
+    "mapping_type": "merged"
+  },
+  {
+    "n": 23,
+    "instruction": "Is theft still dealt with under IPC Section 379?",
+    "mapping_type": "merged"
+  },
+  {
+    "n": 24,
+    "instruction": "Is defamation still dealt with under IPC Section 499?",
+    "mapping_type": "merged"
+  },
+  {
+    "n": 25,
+    "instruction": "Is confession to police officer not to be proved still dealt with under Indian Evidence Act Section 25?",
+    "mapping_type": "merged"
+  },
+  {
+    "n": 26,
+    "instruction": "Is cheating by personation still dealt with under IPC Section 416?",
+    "mapping_type": "merged"
+  },
+  {
+    "n": 27,
+    "instruction": "Is theft still dealt with under IPC Section 378?",
+    "mapping_type": "merged"
+  },
+  {
+    "n": 28,
+    "instruction": "Is robbery still dealt with under IPC Section 392?",
+    "mapping_type": "merged"
+  },
+  {
+    "n": 29,
+    "instruction": "Which single BNSS section replaced CrPC Section 265?",
+    "mapping_type": "split"
+  },
+  {
+    "n": 30,
+    "instruction": "Which single BNS section replaced IPC Section 171?",
+    "mapping_type": "split"
+  },
+  {
+    "n": 31,
+    "instruction": "Which single BNS section replaced IPC Section 228A?",
+    "mapping_type": "split"
+  },
+  {
+    "n": 32,
+    "instruction": "Which single BNS section replaced IPC Section 376?",
+    "mapping_type": "split"
+  },
+  {
+    "n": 33,
+    "instruction": "Which single BNS section replaced IPC Section 498A?",
+    "mapping_type": "split"
+  },
+  {
+    "n": 34,
+    "instruction": "Which BNS section corresponds to IPC Section 124A?",
+    "mapping_type": "removed"
+  },
+  {
+    "n": 35,
+    "instruction": "Which BNS section corresponds to IPC Section 377?",
+    "mapping_type": "removed"
+  },
+  {
+    "n": 36,
+    "instruction": "Which BNS section corresponds to IPC Section 497?",
+    "mapping_type": "removed"
+  },
+  {
+    "n": 37,
+    "instruction": "Which BNS section corresponds to IPC Section 309?",
+    "mapping_type": "removed"
+  },
+  {
+    "n": 38,
+    "instruction": "Which BNS section corresponds to IPC Section 153AA?",
+    "mapping_type": "removed"
+  },
+  {
+    "n": 39,
+    "instruction": "Which BNSS section corresponds to CrPC Section 8?",
+    "mapping_type": "removed"
+  },
+  {
+    "n": 40,
+    "instruction": "Which BNSS section corresponds to CrPC Section 16?",
+    "mapping_type": "removed"
+  },
+  {
+    "n": 41,
+    "instruction": "Which BNSS section corresponds to CrPC Section 17?",
+    "mapping_type": "removed"
+  },
+  {
+    "n": 42,
+    "instruction": "Which BNSS section corresponds to CrPC Section 18?",
+    "mapping_type": "removed"
+  },
+  {
+    "n": 43,
+    "instruction": "Which BNSS section corresponds to CrPC Section 19?",
+    "mapping_type": "removed"
+  },
+  {
+    "n": 44,
+    "instruction": "An FIR was registered on 20 June 2024 for an offence committed that week. The trial is going on now. Should the charge be framed under the IPC or the BNS?",
+    "mapping_type": "transition"
+  }
+]

@@ -37,3 +37,7 @@ wandb/
 Thumbs.db
 .vscode/
 .idea/
+
+# Phase 4: raw replies pasted back from other chatbots are working files; the
+# scored results in data/processed/phase4_*_results.json are the record.
+data/phase4/*_batch*.txt
