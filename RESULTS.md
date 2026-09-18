@@ -1,8 +1,24 @@
 # Results
 
-**Phase 2.5 (retrieval) is the headline: the old-to-new correspondence went
-from 0% to 93% correct on held-out questions. Phase 2, below, is the baseline
-that makes that number mean something.**
+**Read Phase 3.6 and Phase 4 first; the earlier phases are the baselines that
+make those numbers mean anything.**
+
+Two results carry the project.
+
+**Retrieval settles the correspondence questions.** On 676 held-out questions,
+asked what a provision became after 1 July 2024, the fine-tuned model without
+retrieval was right **0 times out of 214**. With retrieval it is right **213 of
+214**. Overall citation accuracy on the test set is 92.9%, against 42.2% unaided.
+
+**Against ChatGPT on the 44 hardest questions, the totals are close and the
+failure modes are not.** ChatGPT gets 25 of 44, this project 27. But ChatGPT
+scores 92.9% on same-number collisions and **7.1% where several old sections were
+merged into one**, because naming every absorbed section requires the concordance
+rather than general knowledge. It answers confidently and incompletely. That — not
+a difference in totals — is what this project demonstrates.
+
+Everything below is in the order it happened, including the runs that failed and
+what each one turned out to be wrong about.
 
 ## Phase 2 — fine-tuned Flan-T5-base, no retrieval
 
