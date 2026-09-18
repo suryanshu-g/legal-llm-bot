@@ -1,0 +1,704 @@
+<title>Section 302 Is Now 103</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Eczar:wght@500;700&family=Spectral:ital,wght@0,300;0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --paper:      #EFF0EC;
+    --paper-deep: #E4E6E0;
+    --card:       #F7F8F5;
+    --ink:        #16202F;
+    --ink-soft:   #4A5566;
+    --ink-faint:  #7C8698;
+    --rule:       #C9CCC3;
+    --rule-soft:  #DCDED7;
+    --old:        #8A6A2F;
+    --old-wash:   #EDE4D2;
+    --new:        #14625C;
+    --new-wash:   #DCE9E6;
+    --flag:       #8C2F2A;
+    --flag-wash:  #F0DEDC;
+
+    --display: "Eczar", "Iowan Old Style", Georgia, serif;
+    --body: "Spectral", Georgia, "Times New Roman", serif;
+    --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+
+    --measure: 66ch;
+    --gutter: clamp(20px, 5vw, 64px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #121821;
+      --paper-deep: #0D131A;
+      --card:       #1A222E;
+      --ink:        #E7E9E4;
+      --ink-soft:   #A8B1BF;
+      --ink-faint:  #77808F;
+      --rule:       #33404F;
+      --rule-soft:  #26313D;
+      --old:        #CFA85F;
+      --old-wash:   #302819;
+      --new:        #5FBCAE;
+      --new-wash:   #12302D;
+      --flag:       #DE8B84;
+      --flag-wash:  #331C1A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #121821;
+    --paper-deep: #0D131A;
+    --card:       #1A222E;
+    --ink:        #E7E9E4;
+    --ink-soft:   #A8B1BF;
+    --ink-faint:  #77808F;
+    --rule:       #33404F;
+    --rule-soft:  #26313D;
+    --old:        #CFA85F;
+    --old-wash:   #302819;
+    --new:        #5FBCAE;
+    --new-wash:   #12302D;
+    --flag:       #DE8B84;
+    --flag-wash:  #331C1A;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.62;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1120px; margin: 0 auto; padding-inline: var(--gutter); }
+  h1, h2, h3 { font-family: var(--display); font-weight: 700; text-wrap: balance; margin: 0; }
+  p { margin: 0; }
+  a { color: inherit; text-decoration-color: var(--rule); text-underline-offset: 3px; }
+  a:hover { text-decoration-color: currentColor; }
+  :focus-visible { outline: 2px solid var(--new); outline-offset: 3px; }
+
+  .eyebrow {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--ink-faint); font-weight: 500;
+  }
+
+  /* ---------- masthead: gazette double rule ---------- */
+  .masthead { border-bottom: 3px double var(--rule); }
+  .masthead .wrap {
+    padding-block: 14px; display: flex; flex-wrap: wrap; gap: 6px 20px;
+    align-items: baseline; justify-content: space-between;
+  }
+  .masthead strong {
+    font-family: var(--display); font-weight: 500; font-size: 15px;
+    letter-spacing: .04em;
+  }
+
+  /* ---------- hero ---------- */
+  .hero .wrap { padding-block: clamp(40px, 7vw, 76px) 34px; }
+  .hero h1 {
+    font-size: clamp(38px, 7.2vw, 74px); line-height: 1.02;
+    letter-spacing: -.02em; max-width: 19ch;
+  }
+  .hero h1 .n { color: var(--old); font-style: italic; font-family: var(--body); font-weight: 400; }
+  .hero h1 .m { color: var(--new); }
+  .lede { max-width: var(--measure); margin-top: 22px; font-size: 19px; color: var(--ink-soft); }
+  .lede b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- the three codes ---------- */
+  .codes { margin-top: 38px; border-top: 1px solid var(--rule); }
+  .code-row {
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    gap: 10px 18px; align-items: center;
+    padding-block: 13px; border-bottom: 1px solid var(--rule-soft);
+  }
+  .code-row .from { color: var(--old); }
+  .code-row .to { color: var(--new); }
+  .code-row .name { font-family: var(--display); font-weight: 500; font-size: 17px; }
+  .code-row .meta { font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); letter-spacing: .04em; }
+  .code-row .arrow { font-family: var(--mono); color: var(--ink-faint); font-size: 13px; }
+
+  /* ---------- section shell ---------- */
+  section.band { border-top: 3px double var(--rule); margin-top: clamp(48px, 8vw, 88px); }
+  section.band > .wrap { padding-block: clamp(34px, 5vw, 56px); }
+  .band h2 { font-size: clamp(26px, 3.6vw, 36px); letter-spacing: -.01em; margin-top: 10px; }
+  .band .intro { max-width: var(--measure); margin-top: 14px; color: var(--ink-soft); }
+
+  /* ---------- ask: docket tabs + panel ---------- */
+  .ask { display: grid; grid-template-columns: minmax(230px, 300px) 1fr; gap: 0; margin-top: 30px;
+         border: 1px solid var(--rule); background: var(--card); }
+  .docket { border-right: 1px solid var(--rule); display: flex; flex-direction: column; }
+  .docket-head {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--ink-faint); padding: 13px 16px 11px; border-bottom: 1px solid var(--rule-soft);
+  }
+  .tab {
+    appearance: none; background: none; border: 0; border-bottom: 1px solid var(--rule-soft);
+    font-family: var(--body); font-size: 15px; line-height: 1.4; color: var(--ink);
+    text-align: left; padding: 13px 16px 13px 14px; cursor: pointer;
+    border-left: 3px solid transparent; transition: background .15s, border-color .15s;
+  }
+  .tab:last-child { border-bottom: 0; }
+  .tab:hover { background: var(--paper-deep); }
+  .tab[aria-selected="true"] { border-left-color: var(--new); background: var(--paper-deep); font-weight: 600; }
+  .tab .k {
+    display: block; font-family: var(--mono); font-size: 9.5px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--ink-faint); margin-bottom: 4px; font-weight: 500;
+  }
+
+  .panel { padding: clamp(20px, 3vw, 32px); min-width: 0; }
+  .panel .q { font-family: var(--display); font-weight: 500; font-size: clamp(20px, 2.5vw, 26px); line-height: 1.24; }
+  .verdict {
+    display: inline-block; margin-top: 16px; font-family: var(--mono); font-size: 13px;
+    letter-spacing: .02em; padding: 5px 11px; background: var(--new-wash); color: var(--new);
+    border: 1px solid color-mix(in srgb, var(--new) 35%, transparent);
+  }
+  .verdict.neg { background: var(--flag-wash); color: var(--flag); border-color: color-mix(in srgb, var(--flag) 35%, transparent); }
+  .answer { margin-top: 18px; max-width: var(--measure); font-size: 17.5px; }
+  .refs { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 20px; }
+  .ref {
+    font-family: var(--mono); font-size: 11.5px; padding: 4px 8px;
+    border: 1px solid var(--rule); color: var(--ink-soft); background: var(--paper);
+  }
+  .ref.old { color: var(--old); border-color: color-mix(in srgb, var(--old) 40%, transparent); background: var(--old-wash); }
+  .ref.new { color: var(--new); border-color: color-mix(in srgb, var(--new) 40%, transparent); background: var(--new-wash); }
+
+  /* sources with marginal section numbers, like a statute book */
+  .sources { margin-top: 26px; border-top: 1px solid var(--rule); }
+  .sources > .eyebrow { display: block; padding-top: 14px; }
+  .src { display: grid; grid-template-columns: 8.5rem 1fr; gap: 4px 20px; padding-block: 15px;
+         border-bottom: 1px solid var(--rule-soft); }
+  .src:last-child { border-bottom: 0; }
+  .src .margin { font-family: var(--mono); font-size: 12px; color: var(--ink-faint); line-height: 1.5; }
+  .src .margin .num { display: block; color: var(--ink); font-size: 13px; }
+  .src .quote { font-size: 15px; color: var(--ink-soft); min-width: 0; }
+  .src .quote em { font-style: normal; color: var(--ink); font-weight: 600; }
+  .src .link { font-family: var(--mono); font-size: 11px; letter-spacing: .04em; margin-top: 7px; display: block; color: var(--ink-faint); }
+
+  .contrast { margin-top: 24px; border-left: 3px solid var(--flag); background: var(--flag-wash); padding: 16px 18px; }
+  .contrast .eyebrow { color: var(--flag); }
+  .contrast p { margin-top: 8px; font-size: 16px; }
+  .contrast .note { color: var(--ink-soft); font-size: 15px; font-style: italic; }
+
+  /* ---------- comparison bars ---------- */
+  .bars { margin-top: 30px; display: grid; gap: 2px; }
+  .bar-row { display: grid; grid-template-columns: minmax(150px, 1.1fr) 3fr; gap: 6px 20px;
+             padding-block: 14px; border-bottom: 1px solid var(--rule-soft); align-items: start; }
+  .bar-row:first-child { border-top: 1px solid var(--rule); }
+  .bar-label { font-family: var(--display); font-weight: 500; font-size: 16px; }
+  .bar-label small { display: block; font-family: var(--mono); font-weight: 400; font-size: 10.5px;
+                     letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); margin-top: 3px; }
+  .pair { display: grid; gap: 7px; min-width: 0; }
+  .track { display: grid; grid-template-columns: 5.2rem 1fr 3.4rem; gap: 10px; align-items: center;
+           font-family: var(--mono); font-size: 11px; }
+  .track .who { color: var(--ink-faint); letter-spacing: .06em; }
+  .track .fill { height: 11px; background: var(--rule-soft); }
+  .track .fill i { display: block; height: 100%; }
+  .track.gpt .fill i { background: var(--old); }
+  .track.sys .fill i { background: var(--new); }
+  .track .val { text-align: right; font-variant-numeric: tabular-nums; color: var(--ink); font-weight: 500; }
+  .bar-note { grid-column: 2; font-size: 14px; color: var(--flag); font-style: italic; }
+
+  /* ---------- split / tally ---------- */
+  .tally { margin-top: 30px; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1px;
+           background: var(--rule); border: 1px solid var(--rule); }
+  .tally div { background: var(--card); padding: 18px 16px; }
+  .tally .num { font-family: var(--display); font-size: 34px; line-height: 1; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .tally .num.sys { color: var(--new); }
+  .tally .num.gpt { color: var(--old); }
+  .tally .num.none { color: var(--flag); }
+  .tally p { font-size: 14.5px; color: var(--ink-soft); margin-top: 8px; }
+
+  /* ---------- pipeline ---------- */
+  .steps { margin-top: 28px; counter-reset: s; display: grid; gap: 1px; background: var(--rule);
+           border: 1px solid var(--rule); }
+  .step { background: var(--card); padding: 18px 20px 18px 62px; position: relative; }
+  .step::before {
+    counter-increment: s; content: counter(s, decimal-leading-zero);
+    position: absolute; left: 20px; top: 19px;
+    font-family: var(--mono); font-size: 12px; color: var(--new); letter-spacing: .06em;
+  }
+  .step h3 { font-size: 17px; font-weight: 500; }
+  .step p { font-size: 15.5px; color: var(--ink-soft); margin-top: 5px; max-width: 60ch; }
+
+  /* ---------- refusals ---------- */
+  .refusals { margin-top: 26px; display: grid; gap: 10px; }
+  .refusal { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: baseline;
+             border-left: 3px solid var(--flag); padding: 11px 14px; background: var(--card); }
+  .refusal .x { font-family: var(--mono); font-size: 11px; color: var(--flag); letter-spacing: .08em; }
+  .refusal q { font-size: 16px; quotes: "\201C" "\201D"; }
+
+  /* ---------- run it ---------- */
+  pre { margin: 18px 0 0; background: var(--paper-deep); border: 1px solid var(--rule);
+        padding: 15px 17px; overflow-x: auto; font-family: var(--mono); font-size: 13px;
+        line-height: 1.75; color: var(--ink); }
+  pre .c { color: var(--ink-faint); }
+
+  /* ---------- limits ---------- */
+  .limits { margin-top: 24px; display: grid; gap: 14px; max-width: 78ch; }
+  .limit { display: grid; grid-template-columns: auto 1fr; gap: 14px; }
+  .limit .mk { font-family: var(--mono); font-size: 11px; color: var(--flag); letter-spacing: .1em; padding-top: 4px; }
+  .limit h3 { font-size: 16.5px; font-weight: 600; font-family: var(--body); }
+  .limit p { font-size: 15.5px; color: var(--ink-soft); margin-top: 3px; }
+  .limit code { font-family: var(--mono); font-size: .88em; background: var(--paper-deep); padding: 1px 4px; }
+
+  /* ---------- footer ---------- */
+  footer { border-top: 3px double var(--rule); margin-top: clamp(48px, 8vw, 88px); background: var(--paper-deep); }
+  footer .wrap { padding-block: 30px 40px; display: grid; gap: 22px; }
+  .disclaimer { border: 1px solid color-mix(in srgb, var(--flag) 40%, transparent);
+                background: var(--flag-wash); padding: 15px 17px; max-width: 74ch; }
+  .disclaimer strong { font-family: var(--display); color: var(--flag); display: block; margin-bottom: 5px; }
+  .disclaimer p { font-size: 15px; color: var(--ink-soft); }
+  .colophon { font-size: 14px; color: var(--ink-faint); max-width: 74ch; }
+  .colophon a { color: var(--ink-soft); }
+
+  @media (max-width: 760px) {
+    .ask { grid-template-columns: 1fr; }
+    .docket { border-right: 0; border-bottom: 1px solid var(--rule); }
+    .docket .tabs { display: flex; overflow-x: auto; }
+    .docket .tab { border-bottom: 0; border-left: 0; border-top: 3px solid transparent;
+                   min-width: 200px; border-right: 1px solid var(--rule-soft); }
+    .docket .tab[aria-selected="true"] { border-left-color: transparent; border-top-color: var(--new); }
+    .src { grid-template-columns: 1fr; }
+    .code-row { grid-template-columns: 1fr; }
+    .code-row .arrow { display: none; }
+    .track { grid-template-columns: 4.4rem 1fr 3rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+<header class="masthead">
+  <div class="wrap">
+    <strong>The 2024 Concordance</strong>
+    <span class="eyebrow">Retrieval-grounded &middot; Indian criminal law &middot; Capstone project</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">In force 1 July 2024</p>
+    <h1>Section <span class="n">302</span> is now Section <span class="m">103</span>.</h1>
+    <p class="lede">
+      On 1 July 2024 India replaced its three foundational criminal codes. Every
+      section was renumbered, some were merged, a few were split, and a handful
+      were dropped altogether. <b>Ask a chatbot what a provision became and it
+      will often answer confidently and incompletely.</b> This assistant answers
+      from the official gazette and the government&rsquo;s own correspondence
+      tables, and shows you the source for every claim.
+    </p>
+
+    <div class="codes">
+      <div class="code-row">
+        <div><span class="name from">Indian Penal Code, 1860</span><br><span class="meta">511 sections &middot; repealed</span></div>
+        <div class="arrow">&#8594;</div>
+        <div><span class="name to">Bharatiya Nyaya Sanhita, 2023</span><br><span class="meta">358 sections &middot; BNS</span></div>
+      </div>
+      <div class="code-row">
+        <div><span class="name from">Code of Criminal Procedure, 1973</span><br><span class="meta">484 sections &middot; repealed</span></div>
+        <div class="arrow">&#8594;</div>
+        <div><span class="name to">Bharatiya Nagarik Suraksha Sanhita, 2023</span><br><span class="meta">531 sections &middot; BNSS</span></div>
+      </div>
+      <div class="code-row">
+        <div><span class="name from">Indian Evidence Act, 1872</span><br><span class="meta">167 sections &middot; repealed</span></div>
+        <div class="arrow">&#8594;</div>
+        <div><span class="name to">Bharatiya Sakshya Adhiniyam, 2023</span><br><span class="meta">170 sections &middot; BSA</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="band">
+  <div class="wrap">
+    <p class="eyebrow">Try it</p>
+    <h2>Pick a question. Read the answer, then check the source.</h2>
+    <p class="intro">
+      Eight questions of the kinds this assistant is built for. Each answer is
+      assembled from the concordance and the gazette text held in the
+      retrieval index &mdash; the citations below every answer link to the
+      document they came from, so nothing here has to be taken on trust.
+    </p>
+
+    <div class="ask">
+      <div class="docket">
+        <div class="docket-head">Questions</div>
+        <div class="tabs" role="tablist" aria-label="Example questions" id="tabs"></div>
+      </div>
+      <div class="panel" role="tabpanel" id="panel"></div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <p class="eyebrow">Measured, not asserted</p>
+    <h2>Why not just ask ChatGPT?</h2>
+    <p class="intro">
+      We did. The same 44 questions &mdash; held out of training from the start
+      &mdash; were put to ChatGPT on 19 September 2026 with no retrieval, and
+      scored by identical code. It got 25 right; this system got 27. That is not
+      the interesting part. <b>The two fail in opposite places.</b>
+    </p>
+
+    <div class="bars" id="bars"></div>
+
+    <p class="intro" style="margin-top:26px">
+      Scored on whether the answer names every provision the correct answer
+      names. ChatGPT knows what provisions are <em>about</em>, so it handles a
+      section number reused for a different offence. It does not have the
+      correspondence table, so when one new provision absorbed four old ones it
+      names the first and stops.
+    </p>
+
+    <div class="tally">
+      <div><div class="num">15</div><p>Both systems correct</p></div>
+      <div><div class="num sys">11</div><p>Only this system correct</p></div>
+      <div><div class="num gpt">9</div><p>Only ChatGPT correct</p></div>
+      <div><div class="num none">8</div><p>Neither correct</p></div>
+    </div>
+    <p class="intro" style="margin-top:18px">
+      They disagree on <b>20 of 43 questions</b>. Where the right answer is a
+      <em>set</em> of provisions &mdash; every section a new one absorbed, every
+      section an old one was split across &mdash; ChatGPT was right on 1 of 19
+      and this system on 10 of 19.
+    </p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <p class="eyebrow">How it answers</p>
+    <h2>Four steps, and the third one is the point.</h2>
+    <div class="steps">
+      <div class="step">
+        <h3>Read the question for citations</h3>
+        <p>&ldquo;BNSS Section 482&rdquo; and &ldquo;CrPC Section 482&rdquo; are
+        parsed out of the question directly, in every form they are written &mdash;
+        &ldquo;IPC 302&rdquo;, &ldquo;Section 65B of the Indian Evidence Act,
+        1872&rdquo;, &ldquo;Sections 415, 417, 418, 419 and 420&rdquo;.</p>
+      </div>
+      <div class="step">
+        <h3>Search 2,819 passages</h3>
+        <p>One passage per section, per First Schedule entry and per judgment,
+        embedded with <span style="font-family:var(--mono);font-size:.9em">bge-small-en-v1.5</span>
+        and searched with FAISS. Exact statutory citations are matched outright
+        and ranked above similarity hits, which took recall at three passages
+        from 26% to 96%.</p>
+      </div>
+      <div class="step">
+        <h3>Look the counterparts up deliberately</h3>
+        <p>Similarity search will never reliably surface the <em>counterpart</em>
+        of a provision: nothing about the words of IPC 302 resembles the words of
+        BNS 103 more than any other homicide section. So counterparts come from
+        the concordance instead. This single change took the share of hard
+        questions whose context held every provision needed from 34% to 98%.</p>
+      </div>
+      <div class="step">
+        <h3>Answer, cite, and refuse when out of scope</h3>
+        <p>Every answer carries the provisions it rests on and a link to the
+        gazette PDF or reported judgment. Requests for advice, for loopholes, or
+        to act as an advocate are refused before the model ever sees them.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <p class="eyebrow">Scope</p>
+    <h2>What it will not do.</h2>
+    <p class="intro">
+      This is an informational tool, not a lawyer. These are refused in code, not
+      merely discouraged by training &mdash; the question is checked against a
+      pattern list before it reaches the model, so a refusal cannot be talked
+      out of it.
+    </p>
+    <div class="refusals" id="refusals"></div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <p class="eyebrow">Run it yourself</p>
+    <h2>It works with no model loaded at all.</h2>
+    <p class="intro">
+      In sources-only mode the assistant returns the retrieved law itself rather
+      than composing prose &mdash; which, given the limitation below, is the mode
+      to trust.
+    </p>
+<pre><span class="c"># the retriever and concordance, no model required</span>
+python scripts/bot.py --sources-only "Which BNS section replaced IPC Section 302?"
+
+<span class="c"># with the fine-tuned model, if you have one saved</span>
+python scripts/bot.py --model-dir path/to/flan-t5-small-context "Is theft bailable?"
+
+<span class="c"># rebuild every dataset from the official sources</span>
+python scripts/scrape_acts.py &amp;&amp; python scripts/build_mapping_table.py
+python scripts/validate_data.py   <span class="c"># expects 0 failures</span></pre>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <p class="eyebrow">Honest limitations</p>
+    <h2>What is still wrong with it.</h2>
+    <p class="intro">
+      The retrieval layer and the concordance are verified against the gazette
+      and pass every validation check. The fine-tuned language model on top of
+      them is a different matter, and reading all 44 of its answers &mdash;
+      rather than only its scores &mdash; turned up three defects.
+    </p>
+    <div class="limits">
+      <div class="limit">
+        <div class="mk">01</div>
+        <div>
+          <h3>Section numbers drift to neighbours</h3>
+          <p>Asked about BNSS 482 the model discusses BNSS 481; asked about BSA
+          114 it discusses BSA 115. All nine of its failures on same-number
+          questions do this, with both provisions sitting in its context. A
+          77-million-parameter model copying a three-digit number.</p>
+        </div>
+      </div>
+      <div class="limit">
+        <div class="mk">02</div>
+        <div>
+          <h3>It corrupts statutory titles</h3>
+          <p>Including in answers scored correct: <code>BNS 324 (Mizachief)</code>,
+          <code>BNS 303 (Trash)</code> for theft. The citation is right and the
+          prose is not.</p>
+        </div>
+      </div>
+      <div class="limit">
+        <div class="mk">03</div>
+        <div>
+          <h3>It invents counterparts for repealed provisions</h3>
+          <p>Ten of ten times. Asked what replaced IPC 124A it answers
+          &ldquo;BNS Section 132 (Sedition)&rdquo;, when sedition was not carried
+          forward at all. The citation metric scored this 100% because the
+          correct answer cites only the old section &mdash; a reminder to read
+          outputs, not only scores.</p>
+        </div>
+      </div>
+      <div class="limit">
+        <div class="mk">04</div>
+        <div>
+          <h3>So every answer on this page is assembled, not generated</h3>
+          <p>The answers above are composed from the concordance and the gazette
+          text in the retrieval index, which are verified. None is the
+          fine-tuned model&rsquo;s prose. The two examples of model output on
+          this page are labelled as such.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="disclaimer">
+      <strong>This is not legal advice.</strong>
+      <p>
+        It describes what the law and reported decisions say, and cites its
+        source. It does not advise on any specific matter, does not suggest ways
+        to evade liability, and does not represent anyone. For advice on a real
+        matter, consult a qualified advocate. This is a student capstone project
+        and is not affiliated with, endorsed by, or published by any government
+        body.
+      </p>
+    </div>
+    <p class="colophon">
+      Statutory text from the Ministry of Home Affairs gazette PDFs; the
+      old-to-new correspondence from the Bureau of Police Research and
+      Development tables, cross-checked against the UP Police comparative table
+      and devgan.in; case summaries from Indian Kanoon. Under section 52(1)(q) of
+      the Copyright Act 1957 there is no copyright in the text of an Act of the
+      legislature or in a court judgment.
+      <br><br>
+      Built as a capstone for a Data Science &amp; Agentic AI programme, submitted
+      under Government and Public Administration. Code, datasets and the full
+      results, including the runs that failed, at
+      <a href="https://github.com/suryanshu-g/legal-llm-bot">github.com/suryanshu-g/legal-llm-bot</a>.
+    </p>
+  </div>
+</footer>
+
+<script>
+  const DATA = /*__DATA__*/;
+
+  const kindOf = (ref) => /^(BNS|BNSS|BSA)/.test(ref) ? "new"
+                        : /^(IPC|CrPC|Indian Evidence)/.test(ref) ? "old" : "";
+
+  const tabs = document.getElementById("tabs");
+  const panel = document.getElementById("panel");
+
+  DATA.items.forEach((item, i) => {
+    const b = document.createElement("button");
+    b.className = "tab";
+    b.type = "button";
+    b.setAttribute("role", "tab");
+    b.setAttribute("aria-selected", i === 0 ? "true" : "false");
+    b.id = "tab-" + item.id;
+    b.innerHTML = '<span class="k"></span>';
+    b.querySelector(".k").textContent = item.kind;
+    b.appendChild(document.createTextNode(item.chip));
+    b.addEventListener("click", () => select(i));
+    tabs.appendChild(b);
+  });
+
+  function select(i) {
+    const item = DATA.items[i];
+    [...tabs.children].forEach((t, j) =>
+      t.setAttribute("aria-selected", j === i ? "true" : "false"));
+
+    const neg = /^(No|None|There is no)/.test(item.verdict) ||
+                /^(No|None|There is no)/.test(item.answer);
+
+    const frag = document.createElement("div");
+
+    const q = document.createElement("p");
+    q.className = "q";
+    q.textContent = item.question;
+    frag.appendChild(q);
+
+    const v = document.createElement("span");
+    v.className = "verdict" + (neg ? " neg" : "");
+    v.textContent = item.verdict;
+    frag.appendChild(v);
+
+    const a = document.createElement("p");
+    a.className = "answer";
+    a.textContent = item.answer;
+    frag.appendChild(a);
+
+    const refs = document.createElement("div");
+    refs.className = "refs";
+    item.refs.forEach((r) => {
+      const s = document.createElement("span");
+      s.className = "ref " + kindOf(r);
+      s.textContent = r;
+      refs.appendChild(s);
+    });
+    frag.appendChild(refs);
+
+    if (item.contrast) {
+      const c = document.createElement("div");
+      c.className = "contrast";
+      const lab = document.createElement("p");
+      lab.className = "eyebrow";
+      lab.textContent = item.contrast.label;
+      const txt = document.createElement("p");
+      txt.textContent = "“" + item.contrast.text + "”";
+      const note = document.createElement("p");
+      note.className = "note";
+      note.textContent = item.contrast.note;
+      c.append(lab, txt, note);
+      frag.appendChild(c);
+    }
+
+    const box = document.createElement("div");
+    box.className = "sources";
+    const lab = document.createElement("p");
+    lab.className = "eyebrow";
+    lab.textContent = "Sources — " + item.sources.length +
+      (item.sources.length === 1 ? " document" : " documents");
+    box.appendChild(lab);
+
+    item.sources.forEach((s) => {
+      const row = document.createElement("div");
+      row.className = "src";
+
+      const m = document.createElement("div");
+      m.className = "margin";
+      const num = document.createElement("span");
+      num.className = "num";
+      num.textContent = s.ref;
+      m.appendChild(num);
+      m.appendChild(document.createTextNode(s.act));
+
+      const qt = document.createElement("div");
+      qt.className = "quote";
+      if (s.title) {
+        const em = document.createElement("em");
+        em.textContent = s.title + ". ";
+        qt.appendChild(em);
+      }
+      qt.appendChild(document.createTextNode(s.text));
+      const link = document.createElement("a");
+      link.className = "link";
+      link.href = s.url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = s.name + " ↗";
+      qt.appendChild(link);
+
+      row.append(m, qt);
+      box.appendChild(row);
+    });
+    frag.appendChild(box);
+
+    panel.replaceChildren(...frag.childNodes);
+  }
+
+  // comparison bars, drawn to a single 0-100 scale
+  const KINDS = [
+    { label: "Same number, different subject", sub: "collision · n=14", gpt: 92.9, sys: 35.7 },
+    { label: "Several sections merged into one", sub: "merged · n=14", gpt: 7.1, sys: 71.4 },
+    { label: "One section split across several", sub: "split · n=5", gpt: 0, sys: 20.0 },
+    { label: "Repealed, no counterpart", sub: "removed · n=10", gpt: 0, sys: 0,
+      note: "Both invent a replacement. Scored 100% by a subset test that the correct answer — “there is none” — cannot fail." }
+  ];
+  const bars = document.getElementById("bars");
+  KINDS.forEach((k) => {
+    const row = document.createElement("div");
+    row.className = "bar-row";
+    const lab = document.createElement("div");
+    lab.className = "bar-label";
+    lab.textContent = k.label;
+    const sub = document.createElement("small");
+    sub.textContent = k.sub;
+    lab.appendChild(sub);
+
+    const pair = document.createElement("div");
+    pair.className = "pair";
+    [["ChatGPT", "gpt", k.gpt], ["This system", "sys", k.sys]].forEach(([who, cls, val]) => {
+      const t = document.createElement("div");
+      t.className = "track " + cls;
+      const w = document.createElement("span");
+      w.className = "who";
+      w.textContent = who;
+      const f = document.createElement("span");
+      f.className = "fill";
+      const i = document.createElement("i");
+      i.style.width = Math.max(val, 0.6) + "%";
+      f.appendChild(i);
+      const v = document.createElement("span");
+      v.className = "val";
+      v.textContent = val.toFixed(1) + "%";
+      t.append(w, f, v);
+      pair.appendChild(t);
+    });
+
+    row.append(lab, pair);
+    bars.appendChild(row);
+    if (k.note) {
+      const n = document.createElement("p");
+      n.className = "bar-note";
+      n.textContent = k.note;
+      row.appendChild(n);
+    }
+  });
+
+  // refusals
+  const refs = document.getElementById("refusals");
+  DATA.refusals.forEach((r) => {
+    const d = document.createElement("div");
+    d.className = "refusal";
+    const x = document.createElement("span");
+    x.className = "x";
+    x.textContent = "REFUSED";
+    const q = document.createElement("q");
+    q.textContent = r;
+    d.append(x, q);
+    refs.appendChild(d);
+  });
+
+  select(0);
+</script>

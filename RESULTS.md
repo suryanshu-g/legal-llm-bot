@@ -800,8 +800,16 @@ ChatGPT.
 |---|---|---|---|---|
 | `collision` — same number, different subject | 14 | **92.9%** | 35.7% | ChatGPT, heavily |
 | `merged` — several old sections into one | 14 | 7.1% | **71.4%** | the bot, heavily |
-| `removed` — repealed, no counterpart | 10 | **100%** | **100%** | tie |
+| `removed` — repealed, no counterpart | 10 | 100%\* | 100%\* | **both wrong** |
 | `split` — one old section across several | 5 | 0.0% | 20.0% | neither works |
+
+**\* The `removed` row is a metric artifact, and both systems fail it.** The gold
+answer is "None — this provision has no counterpart", which cites only the old
+section, so an answer that names the old section and then invents a new one passes
+the subset test. Reading the outputs: **10 of 10 of this bot's answers assert a
+correspondence that does not exist**, including "IPC Section 124A corresponds to
+BNS Section 132 (Sedition)" when sedition was not carried forward at all.
+`citation_exact` on this slice is **0 of 10**. Do not quote the 100%.
 
 ### The two systems fail on opposite axes
 
@@ -865,8 +873,27 @@ figure is a rough ceiling for what that would buy.
    ChatGPT.
 2. ~~Measure the bot's per-kind breakdown.~~ Done, and it is the finding: the bot
    takes `merged` 71.4% to 7.1% while losing `collision` 35.7% to 92.9%.
-3. **The bot's `collision` weakness is worth one more look.** 35.7% is low given
-   that both provisions are in its context, and the BNSS 481-for-482 slip suggests
-   generation error rather than retrieval error. Not investigated.
+3. **The generated prose is not trustworthy, independently of the citation
+   scores.** Reading all 44 answers rather than only their scores turns up three
+   defects that the metrics do not capture, and they are the most important
+   finding on this page for anyone thinking of using the output:
+
+   * **Section numbers drift.** All 9 collision failures answer about a
+     *neighbouring* section: asked about BNSS 482 it discusses BNSS 481, asked
+     about BSA 114 it discusses BSA 115, asked about BNS 320 it discusses BNS 330.
+     The offsets are +1 (four times), +2 (three), −1 and +10. Both provisions were
+     in its context, so this is generation, not retrieval: a 77M-parameter model
+     copying a three-digit number it has been shown.
+   * **Statutory titles are corrupted**, including in answers scored correct:
+     "BNS Section 324 (Mizachief)", "BNS Section 303 (Trash)" for theft,
+     "BNS Section 356 (Deframatio…)", and "BNS Section 2 (Adulteration of rape)".
+   * **It invents correspondences for repealed provisions**, as above.
+
+   **Consequence for the project:** the *retrieval and concordance layer* is sound
+   and verified — 0 validation failures, every passage carrying a gazette URL — but
+   the small model's sentences are not publishable as legal information. Any demo
+   or interface should present the retrieved provisions and the concordance
+   directly, and label anything the fine-tuned model generated as such. That is
+   how the frontend in `frontend/` is built.
 4. ~~Name and date the other model.~~ Done: ChatGPT, 19 September 2026, recorded
    above and in `data/processed/phase4_chatgpt_results.json`.

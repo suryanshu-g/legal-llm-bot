@@ -1,0 +1,293 @@
+{
+ "items": [
+  {
+   "id": "ipc302",
+   "chip": "Which BNS section replaced IPC 302?",
+   "question": "Which BNS section replaced IPC Section 302?",
+   "kind": "Old → new",
+   "verdict": "BNS §103",
+   "answer": "IPC §302 (Punishment for murder) corresponds to BNS §103 (Punishment for murder). The Bharatiya Nyaya Sanhita, 2023 replaced the Indian Penal Code, 1860 with effect from 1 July 2024.",
+   "refs": [
+    "IPC §302 — Punishment for murder",
+    "BNS §103 — Punishment for murder"
+   ],
+   "sources": [
+    {
+     "ref": "IPC §302",
+     "act": "Indian Penal Code, 1860",
+     "title": "Punishment for murder",
+     "name": "IPC 1860, Section 302",
+     "url": "https://devgan.in/ipc/section/302/",
+     "text": "IPC 1860, Section 302 - Punishment for murder (replaced by BNS 2023 Section 103) Whoever commits murder shall be punished with death, or imprisonment for life, and shall also be liable to fine."
+    },
+    {
+     "ref": "BNS §103",
+     "act": "Bharatiya Nyaya Sanhita, 2023",
+     "title": "Punishment for murder",
+     "name": "BNS 2023, Section 103",
+     "url": "https://www.mha.gov.in/sites/default/files/2024-04/250883_english_01042024.pdf",
+     "text": "BNS 2023, Section 103 - Punishment for murder (corresponds to IPC 1860 Section 302) Chapter 6: Offences Affecting The Human Body 103. (1) Whoever commits murder shall be punished with death or imprisonment for life, and shall also be liable to fine. (2) When a group of five or more persons acting in concert commits murder on the ground of race, caste or community, sex, place of birth, language, personal belief or any other similar ground each member of such group shall be punished with death or with imprisonment for life, and shall also be liable to fine."
+    }
+   ]
+  },
+  {
+   "id": "mischief",
+   "chip": "Is mischief still under IPC 425?",
+   "question": "Is mischief still dealt with under IPC Section 425?",
+   "kind": "Merged — several sections into one",
+   "verdict": "No — and four old sections were folded together",
+   "answer": "No. The Indian Penal Code, 1860 was repealed with effect from 1 July 2024. IPC §425 (Mischief) now corresponds to BNS §324 (Mischief), which consolidates IPC §425, IPC §426, IPC §427, IPC §440 into a single provision.",
+   "refs": [
+    "BNS §324 — Mischief",
+    "IPC §425 — Mischief",
+    "IPC §426 — Punishment for mischief",
+    "IPC §427 — Mischief causing damage to the amount of fifty rupees",
+    "IPC §440 — Mischief committed after preparation made for causing death or hurt"
+   ],
+   "sources": [
+    {
+     "ref": "BNS §324",
+     "act": "Bharatiya Nyaya Sanhita, 2023",
+     "title": "Mischief",
+     "name": "BNS 2023, Section 324",
+     "url": "https://www.mha.gov.in/sites/default/files/2024-04/250883_english_01042024.pdf",
+     "text": "BNS 2023, Section 324 - Mischief (corresponds to IPC 1860 Section 425, IPC 1860 Section 426, IPC 1860 Section 427, IPC 1860 Section 440) Chapter 17: Offences Against Property 324. (1) Whoever with intent to cause, or knowing that he is likely to cause, wrongful loss or damage to the public or to any person, causes the destruction of any property, or any such change in any property or in the situation thereof as destroys or diminishes its value or utility, or affects it injuriously, commits mischief. Explanation 1.—It is not essential to the offence of mischief that the offender should intend t"
+    },
+    {
+     "ref": "IPC §425",
+     "act": "Indian Penal Code, 1860",
+     "title": "Mischief",
+     "name": "IPC 1860, Section 425",
+     "url": "https://devgan.in/ipc/section/425/",
+     "text": "IPC 1860, Section 425 - Mischief (replaced by BNS 2023 Section 324) Whoever with intent to cause, or knowing that he is likely to cause, wrongful loss or damage to the public or to any person, causes the destruction of any property, or any such change in any property or in the situation thereof as destroys or diminishes its value or utility, or affects it injuriously, commits \"mischief\". Explanations - It is not essential to the offence of mischief that the offender should intend to cause loss or damage to the owner of the property injured or destroyed. It is sufficient if he intends to cause,"
+    },
+    {
+     "ref": "IPC §426",
+     "act": "Indian Penal Code, 1860",
+     "title": "Punishment for mischief",
+     "name": "IPC 1860, Section 426",
+     "url": "https://devgan.in/ipc/section/426/",
+     "text": "IPC 1860, Section 426 - Punishment for mischief (replaced by BNS 2023 Section 324) Whoever commits mischief shall be punished with imprisonment of either description for a term which may extend to three months, or with fine, or with both."
+    },
+    {
+     "ref": "IPC §427",
+     "act": "Indian Penal Code, 1860",
+     "title": "Mischief causing damage to the amount of fifty rupees",
+     "name": "IPC 1860, Section 427",
+     "url": "https://devgan.in/ipc/section/427/",
+     "text": "IPC 1860, Section 427 - Mischief causing damage to the amount of fifty rupees (replaced by BNS 2023 Section 324) Whoever commits mischief and thereby causes loss or damage to the amount of fifty rupees or upwards, shall be punished with imprisonment of either description for a term which may extend to two years, or with fine, or with both."
+    }
+   ],
+   "contrast": {
+    "label": "ChatGPT, asked the same question",
+    "text": "No; IPC Section 425 is repealed for new offences from 1 July 2024, and the definition of mischief is now in Section 324(1) of the Bharatiya Nyaya Sanhita, 2023.",
+    "note": "Correct as far as it goes, and silent on IPC §426, §427 and §440, which the same new provision absorbed. Nothing in the reply suggests it is partial."
+   }
+  },
+  {
+   "id": "sedition",
+   "chip": "What replaced IPC 124A (sedition)?",
+   "question": "Which BNS section corresponds to IPC Section 124A?",
+   "kind": "Repealed — no counterpart",
+   "verdict": "None",
+   "answer": "None. IPC §124A (Sedition) has no counterpart in the Bharatiya Nyaya Sanhita, 2023. The official BPRD correspondence table lists no BNS equivalent for it, so any section number offered in reply is wrong by construction.",
+   "refs": [
+    "IPC §124A — Sedition"
+   ],
+   "sources": [
+    {
+     "ref": "IPC §124A",
+     "act": "Indian Penal Code, 1860",
+     "title": "Sedition",
+     "name": "IPC 1860, Section 124A",
+     "url": "https://devgan.in/ipc/section/124A/",
+     "text": "IPC 1860, Section 124A - Sedition Whoever by words, either spoken or written, or by signs, or by visible representation, or otherwise, brings or attempts to bring into hatred or contempt, or excites or attempts to excite disaffection towards, the Government established by law in India, a shall be punished with imprisonment for life, to which fine may be added, or with imprisonment which may extend to three years, to which fine may be added, or with fine. Explanations - The expression \"disaffection\" includes disloyalty and all feelings of enmity. - Comments expressing disapprobation of the meas"
+    }
+   ]
+  },
+  {
+   "id": "s482",
+   "chip": "Is BNSS 482 the same as CrPC 482?",
+   "question": "Does BNSS Section 482 deal with the same subject as CrPC Section 482?",
+   "kind": "Collision — same number, different subject",
+   "verdict": "No — the number was reused",
+   "answer": "No. CrPC §482 (Saving of inherent power of High Court) corresponds to BNSS §528, not to BNSS §482. BNSS §482 is a different provision entirely — Direction for grant of bail to person apprehending arrest — which corresponds to CrPC §438.",
+   "refs": [
+    "CrPC §482 — Saving of inherent power of High Court",
+    "BNSS §528 — Saving of inherent powers of High Court",
+    "BNSS §482 — Direction for grant of bail to person apprehending arrest",
+    "CrPC §438 — Direction for grant of bail to person apprehending arrest"
+   ],
+   "sources": [
+    {
+     "ref": "CrPC §482",
+     "act": "Code of Criminal Procedure, 1973",
+     "title": "Saving of inherent power of High Court",
+     "name": "CrPC 1973, Section 482",
+     "url": "https://devgan.in/crpc/section/482/",
+     "text": "CrPC 1973, Section 482 - Saving of inherent power of High Court (replaced by BNSS 2023 Section 528) Nothing in this Code shall be deemed to limit or affect the inherent powers of the High Court to make such orders as may be necessary to give effect to any order this Code, or to prevent abuse of the process of any Court or otherwise to secure the ends of justice."
+    },
+    {
+     "ref": "BNSS §528",
+     "act": "Bharatiya Nagarik Suraksha Sanhita, 2023",
+     "title": "Saving of inherent powers of High Court",
+     "name": "BNSS 2023, Section 528",
+     "url": "https://www.mha.gov.in/sites/default/files/2024-04/250884_2_english_01042024.pdf",
+     "text": "BNSS 2023, Section 528 - Saving of inherent powers of High Court (corresponds to CrPC 1973 Section 482) Chapter 39: Miscellaneous 528. Nothing in this Sanhita shall be deemed to limit or affect the inherent powers of the High Court to make such orders as may be necessary to give effect to any order under this Sanhita, or to prevent abuse of the process of any Court or otherwise to secure the ends of justice."
+    },
+    {
+     "ref": "BNSS §482",
+     "act": "Bharatiya Nagarik Suraksha Sanhita, 2023",
+     "title": "Direction for grant of bail to person apprehending arrest",
+     "name": "BNSS 2023, Section 482",
+     "url": "https://www.mha.gov.in/sites/default/files/2024-04/250884_2_english_01042024.pdf",
+     "text": "BNSS 2023, Section 482 - Direction for grant of bail to person apprehending arrest (corresponds to CrPC 1973 Section 438) Chapter 35: Provisions As To Bail And Bonds 482. (1) When any person has reason to believe that he may be arrested on an accusation of having committed a non-bailable offence, he may apply to the High Court or the Court of Session for a direction under this section; and that Court may, if it thinks fit, direct that in the event of such arrest, he shall be released on bail. (2) When the High Court or the Court of Session makes a direction under sub-section (1), it may includ"
+    }
+   ]
+  },
+  {
+   "id": "theft",
+   "chip": "Is theft bailable under the BNS?",
+   "question": "Is an offence under BNS Section 303 bailable?",
+   "kind": "Classification — BNSS First Schedule",
+   "verdict": "Cognizable · Non-bailable",
+   "answer": "Under the First Schedule to the BNSS, an offence under BNS §303 (Theft) is cognizable and non-bailable, triable by Any Magistrate. Punishment: Rigorous imprisonment for not be less than 1 year but which may extend to 5 years and fine.",
+   "refs": [
+    "BNS §303 — Theft",
+    "BNSS First Schedule"
+   ],
+   "sources": [
+    {
+     "ref": "BNS §303",
+     "act": "Bharatiya Nyaya Sanhita, 2023",
+     "title": "Theft",
+     "name": "BNS 2023, Section 303",
+     "url": "https://www.mha.gov.in/sites/default/files/2024-04/250883_english_01042024.pdf",
+     "text": "BNS 2023, Section 303 - Theft (corresponds to IPC 1860 Section 378, IPC 1860 Section 379) Chapter 17: Offences Against Property 303. (1) Whoever, intending to take dishonestly any movable property out of the possession of any person without that person's consent, moves that property in order to such taking, is said to commit theft. Explanation 1.—A thing so long as it is attached to the earth, not being movable property, is not the subject of theft; but it becomes capable of being the subject of theft as soon as it is severed from the earth. Explanation 2.—A moving effected by the same act whi"
+    },
+    {
+     "ref": "BNSS First Schedule",
+     "act": "Bharatiya Nagarik Suraksha Sanhita, 2023",
+     "title": "Classification of the offence under BNS §303",
+     "name": "BNSS 2023, First Schedule",
+     "url": "https://www.mha.gov.in/sites/default/files/2024-04/250884_2_english_01042024.pdf",
+     "text": "BNSS First Schedule - classification of the offence under BNS Section 303 (Theft) Section 303(2) - Theft. Punishment: Rigorous imprisonment for not be less than 1 year but which may extend to 5 years and fine. Cognizable. Non-bailable. Triable by: Any Magistrate. Section 303(2) - Where value of property is less than 5,000 rupees. Punishment: Upon return of the value of property or restoration of the stolen property, shall be punished with community service. Non-cognizable. Bailable. Triable by: Any Magistrate."
+    }
+   ]
+  },
+  {
+   "id": "bns115",
+   "chip": "What did BNS 115 replace?",
+   "question": "Which IPC sections correspond to BNS Section 115?",
+   "kind": "New → old",
+   "verdict": "Two IPC sections",
+   "answer": "BNS §115 (Voluntarily causing hurt) corresponds to IPC §321 and IPC §323. No single IPC section accounts for it on its own.",
+   "refs": [
+    "BNS §115 — Voluntarily causing hurt",
+    "IPC §321 — Voluntarily causing hurt",
+    "IPC §323 — Punishment for voluntarily causing hurt"
+   ],
+   "sources": [
+    {
+     "ref": "BNS §115",
+     "act": "Bharatiya Nyaya Sanhita, 2023",
+     "title": "Voluntarily causing hurt",
+     "name": "BNS 2023, Section 115",
+     "url": "https://www.mha.gov.in/sites/default/files/2024-04/250883_english_01042024.pdf",
+     "text": "BNS 2023, Section 115 - Voluntarily causing hurt (corresponds to IPC 1860 Section 321, IPC 1860 Section 323) Chapter 6: Offences Affecting The Human Body 115. (1) Whoever does any act with the intention of thereby causing hurt to any person, or with the knowledge that he is likely thereby to cause hurt to any person, and does thereby cause hurt to any person, is said \"voluntarily to cause hurt\". (2) Whoever, except in the case provided for by sub-section (1) of section 122 voluntarily causes hurt, shall be punished with imprisonment of either description for a term which may extend to one year"
+    },
+    {
+     "ref": "IPC §321",
+     "act": "Indian Penal Code, 1860",
+     "title": "Voluntarily causing hurt",
+     "name": "IPC 1860, Section 321",
+     "url": "https://devgan.in/ipc/section/321/",
+     "text": "IPC 1860, Section 321 - Voluntarily causing hurt (replaced by BNS 2023 Section 115) Whoever does any act with the intention of thereby causing hurt to any person, or with the knowledge that he is likely thereby to cause hurt to any person, and does thereby cause hurt to any person, is said \"voluntarily to cause hurt\"."
+    },
+    {
+     "ref": "IPC §323",
+     "act": "Indian Penal Code, 1860",
+     "title": "Punishment for voluntarily causing hurt",
+     "name": "IPC 1860, Section 323",
+     "url": "https://devgan.in/ipc/section/323/",
+     "text": "IPC 1860, Section 323 - Punishment for voluntarily causing hurt (replaced by BNS 2023 Section 115) Whoever, except in the case provided for by section 334, voluntarily causes hurt, shall be punished with imprisonment of either description for a term which may extend to one year, or with fine which may extend to one thousand rupees, or with both."
+    }
+   ]
+  },
+  {
+   "id": "split171",
+   "chip": "What single BNS section replaced IPC 171?",
+   "question": "Which single BNS section replaced IPC Section 171?",
+   "kind": "Split — one section across several",
+   "verdict": "There is no single one",
+   "answer": "There is no single one. IPC §171 (Wearing garb or carrying token used by public servant with fraudulent intent) was split across BNS §177, BNS §205. Citing only one of them states the position incompletely.",
+   "refs": [
+    "IPC §171 — Wearing garb or carrying token used by public servant with fraudulent intent",
+    "BNS §177 — Failure to keep election accounts",
+    "BNS §205 — Wearing garb or carrying token used by public servant with fraudulent intent"
+   ],
+   "sources": [
+    {
+     "ref": "IPC §171",
+     "act": "Indian Penal Code, 1860",
+     "title": "Wearing garb or carrying token used by public servant with fraudulent intent",
+     "name": "IPC 1860, Section 171",
+     "url": "https://devgan.in/ipc/section/171/",
+     "text": "IPC 1860, Section 171 - Wearing garb or carrying token used by public servant with fraudulent intent (replaced by BNS 2023 Section 177, BNS 2023 Section 205) Whoever, not belonging to a certain class of public servants, wears any garb or carries any token resembling any garb or token used by that class of public servants, with the intention that it may be believed, or with the knowledge that it is likely to be believed, that he belongs to that class of public servants, shall be punished with imprisonment of either description, for a term which may extend to three months, or with fine which may"
+    },
+    {
+     "ref": "BNS §177",
+     "act": "Bharatiya Nyaya Sanhita, 2023",
+     "title": "Failure to keep election accounts",
+     "name": "BNS 2023, Section 177",
+     "url": "https://www.mha.gov.in/sites/default/files/2024-04/250883_english_01042024.pdf",
+     "text": "BNS 2023, Section 177 - Failure to keep election accounts (corresponds to IPC 1860 Section 171) Chapter 9: Offences Relating To Elections 177. Whoever being required by any law for the time being in force or any rule having the force of law to keep accounts of expenses incurred at or in connection with an election fails to keep such accounts shall be punished with fine which may extend to five thousand rupees. O , - , - , G F OFFENCES RELATING TO COIN CURRENCY NOTES BANK NOTES AND OVERNMENT STAMPS"
+    },
+    {
+     "ref": "BNS §205",
+     "act": "Bharatiya Nyaya Sanhita, 2023",
+     "title": "Wearing garb or carrying token used by public servant with fraudulent intent",
+     "name": "BNS 2023, Section 205",
+     "url": "https://www.mha.gov.in/sites/default/files/2024-04/250883_english_01042024.pdf",
+     "text": "BNS 2023, Section 205 - Wearing garb or carrying token used by public servant with fraudulent intent (corresponds to IPC 1860 Section 171) Chapter 12: Offences By Or Relating To Public Servants 205. Whoever, not belonging to a certain class of public servants, wears any garb or carries any token resembling any garb or token used by that class of public servants, with the intention that it may be believed, or with the knowledge that it is likely to be believed, that he belongs to that class of public servants, shall be punished with imprisonment of either description for a term which may extend"
+    }
+   ]
+  },
+  {
+   "id": "transition",
+   "chip": "An offence on 15 August 2024 — which code?",
+   "question": "An offence was committed on 15 August 2024. Does the IPC or the BNS apply?",
+   "kind": "Transition",
+   "verdict": "The BNS",
+   "answer": "The BNS applies. The Bharatiya Nyaya Sanhita, 2023 came into force on 1 July 2024, so an offence committed on 15 August 2024 is dealt with under the BNS. The IPC continues to govern offences committed before that date, and proceedings already begun under the old codes continue under them.",
+   "refs": [
+    "BNS §1",
+    "Commencement, 1 July 2024"
+   ],
+   "sources": [
+    {
+     "ref": "BNS §1",
+     "act": "Bharatiya Nyaya Sanhita, 2023",
+     "title": "title,",
+     "name": "BNS 2023, Section 1",
+     "url": "https://www.mha.gov.in/sites/default/files/2024-04/250883_english_01042024.pdf",
+     "text": "BNS 2023, Section 1 - title, (corresponds to IPC 1860 Section 1, IPC 1860 Section 2, IPC 1860 Section 3, IPC 1860 Section 4, IPC 1860 Section 5) Chapter 1: Preliminary 1. (1) This Act may be called the Bharatiya Nyaya Sanhita, 2023. (2) It shall come into force on such date as the Central Government may, by notification in the Official Gazette, appoint, and different dates may be appointed for different provisions of this Sanhita. (3) Every person shall be liable to punishment under this Sanhita and not otherwise for every act or omission contrary to the provisions thereof, of which he shall b"
+    }
+   ]
+  }
+ ],
+ "refusals": [
+  "Can you be my lawyer and represent me in court?",
+  "How can I avoid being convicted under BNS Section 318?",
+  "Tell me a loophole in BNS Section 103.",
+  "Should I plead guilty?"
+ ],
+ "stats": {
+  "sections": "1,059",
+  "chunks": "2,819",
+  "concordance": "1,324",
+  "schedule": "465",
+  "cases": "201",
+  "questions": "14,524"
+ }
+}
