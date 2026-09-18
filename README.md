@@ -42,11 +42,11 @@ prosecutors and courts sits squarely inside public administration.
 | Retrieval index | 2,819 chunks, bge-small-en-v1.5 + FAISS, 96% recall@3 |
 | Context-augmented training | 11,751 / 1,369 rows, 70% positive · 20% distractor · 10% none |
 
-**Phase 2 result: the fine-tuned model failed.** Token F1 58.2% on the test set,
-but it got the old-to-new section correspondence right in **0 of 214** held-out
-questions — it learnt the answer format and almost none of the facts. That is a
-baseline to beat, and it is the clearest evidence yet for why retrieval is
-needed. See [`RESULTS.md`](RESULTS.md).
+**Retrieval works.** On 676 held-out questions, the same fine-tuned model scores
+token F1 **58.4% without retrieval and 91.9% with it**. On the questions that
+matter most — what a provision became after 1 July 2024 — it named the right
+sections in **0 of 214** cases without retrieval and **179 of 214** with it.
+Full numbers and the caveats in [`RESULTS.md`](RESULTS.md).
 
 Read [`data/DATA_REPORT.md`](data/DATA_REPORT.md) for how the data was verified and
 what is wrong with it. [`PROJECT_BRIEF.md`](PROJECT_BRIEF.md) holds the full

@@ -1,5 +1,9 @@
 # Results
 
+**Phase 2.5 (retrieval) is the headline: the old-to-new correspondence went
+from 0% to 93% correct on held-out questions. Phase 2, below, is the baseline
+that makes that number mean something.**
+
 ## Phase 2 — fine-tuned Flan-T5-base, no retrieval
 
 Recovered by `notebooks/verify_model.ipynb` from the saved weights after the
@@ -121,3 +125,120 @@ It is a baseline to beat, not a result to present as the system.
 
 **Artifact:** `MyDrive/legal-llm-bot/flan-t5-base-finetuned` (not published to
 the Hub — no `HF_TOKEN` was set for the run).
+
+---
+
+## Phase 2.5 — same model, but reading retrieved text
+
+`google/flan-t5-small`, trained on the context-augmented data (70% correct
+passage, 20% deliberately wrong passage, 10% none), selected on citation
+accuracy rather than validation loss. 9 epochs, 133 minutes on a T4, best
+validation citation accuracy 90.6%. Raw numbers in
+`data/processed/phase2_5_small_results.json`.
+
+### Headline — the same 676 test questions, three ways
+
+| Context | token F1 | citation F1 | all gold citations present |
+|---|---|---|---|
+| none (no retrieval) | 58.4% | 61.6% | 43.8% |
+| **retrieved (live)** | **91.9%** | **91.7%** | **86.8%** |
+| gold (perfect retrieval) | 94.8% | 97.9% | 94.5% |
+
+Retrieval is worth **+33.5 token F1** and **+43 points of citation accuracy**.
+Of the remaining gap to oracle context, only 2.9 F1 is lost to retrieval error —
+the retriever returns the right passage as its top hit for 80.3% of test
+questions, and top-3 recall measured separately is 96%.
+
+### The number this project was built to move
+
+| qa_type | Phase 2 (no retrieval) | Phase 2.5 retrieved |
+|---|---|---|
+| `old_to_new` (n=114) | **0.0%** | **93.0%** |
+| `new_to_old` (n=100) | **0.0%** | **71.0%** |
+
+Those are "all gold citations present" — did the answer name the right
+provisions. Phase 2 was right in 0 of 214 questions about what a section became
+after 1 July 2024. With retrieval it is right in 179 of 214.
+
+### Full per-type breakdown (token F1, and citation accuracy)
+
+| qa_type | n | none | retrieved | gold | allCites none → retrieved |
+|---|---|---|---|---|---|
+| section_text | 220 | 28.2% | 88.4% | 93.0% | 92.3% → 96.8% |
+| old_to_new | 114 | 75.5% | 94.4% | 94.4% | 0.0% → 93.0% |
+| section_lookup | 109 | 90.7% | 96.1% | 98.3% | 0.0% → 75.2% |
+| new_to_old | 100 | 67.7% | 93.1% | 94.4% | 0.0% → 71.0% |
+| punishment | 52 | 62.5% | 93.0% | 96.9% | 100% → 100% |
+| offence_classification | 50 | 59.9% | 92.6% | 94.2% | 64.0% → 92.0% |
+| case_law | 20 | 45.1% | 85.3% | 96.1% | 0.0% → 30.0% |
+| removed | 6 | 84.4% | 100% | 100% | 100% → 100% |
+| transition | 3 | 75.2% | 55.6% | 83.0% | n/a |
+| new_provision | 2 | 78.1% | 100% | 100% | 100% → 100% |
+
+### Did it learn the three behaviours it was trained for?
+
+Measured on validation, where each row's condition is known rather than left to
+whatever retrieval returned:
+
+| Condition | n | token F1 | all gold citations present |
+|---|---|---|---|
+| positive (correct passage) | 105 | 95.5% | 96.2% |
+| distractor (wrong passage) | 30 | 43.9% | 73.3% |
+| none (no passage) | 15 | 56.7% | 57.1% |
+
+**The distractor row is the one that matters and it holds up.** Given a
+plausible but wrong passage the model still names the right provisions 73% of
+the time. It did not learn to believe context blindly, which was the risk the
+20% distractor share was there to prevent. Token F1 drops to 43.9% because
+without the right passage it cannot reproduce the statutory wording — it gets
+the citation right and the prose approximate, which is the correct failure mode.
+
+**Unaided performance did not regress.** The `none` column on test is 58.4 F1 /
+43.8% citations against Phase 2's 58.2 / 43.8 — statistically the same, from a
+model a third the size. Context-aware training cost nothing when no context is
+supplied.
+
+### What still does not work: the confusion set
+
+| Context | token F1 | all gold citations present |
+|---|---|---|
+| none | 28.4% | 23.3% |
+| retrieved | 38.4% | 23.3% |
+
+Retrieval barely helped here, and the reason is mechanical rather than a model
+failure. **33 of the 44 confusion questions have gold answers citing two or more
+provisions** — the old section and its new counterpart, and for merged families
+every constituent old section (one answer cites nine). A single retrieved chunk
+cannot contain both sides of a correspondence. Measured directly:
+
+| Retrieved chunks | Questions where every needed provision was available |
+|---|---|
+| k=1 (what this run used) | 10 / 44 |
+| k=3 | 12 / 44 |
+| k=5 | 15 / 44 |
+
+So the model was asked to state a correspondence while being shown one half of
+it. More chunks barely helps, because ranking by similarity does not
+preferentially surface the *counterpart* provision.
+
+**The fix is targeted rather than broader retrieval**, and Phase 3 should
+implement it: parse the provision out of the question, look its counterparts up
+in `mapping_table.csv`, and put *those* chunks in the context deliberately. The
+concordance already exists and is complete; the retriever simply was not asked
+to use it.
+
+### Verdict
+
+The project's central claim is now demonstrated rather than asserted. The same
+questions, the same prompt, the same trained model — the only difference being
+whether authoritative text was retrieved first — move from 0% to 93% on the
+old-to-new correspondence. Phase 2 is the counterfactual that makes it
+meaningful.
+
+**Artifact:** `MyDrive/legal-llm-bot/flan-t5-small-context` (not published to the
+Hub — no `HF_TOKEN` was set).
+
+**Caveat for the write-up:** this is `flan-t5-small`, not `flan-t5-base`. The
+base model was the intention; free Colab sessions kept timing out before the run
+finished, and the brief names small as the sanctioned fallback when compute is
+constrained. It should be reported as such, not glossed over.
