@@ -695,3 +695,92 @@ the last is 15 / 44.)
 
 Phase 4 puts the same 44 questions to a general-purpose LLM for the third column,
 which is the comparison the whole project was built to make.
+
+---
+
+## Phase 4 — against a general-purpose LLM
+
+The 44 confusion questions, unaided, put to a general-purpose chatbot in two
+batches of 22 fresh chats, scored by `scripts/metrics.py` — the same code that
+scores this project's model. The other model was told to name the sections,
+because that is what the metric measures, but was not told that the codes changed
+in 2024 nor which answers were negative.
+
+| System | token F1 | citation F1 | allCites | citation_exact | right |
+|---|---|---|---|---|---|
+| general LLM, no retrieval | 50.2% | 83.9% | 55.8% | 23.3% | 25 / 44 |
+| this bot, retrieval disabled | 55.0% | 50.8% | 25.6% | 2.3% | 11 / 44 |
+| this bot, one passage | 64.5% | 61.6% | 30.2% | 4.7% | 13 / 44 |
+| **this bot, full context** | **76.5%** | 79.6% | **60.5%** | **34.9%** | **27 / 44** |
+
+**This is not a blowout, and it should not be reported as one.** A frontier model
+with no retrieval at all gets 25 of 44; this project's 77M-parameter model with
+retrieval gets 27. On the stricter `citation_exact` the gap is wider — 34.9%
+against 23.3% — but the headline honest summary is that the two are close.
+
+**Ignore the token F1 column when comparing.** The gold answers were written in
+this project's own phrasing, so a model trained on that phrasing scores higher for
+reasons that have nothing to do with being right. The citation columns are the
+fair comparison, which is why they exist.
+
+### Where the difference actually lies
+
+| Question kind | n | general LLM | what it does |
+|---|---|---|---|
+| `collision` | 14 | **92.9%** | near-perfect |
+| `removed` | 10 | **100%** | perfect |
+| `merged` | 14 | **7.1%** | names one section, misses the family |
+| `split` | 5 | **0.0%** | gives a single answer where there is none |
+
+This is the finding, and it is sharper than a difference in totals. The general
+model is excellent on the traps that are *widely written about* — a section number
+reused for a different offence, or sedition not being carried forward — and fails
+almost completely where the answer requires **enumerating a set**:
+
+> *Is mischief still dealt with under IPC Section 425?*
+> **Needs:** BNS 324, IPC 425, 426, 427, 440
+> **Said:** "the definition of mischief is now in Section 324(1) of the Bharatiya
+> Nyaya Sanhita" — correct as far as it goes, and silent on the other three
+> sections the new provision absorbed.
+
+> *Which single BNSS section replaced CrPC Section 265?*
+> **Needs:** the answer that there is no single one — BNSS 288 *and* 297
+> **Said:** "corresponds to Section 288" — confidently, with no indication that
+> anything is missing.
+
+Completeness over a many-to-one or one-to-many mapping is exactly what a
+concordance provides and parametric memory does not. That is the defensible claim
+this project supports: **not that a small retrieval-grounded model knows more law,
+but that it does not quietly give you a partial answer to a question about what a
+provision became.**
+
+### A metric bug found while doing this, and fixed
+
+The first scoring run gave the other model 80.8% citation F1. Reading its answers
+showed the extractor was missing citations written in subsection form — "Section
+115(2) of the Bharatiya Nyaya Sanhita" — because the `(2)` sat between the number
+and the Act name. This project's own answers say "BNS Section 115", so **only the
+other model was being marked down**, on style. `metrics.py` now handles subsection
+forms and carries four test cases for them; the corrected figure is 83.9%, and
+`allCites` was unaffected at 25/44 because the misses on merged families are
+genuine rather than a parsing artefact.
+
+It is worth stating plainly that this was found by reading the outputs rather than
+by trusting the numbers, and that the direction of the error flattered this
+project.
+
+### Outstanding before this goes in the paper
+
+1. **The bot's column needs re-scoring with the corrected extractor.** Its numbers
+   above were produced in Colab with the pre-fix version. The fix can only find
+   *more* citations, so they are a lower bound, and the bot's phrasing is the one
+   the old extractor handled well — but the final table should be measured with
+   one metric, not two. The notebook now imports `metrics.py` instead of carrying
+   its own copy, so a re-run settles it; training is skipped, since the model is
+   already saved.
+2. **The bot's per-kind breakdown is not yet measured**, so the decisive
+   comparison — whether the bot is strong on `merged` and `split` where the general
+   model collapses — is still unquantified. The notebook now computes and saves it.
+3. **Name and date the other model.** Which chatbot answered, and on what date,
+   belongs in the write-up: these systems change weekly, and the result is not
+   reproducible without it.

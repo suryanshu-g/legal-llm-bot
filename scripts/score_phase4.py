@@ -44,7 +44,7 @@ PHASE4 = os.path.join(ROOT, "data", "phase4")
 NUMBERED = re.compile(r"^\s*(?:\*\*)?(\d{1,3})(?:\*\*)?\s*[.)\-:]\s*(.*)$")
 
 
-def parse_reply(text: str) -> dict[int, str]:
+def parse_numbered(text: str) -> dict[int, str]:
     """Question number -> answer, from a numbered reply."""
     answers: dict[int, list[str]] = {}
     current = None
@@ -60,6 +60,31 @@ def parse_reply(text: str) -> dict[int, str]:
             for n, parts in answers.items()}
 
 
+def parse_positional(text: str, first: int, count: int) -> dict[int, str]:
+    """One answer per line, unnumbered, in the order the questions were asked.
+
+    Models often drop the numbering however plainly it was asked for. Taking
+    lines positionally is only safe if there are exactly as many of them as
+    there were questions in the batch - one missing line would shift every
+    answer after it onto the wrong question - so this returns nothing at all
+    unless the count matches, and the caller then reports the mismatch.
+    """
+    lines = [l.strip() for l in text.splitlines() if l.strip()]
+    # A leading "Here are the answers:" style preamble is discarded; a line is
+    # only an answer if it is long enough to be one.
+    lines = [l for l in lines if len(l) > 25]
+    if len(lines) != count:
+        return {}
+    return {first + i: line for i, line in enumerate(lines)}
+
+
+def parse_reply(text: str, first: int, count: int) -> tuple[dict[int, str], str]:
+    numbered = parse_numbered(text)
+    if numbered:
+        return numbered, "numbered"
+    return parse_positional(text, first, count), "positional"
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", required=True,
@@ -72,22 +97,51 @@ def main() -> None:
                  encoding="utf-8") as fh:
         conf = [json.loads(l) for l in fh if l.strip()]
 
+    # Either naming works: "<model>_batch1.txt" as documented, or the
+    # "prompt_batch1_result.txt" that falls out of saving each reply beside the
+    # prompt it answers.
     files = sorted(glob.glob(os.path.join(PHASE4, f"{args.model}_batch*.txt")))
     if not files:
+        files = sorted(glob.glob(os.path.join(PHASE4, "prompt_batch*_result.txt")))
+    if not files:
         raise SystemExit(
-            f"No replies found at data/phase4/{args.model}_batch*.txt\n"
-            f"Save the chatbot's reply to each prompt file there, then re-run.")
+            f"No replies found in data/phase4/.\n"
+            f"Save each reply as {args.model}_batch1.txt, {args.model}_batch2.txt "
+            f"(or prompt_batch1_result.txt), then re-run.")
+
+    # The batch number in the filename says which questions the file answers,
+    # using the same division build_phase4_prompts.py made.
+    n_batches = len(files)
+    size = -(-len(conf) // n_batches)
 
     answers: dict[int, str] = {}
     duplicates = []
     for path in files:
+        name = os.path.basename(path)
+        bm = re.search(r"batch(\d+)", name)
+        if not bm:
+            raise SystemExit(f"Cannot tell which questions {name} answers - "
+                             f"the filename needs 'batch<N>' in it.")
+        b = int(bm.group(1)) - 1
+        first, count = b * size + 1, len(conf[b * size:(b + 1) * size])
         with io.open(path, encoding="utf-8") as fh:
-            got = parse_reply(fh.read())
+            got, how = parse_reply(fh.read(), first, count)
+        if not got:
+            raise SystemExit(
+                f"{name}: could not line the reply up with questions "
+                f"{first}-{first + count - 1}.\n"
+                f"The reply has no numbering, and the number of answer lines "
+                f"does not match the {count} questions asked, so matching them "
+                f"positionally would put answers against the wrong questions.\n"
+                f"Either ask the chatbot to re-answer with '<number>. <answer>' "
+                f"numbering, or fix the file so it has exactly {count} lines, "
+                f"one answer each.")
         for n, a in got.items():
             if n in answers:
                 duplicates.append(n)
             answers[n] = a
-        print(f"read {os.path.basename(path)}: {len(got)} answers")
+        print(f"read {name}: {len(got)} answers ({how}, questions "
+              f"{min(got)}-{max(got)})")
 
     missing = [i + 1 for i in range(len(conf)) if i + 1 not in answers]
     if missing or duplicates:

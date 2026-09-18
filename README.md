@@ -83,8 +83,12 @@ project context.
   ([`scripts/build_negation_dataset.py`](scripts/build_negation_dataset.py)) and
   retrain. Done: the confusion set went from 10 to 27 of 44, at no cost to any
   other capability.
-- **Phase 4** — run `confusion_test_set.jsonl` against both this bot and a
-  general-purpose LLM to test the core claim; paper and video.
+- **Phase 4** — the 44 confusion questions put to a general-purpose LLM
+  ([`scripts/build_phase4_prompts.py`](scripts/build_phase4_prompts.py),
+  [`scripts/score_phase4.py`](scripts/score_phase4.py)). First run in: the general
+  model gets 25 of 44, this bot 27 — but it scores 92.9% on same-number collisions
+  and **7.1% on merged families**, where naming every absorbed section needs the
+  concordance. Paper and video still to come.
 
 ### Asking it something
 
@@ -156,6 +160,9 @@ scripts/
   build_context_dataset.py  positive / distractor / no-context training data
   build_negation_dataset.py collision / merged / no_single: teaching it to say no
   check_retrieval.py        retrieval recall@k, broken down by question type
+  metrics.py                EM / token F1 / citation metrics, one definition
+  build_phase4_prompts.py   write the confusion questions for another chatbot
+  score_phase4.py           score its replies against this bot, same metrics
   bot.py                    the assistant: retrieve, answer, cite
   check_bot_context.py      is the answer's law actually in the bot's context?
   validate_data.py          checks; non-zero exit on failure

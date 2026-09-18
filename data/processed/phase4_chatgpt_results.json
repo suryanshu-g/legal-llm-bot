@@ -1,0 +1,148 @@
+{
+  "model": "chatgpt",
+  "n": 44,
+  "source_files": [
+    "prompt_batch1_result.txt",
+    "prompt_batch2_result.txt"
+  ],
+  "overall": {
+    "set": "chatgpt",
+    "n": 44,
+    "exact_match": 0.0,
+    "f1": 50.20673975436987,
+    "citation_f1": 83.92320643476295,
+    "all_citations_present": 55.81395348837209,
+    "citation_exact": 23.25581395348837,
+    "n_with_citations": 43
+  },
+  "by_kind": {
+    "collision": {
+      "set": "collision",
+      "n": 14,
+      "exact_match": 0.0,
+      "f1": 59.662151784433675,
+      "citation_f1": 84.65608465608466,
+      "all_citations_present": 92.85714285714286,
+      "citation_exact": 14.285714285714286,
+      "n_with_citations": 14
+    },
+    "merged": {
+      "set": "merged",
+      "n": 14,
+      "exact_match": 0.0,
+      "f1": 45.63451980798241,
+      "citation_f1": 70.10309278350518,
+      "all_citations_present": 7.142857142857143,
+      "citation_exact": 7.142857142857143,
+      "n_with_citations": 14
+    },
+    "removed": {
+      "set": "removed",
+      "n": 10,
+      "exact_match": 0.0,
+      "f1": 50.2979457265321,
+      "citation_f1": 91.89189189189189,
+      "all_citations_present": 100.0,
+      "citation_exact": 70.0,
+      "n_with_citations": 10
+    },
+    "split": {
+      "set": "split",
+      "n": 5,
+      "exact_match": 0.0,
+      "f1": 35.03471323526752,
+      "citation_f1": 80.0,
+      "all_citations_present": 0.0,
+      "citation_exact": 0.0,
+      "n_with_citations": 5
+    },
+    "transition": {
+      "set": "transition",
+      "n": 1,
+      "exact_match": 0.0,
+      "f1": 56.79012345679012,
+      "citation_f1": null,
+      "all_citations_present": null,
+      "citation_exact": null,
+      "n_with_citations": 0
+    }
+  },
+  "bot_for_comparison": {
+    "none": {
+      "set": "none",
+      "n": 44,
+      "exact_match": 0.0,
+      "f1": 55.016691151109534,
+      "citation_f1": 50.80648738154024,
+      "all_citations_present": 25.58139534883721,
+      "citation_exact": 2.3255813953488373,
+      "n_with_citations": 43
+    },
+    "single passage": {
+      "set": "single passage",
+      "n": 44,
+      "exact_match": 0.0,
+      "f1": 64.45917604486796,
+      "citation_f1": 61.62667238477684,
+      "all_citations_present": 30.232558139534884,
+      "citation_exact": 4.651162790697675,
+      "n_with_citations": 43
+    },
+    "bot context": {
+      "set": "bot context",
+      "n": 44,
+      "exact_match": 4.545454545454546,
+      "f1": 76.48393357048413,
+      "citation_f1": 79.62720960961863,
+      "all_citations_present": 60.46511627906977,
+      "citation_exact": 34.883720930232556,
+      "n_with_citations": 43
+    }
+  },
+  "answers": {
+    "1": "No; BSA Section 27 corresponds to Indian Evidence Act, 1872 Section 33, while Indian Evidence Act Section 27 concerns information received from an accused in custody and has no same-number counterpart in BSA; the related BSA provision is Section 23(2)-proviso.",
+    "2": "No; BSA Section 101 corresponds to Indian Evidence Act, 1872 Section 98, while Indian Evidence Act Section 101 (burden of proof) corresponds to BSA Section 104.",
+    "3": "No; BNSS Section 482 corresponds to CrPC Section 438 (anticipatory bail), while CrPC Section 482 (inherent powers of High Court) corresponds to BNSS Section 528.",
+    "4": "No; BSA Section 32 corresponds to Indian Evidence Act, 1872 Section 38, while Indian Evidence Act Section 32 (statements of persons who cannot be called as witnesses) corresponds principally to BSA Section 26.",
+    "5": "No; BNS Section 306 deals with theft by a clerk or servant and corresponds to IPC Section 381, whereas IPC Section 306 (abetment of suicide) corresponds to BNS Section 108.",
+    "6": "No; BNSS Section 438 deals with calling for records to exercise revisional powers and corresponds to CrPC Section 397, whereas CrPC Section 438 (anticipatory bail) corresponds to BNSS Section 482.",
+    "7": "Yes; BSA Section 26 and Indian Evidence Act, 1872 Section 32 both deal with the relevancy of statements made by persons who are dead, cannot be found, or are otherwise unavailable as witnesses.",
+    "8": "No; BNS Section 147 deals with waging, attempting to wage, or abetting war against the Government of India, while IPC Section 147 deals with punishment for rioting; the latter is covered by BNS Section 191(2).",
+    "9": "No; BNS Section 107 deals with abetment of suicide of a child or person of unsound mind and corresponds to IPC Section 305, while IPC Section 107 (abetment of a thing) corresponds to BNS Section 45.",
+    "10": "No; BNSS Section 167 deals with local inquiry and corresponds to CrPC Section 148, while CrPC Section 167 (procedure when investigation cannot be completed within 24 hours) corresponds to BNSS Section 187.",
+    "11": "No; BSA Section 114 deals with proof of good faith in transactions involving active confidence and corresponds to Indian Evidence Act, 1872 Section 111, while Indian Evidence Act Section 114 (court may presume existence of certain facts) corresponds to BSA Section 119.",
+    "12": "No; BSA Section 102 concerns who may give evidence of an agreement varying the terms of a document and corresponds to Indian Evidence Act, 1872 Section 99, while Indian Evidence Act Section 102 (burden of proof) corresponds to BSA Section 105.",
+    "13": "No; BNSS Section 437 deals with disposal of a case according to the High Court's decision on a reference and corresponds to CrPC Section 396, while CrPC Section 437 (bail in non-bailable offences) corresponds to BNSS Section 480.",
+    "14": "No; BNS Section 320 deals with dishonest or fraudulent removal or concealment of property to prevent distribution among creditors, whereas IPC Section 320 defines grievous hurt; grievous hurt is now dealt with in BNS Section 116.",
+    "15": "No; IPC Section 323 is repealed for new offences from 1 July 2024, and voluntarily causing hurt is now dealt with under Section 115(2) of the Bharatiya Nyaya Sanhita, 2023; IPC Section 323 remains applicable to offences governed by the old IPC.",
+    "16": "No; IPC Section 425 is repealed for new offences from 1 July 2024, and the definition of mischief is now in Section 324(1) of the Bharatiya Nyaya Sanhita, 2023.",
+    "17": "No; IPC Section 325 is repealed for new offences from 1 July 2024, and punishment for voluntarily causing grievous hurt is now under Section 117(2) of the Bharatiya Nyaya Sanhita, 2023.",
+    "18": "No; IPC Section 427 is repealed for new offences from 1 July 2024, and the corresponding provision is Section 324(4) of the Bharatiya Nyaya Sanhita, 2023.",
+    "19": "No; IPC Section 457 is repealed for new offences from 1 July 2024, and the corresponding provision is Section 331(4) of the Bharatiya Nyaya Sanhita, 2023.",
+    "20": "No; IPC Section 406 is repealed for new offences from 1 July 2024, and punishment for criminal breach of trust is now under Section 316(2) of the Bharatiya Nyaya Sanhita, 2023.",
+    "21": "No; IPC Section 120A is repealed for new offences from 1 July 2024, and the definition of criminal conspiracy is now contained in Section 61(1) of the Bharatiya Nyaya Sanhita, 2023; BNS Section 61 consolidates the former IPC Sections 120A and 120B.",
+    "22": "No; IPC Section 468 is repealed for new offences from 1 July 2024, and its corresponding provision is Section 336 of the Bharatiya Nyaya Sanhita, 2023, which deals with forgery and includes the relevant fraudulent/cheating purpose.",
+    "23": "No; IPC Section 379, Indian Penal Code, 1860, has been replaced for new offences by Section 303 of the Bharatiya Nyaya Sanhita, 2023 (BNS), which consolidates the definition and punishment of theft.",
+    "24": "No; IPC Section 499, Indian Penal Code, 1860, has been replaced by Section 356 of the Bharatiya Nyaya Sanhita, 2023, which deals with defamation.",
+    "25": "No; Indian Evidence Act, 1872 Section 25 corresponds to Section 23(1) of the Bharatiya Sakshya Adhiniyam, 2023, concerning confessions made to a police officer.",
+    "26": "No; IPC Section 416, Indian Penal Code, 1860, corresponds to Section 319(1) of the Bharatiya Nyaya Sanhita, 2023, while punishment is provided in Section 319(2).",
+    "27": "No; IPC Section 378, Indian Penal Code, 1860, has been replaced by Section 303(1) of the Bharatiya Nyaya Sanhita, 2023, which defines theft.",
+    "28": "No; IPC Section 392, Indian Penal Code, 1860, has been replaced by Section 309 of the Bharatiya Nyaya Sanhita, 2023, which deals with robbery and its punishment.",
+    "29": "Section 265 of the Code of Criminal Procedure, 1973 corresponds to Section 288 of the Bharatiya Nagarik Suraksha Sanhita, 2023, both concerning the language of the record and judgment.",
+    "30": "IPC Section 171, Indian Penal Code, 1860, corresponds to Section 205 of the Bharatiya Nyaya Sanhita, 2023, concerning wearing garb or carrying a token used by a public servant with fraudulent intent.",
+    "31": "IPC Section 228A, Indian Penal Code, 1860, corresponds to Section 72 of the Bharatiya Nyaya Sanhita, 2023, concerning disclosure of the identity of victims of certain offences.",
+    "32": "IPC Section 376, Indian Penal Code, 1860, corresponds principally to Section 64 of the Bharatiya Nyaya Sanhita, 2023, concerning punishment for rape.",
+    "33": "IPC Section 498A, Indian Penal Code, 1860, corresponds to Section 85 of the Bharatiya Nyaya Sanhita, 2023, concerning cruelty by a husband or his relatives.",
+    "34": "IPC Section 124A, Indian Penal Code, 1860, has no identical counterpart, but its subject matter is substantially addressed by Section 152 of the Bharatiya Nyaya Sanhita, 2023, concerning acts endangering the sovereignty, unity and integrity of India.",
+    "35": "IPC Section 377, Indian Penal Code, 1860, has no counterpart in the Bharatiya Nyaya Sanhita, 2023; the former offence of unnatural offences was not carried forward as a corresponding BNS provision.",
+    "36": "IPC Section 497, Indian Penal Code, 1860, has no counterpart in the Bharatiya Nyaya Sanhita, 2023; the offence of adultery was not carried forward.",
+    "37": "IPC Section 309, Indian Penal Code, 1860, has no single counterpart in the Bharatiya Nyaya Sanhita, 2023; BNS Section 226 covers only attempt to suicide with intent to compel or restrain a public servant, not the former general offence.",
+    "38": "IPC Section 153AA, Indian Penal Code, 1860, has no counterpart in the Bharatiya Nyaya Sanhita, 2023; it was deleted and not carried forward.",
+    "39": "CrPC Section 8, Code of Criminal Procedure, 1973, has no single BNSS counterpart; the concept of metropolitan areas was not retained as a separate BNSS section, although Section 7 of the Bharatiya Nagarik Suraksha Sanhita, 2023 contains a limited reference to metropolitan areas.",
+    "40": "CrPC Section 16, Code of Criminal Procedure, 1973, has no counterpart as a numbered section in the Bharatiya Nagarik Suraksha Sanhita, 2023; courts of Metropolitan Magistrates were not separately re-enacted.",
+    "41": "CrPC Section 17, Code of Criminal Procedure, 1973, has no counterpart as a numbered section in the Bharatiya Nagarik Suraksha Sanhita, 2023; the separate offices of Chief Metropolitan Magistrate and Additional Chief Metropolitan Magistrate were not retained.",
+    "42": "CrPC Section 18, Code of Criminal Procedure, 1973, has no counterpart as a numbered section in the Bharatiya Nagarik Suraksha Sanhita, 2023; Special Metropolitan Magistrates were not separately re-enacted.",
+    "43": "CrPC Section 19, Code of Criminal Procedure, 1973, has no counterpart as a numbered section in the Bharatiya Nagarik Suraksha Sanhita, 2023; separate subordination provisions for Metropolitan Magistrates were not re-enacted.",
+    "44": "The charge should be framed under the IPC, Indian Penal Code, 1860, because the offence was committed before 1 July 2024, when the Bharatiya Nyaya Sanhita, 2023 came into force; the repeal-and-savings provision in BNS Section 358 preserves the application of the IPC to such offences."
+  }
+}

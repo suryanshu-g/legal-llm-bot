@@ -78,8 +78,15 @@ _NUMS = r"\d+[A-Za-z]{0,2}(?:\s*(?:,|and|&)\s*\d+[A-Za-z]{0,2})*"
 REF_ACT_FIRST = re.compile(
     r"(" + _ACTS + r")\b[ ,]*(?:\d{4}[ ,]*)?(?:Sections?|ss?\.)?\s*(" + _NUMS + r")",
     re.I)
+# A subsection may sit between the number and the Act - "Section 115(2) of the
+# Bharatiya Nyaya Sanhita". Without this the citation is missed entirely, which
+# silently penalises any writer who cites in subsection form. That is a real
+# hazard when comparing against another model: this project's own answers say
+# "BNS Section 115", so only the other side would have been marked down.
+_SUBSEC = r"(?:\s*\([0-9a-z]+\))*"
 REF_SEC_FIRST = re.compile(
-    r"Sections?\s*(" + _NUMS + r")\s*(?:of\s+(?:the\s+)?)(" + _ACTS + r")\b", re.I)
+    r"Sections?\s*(" + _NUMS + r")" + _SUBSEC +
+    r"\s*(?:of\s+(?:the\s+)?)(" + _ACTS + r")\b", re.I)
 
 
 def _numbers(blob: str):
@@ -164,6 +171,14 @@ _CHECKS = [
      {"BNS 318", "IPC 415", "IPC 417", "IPC 418", "IPC 419", "IPC 420"}),
     ("The Bharatiya Nyaya Sanhita, 2023 replaced the Indian Penal Code, 1860.",
      set()),
+    # Subsection forms, which a model writing prose citations uses freely.
+    ("now dealt with under Section 115(2) of the Bharatiya Nyaya Sanhita, 2023",
+     {"BNS 115"}),
+    ("the definition is in Section 324(1) of the Bharatiya Nyaya Sanhita",
+     {"BNS 324"}),
+    ("corresponds to Section 23(1)(a) of the Bharatiya Sakshya Adhiniyam, 2023",
+     {"BSA 23"}),
+    ("BNS Section 303(2) prescribes the punishment", {"BNS 303"}),
 ]
 for _text, _want in _CHECKS:
     _got = extract_refs(_text)
