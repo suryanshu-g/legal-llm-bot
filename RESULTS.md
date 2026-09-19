@@ -888,6 +888,22 @@ figure is a rough ceiling for what that would buy.
      "BNS Section 324 (Mizachief)", "BNS Section 303 (Trash)" for theft,
      "BNS Section 356 (Deframatio…)", and "BNS Section 2 (Adulteration of rape)".
    * **It invents correspondences for repealed provisions**, as above.
+   * **It fabricates statutory text**, which is the most serious of the four and
+     was found by typing ordinary questions at the command line rather than by
+     any metric. Asked about IPC §69 it reproduces the heading correctly and then
+     reports the imprisonment as proportional to "the part of the **bail bond**
+     still unpaid" — the provision says *fine* — and follows it with an
+     illustration that does not exist in the Act. Asked about BNS §72 it renders
+     the heading as "**Divine** of identity of victim" and continues into
+     invented punishments that are not in the section and read as nonsense.
+     A wrong section number is visible to anyone who checks; invented statutory
+     wording under a correct citation is not.
+   * **It answers a question the retrieved passage already answers correctly.**
+     Asked for the BNS equivalent of IPC §69, the context it was handed opens
+     `IPC 1860, Section 69 … (replaced by BNS 2023 Section 8)`. The model never
+     said BNS §8. Sources-only mode, on the same question, returns both IPC §69
+     and BNS §8 with the full list of the eight IPC sections that BNS §8
+     absorbed. The retrieval layer had the answer; the model discarded it.
 
    **Consequence for the project:** the *retrieval and concordance layer* is sound
    and verified — 0 validation failures, every passage carrying a gazette URL — but
