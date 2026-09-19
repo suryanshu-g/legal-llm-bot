@@ -266,7 +266,11 @@ class Bot:
             # No model loaded: approximate, 4 characters per token.
             limit = budget * 4
             return text if len(text) <= limit else text[:limit].rsplit(" ", 1)[0] + " [...]"
-        ids = self.tokenizer(text, add_special_tokens=False)["input_ids"]
+        # verbose=False: this call only measures the passage, so the
+        # tokenizer's "sequence length is longer than 512" warning is
+        # noise - truncating to the budget is the very next thing we do.
+        ids = self.tokenizer(text, add_special_tokens=False,
+                             verbose=False)["input_ids"]
         if len(ids) <= budget:
             return text
         cut = self.tokenizer.decode(ids[:budget], skip_special_tokens=True)
