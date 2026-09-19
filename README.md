@@ -94,6 +94,49 @@ project context.
   of 44, this bot 27 — and they disagree on 46.5% of questions, failing on opposite
   axes. Written up in [`PAPER.md`](PAPER.md); the video is the last deliverable.
 
+### Using your own model
+
+The trained model lives on Google Drive, not in this repository (weights are
+deliberately never committed). To run it on your own machine:
+
+**1. Set up an environment.** The blocker on a fresh Windows install is that
+`transformers` 5.x refuses to use `torch` below 2.5, so models silently fail to
+load. This makes an isolated environment that reuses the torch you already have:
+
+```bash
+python -m venv .venv --system-site-packages
+./.venv/Scripts/python.exe -m pip install "transformers<5" sentence-transformers faiss-cpu
+```
+
+**2. Copy the model down from Drive.** In Google Drive open
+`MyDrive/legal-llm-bot`, right-click **`flan-t5-small-context-v3`** and choose
+Download; Drive sends it as a zip. Extract it so the folder sits at
+`models/flan-t5-small-context-v3` — about 300 MB. Do **not** download
+`checkpoints-flan-t5-small-context-v3`, which is training scratch data and far
+larger.
+
+**3. Check it before trusting it.**
+
+```bash
+./.venv/Scripts/python.exe scripts/check_model.py models/flan-t5-small-context-v3
+```
+
+This confirms the files are complete, that the weights really differ from the
+stock Flan-T5 checkpoint (an untrained model loads and generates fluent English
+perfectly happily), that five known-answer probes come out right, that the scope
+refusals fire — and it tests specifically for the three defects recorded in
+[`RESULTS.md`](RESULTS.md). Expect those three to fail; the point is to see which
+ones on your copy.
+
+**4. Ask it things.**
+
+```bash
+./.venv/Scripts/python.exe scripts/bot.py --model-dir models/flan-t5-small-context-v3
+```
+
+with no question, that opens a prompt you can type into. It runs on CPU — this is
+a 77M-parameter model, so a GPU is not needed.
+
 ### Asking it something
 
 ```bash
