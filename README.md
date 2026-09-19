@@ -103,9 +103,14 @@ deliberately never committed). To run it on your own machine:
 `transformers` 5.x refuses to use `torch` below 2.5, so models silently fail to
 load. This makes an isolated environment that reuses the torch you already have:
 
-```bash
+In Windows PowerShell, from the project root. The `cd` matters — every
+command below is run from there — and the quotes matter because the path
+contains a space:
+
+```powershell
+cd "C:\Users\ACER\Desktop\Legal bot\legal-llm-bot"
 python -m venv .venv --system-site-packages
-./.venv/Scripts/python.exe -m pip install "transformers<5" sentence-transformers faiss-cpu
+.\.venv\Scripts\python.exe -m pip install "transformers<5" sentence-transformers faiss-cpu
 ```
 
 **2. Copy the model down from Drive.** In Google Drive open
@@ -117,8 +122,9 @@ larger.
 
 **3. Check it before trusting it.**
 
-```bash
-./.venv/Scripts/python.exe scripts/check_model.py models/flan-t5-small-context-v3
+```powershell
+cd "C:\Users\ACER\Desktop\Legal bot\legal-llm-bot"
+.\.venv\Scripts\python.exe scripts\check_model.py models\flan-t5-small-context-v3
 ```
 
 This confirms the files are complete, that the weights really differ from the
@@ -130,8 +136,9 @@ ones on your copy.
 
 **4. Ask it things.**
 
-```bash
-./.venv/Scripts/python.exe scripts/bot.py --model-dir models/flan-t5-small-context-v3
+```powershell
+cd "C:\Users\ACER\Desktop\Legal bot\legal-llm-bot"
+.\.venv\Scripts\python.exe scripts\bot.py --model-dir models\flan-t5-small-context-v3
 ```
 
 with no question, that opens a prompt you can type into. It runs on CPU — this is
@@ -153,9 +160,10 @@ if you load this checkpoint any other way.** Colab trained it under transformers
 
 ### Asking it something
 
-```bash
-python scripts/bot.py "Which BNS section replaced IPC Section 302?"
-python scripts/bot.py --sources-only "Is an offence under BNS Section 303 bailable?"
+```powershell
+cd "C:\Users\ACER\Desktop\Legal bot\legal-llm-bot"
+.\.venv\Scripts\python.exe scripts\bot.py "Which BNS section replaced IPC Section 302?"
+.\.venv\Scripts\python.exe scripts\bot.py --sources-only "Is an offence under BNS Section 303 bailable?"
 ```
 
 Point `--model-dir` (or `$LEGAL_BOT_MODEL`) at the fine-tuned model to get a
