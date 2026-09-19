@@ -147,6 +147,51 @@
   .band h2 { font-size: clamp(26px, 3.6vw, 36px); letter-spacing: -.01em; margin-top: 10px; }
   .band .intro { max-width: var(--measure); margin-top: 14px; color: var(--ink-soft); }
 
+  /* ---------- the live question box ---------- */
+  .chat { margin-top: 30px; border: 1px solid var(--rule); background: var(--card); }
+  .chat-bar { display: grid; grid-template-columns: 1fr auto; gap: 0;
+              border-bottom: 1px solid var(--rule); }
+  .chat-bar input {
+    appearance: none; border: 0; background: transparent; color: var(--ink);
+    font-family: var(--body); font-size: 17px; padding: 16px 18px; min-width: 0;
+  }
+  .chat-bar input::placeholder { color: var(--ink-faint); }
+  .chat-bar button {
+    appearance: none; border: 0; border-left: 1px solid var(--rule);
+    background: var(--new); color: var(--card); cursor: pointer;
+    font-family: var(--mono); font-size: 12px; letter-spacing: .12em;
+    text-transform: uppercase; padding: 0 22px;
+  }
+  .chat-bar button:hover { filter: brightness(1.12); }
+  .chat-bar button[disabled] { background: var(--rule); color: var(--ink-faint); cursor: wait; }
+  .chips { display: flex; flex-wrap: wrap; gap: 7px; padding: 13px 18px;
+           border-bottom: 1px solid var(--rule-soft); }
+  .chip {
+    appearance: none; cursor: pointer; font-family: var(--body); font-size: 14px;
+    background: var(--paper); color: var(--ink-soft);
+    border: 1px solid var(--rule); padding: 5px 11px;
+  }
+  .chip:hover { border-color: var(--new); color: var(--new); }
+  .chat-out { padding: clamp(18px, 3vw, 28px); min-height: 150px; }
+  .chat-status { font-family: var(--mono); font-size: 12px; color: var(--ink-faint); }
+  .turn + .turn { margin-top: 26px; padding-top: 26px; border-top: 1px solid var(--rule-soft); }
+  .turn .asked {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--ink-faint); margin-bottom: 9px;
+  }
+  .turn .said { font-family: var(--display); font-weight: 500; font-size: 20px;
+                line-height: 1.3; margin-bottom: 14px; }
+  .turn .body { max-width: var(--measure); }
+  .turn .body p + p { margin-top: 10px; }
+  .kv { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; margin-top: 12px;
+        font-size: 15.5px; }
+  .kv dt { font-family: var(--mono); font-size: 11px; letter-spacing: .08em;
+           text-transform: uppercase; color: var(--ink-faint); padding-top: 4px; }
+  .kv dd { margin: 0; }
+  .quote-law { border-left: 3px solid var(--rule); padding: 2px 0 2px 15px;
+               margin-top: 12px; color: var(--ink-soft); font-size: 15.5px; }
+  .no-model { margin-top: 16px; font-size: 14px; color: var(--ink-faint); font-style: italic; }
+
   /* ---------- ask: docket tabs + panel ---------- */
   .ask { display: grid; grid-template-columns: minmax(230px, 300px) 1fr; gap: 0; margin-top: 30px;
          border: 1px solid var(--rule); background: var(--card); }
@@ -332,13 +377,49 @@
 
 <section class="band">
   <div class="wrap">
-    <p class="eyebrow">Try it</p>
-    <h2>Pick a question. Read the answer, then check the source.</h2>
+    <p class="eyebrow">Ask it something</p>
+    <h2>A working assistant, running in this page.</h2>
     <p class="intro">
-      Eight questions of the kinds this assistant is built for. Each answer is
-      assembled from the concordance and the gazette text held in the
-      retrieval index &mdash; the citations below every answer link to the
-      document they came from, so nothing here has to be taken on trust.
+      Name a provision &mdash; &ldquo;IPC 302&rdquo;, &ldquo;BNSS Section
+      173&rdquo;, &ldquo;Section 65B of the Indian Evidence Act&rdquo; &mdash; or
+      describe an offence. Answers are composed from the official correspondence
+      tables and the gazette text, in your browser, with the source for every
+      claim.
+    </p>
+
+    <div class="chat">
+      <div class="chat-bar">
+        <label for="q" class="visually-hidden" hidden>Your question</label>
+        <input id="q" type="text" autocomplete="off"
+               placeholder="Which BNS section replaced IPC Section 302?">
+        <button id="go" type="button" disabled>Loading</button>
+      </div>
+      <div class="chips" id="chips"></div>
+      <div class="chat-out" id="out">
+        <p class="chat-status" id="status">Loading the statute book&hellip;</p>
+      </div>
+    </div>
+
+    <p class="no-model">
+      This runs the retrieval and concordance half of the project &mdash; the half
+      that is verified. The fine-tuned language model is not here: it needs
+      PyTorch and a 300&nbsp;MB checkpoint, and its prose drifts section numbers
+      and corrupts statutory titles, so the sentences below are composed from the
+      data rather than generated. Run <span style="font-family:var(--mono);font-size:.9em">scripts/bot.py</span>
+      from the repository for the model itself.
+    </p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <p class="eyebrow">Worked examples</p>
+    <h2>Eight questions, and what makes each one hard.</h2>
+    <p class="intro">
+      The kinds of question this project was built for, with the answer, the
+      provisions it rests on and a link to the document behind every one. The
+      merged-family example also shows what ChatGPT said when asked the same
+      thing.
     </p>
 
     <div class="ask">
@@ -660,6 +741,375 @@ python scripts/validate_data.py   <span class="c"># expects 0 failures</span></p
 
     panel.replaceChildren(...frag.childNodes);
   }
+
+  // ------------------------------------------------------------------
+  // The assistant. Everything here is a lookup over verified data: the
+  // concordance from the BPRD correspondence tables, the BNSS First Schedule,
+  // and the gazette text. No model, so nothing is generated - which is the
+  // point, since the fine-tuned model's prose is not reliable.
+  // ------------------------------------------------------------------
+  let LAW = null;
+
+  const ALIASES = {
+    "BHARATIYA NYAYA SANHITA": "BNS", "BNS": "BNS",
+    "BHARATIYA NAGARIK SURAKSHA SANHITA": "BNSS", "BNSS": "BNSS",
+    "BHARATIYA SAKSHYA ADHINIYAM": "BSA", "BSA": "BSA",
+    "INDIAN PENAL CODE": "IPC", "IPC": "IPC",
+    "CODE OF CRIMINAL PROCEDURE": "CRPC", "CRPC": "CRPC", "CR.P.C": "CRPC",
+    "INDIAN EVIDENCE ACT": "IEA", "EVIDENCE ACT": "IEA", "IEA": "IEA"
+  };
+  const ACTS = Object.keys(ALIASES)
+    .sort((a, b) => b.length - a.length)
+    .map((a) => a.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+    .join("|");
+  const NUMS = "\\d+[A-Za-z]{0,2}(?:\\s*(?:,|and|&)\\s*\\d+[A-Za-z]{0,2})*";
+  const ACT_FIRST = new RegExp(
+    "(" + ACTS + ")\\b[ ,]*(?:\\d{4}[ ,]*)?(?:Sections?|ss?\\.)?\\s*(" + NUMS + ")", "gi");
+  const SEC_FIRST = new RegExp(
+    "Sections?\\s*(" + NUMS + ")(?:\\s*\\([0-9a-z]+\\))*\\s*of\\s+(?:the\\s+)?(" + ACTS + ")\\b", "gi");
+
+  // Refused before anything is looked up - the same boundary bot.py enforces.
+  const OUT_OF_SCOPE = /\b(be my (lawyer|advocate|counsel)|represent me|are you a lawyer|should i plead|will i (be convicted|go to (jail|prison))|what will my sentence|loophole|get (away with|off)|avoid (being )?(convict|prosecut|arrest|liab)|evade|how (do|can) i (avoid|escape|beat)|fake|false (alibi|evidence)|bribe|give me legal advice|advise me on my)\b/i;
+
+  const REFUSAL = "I can't help with that. I'm an informational tool, not a licensed advocate: I can't advise on a specific case, predict an outcome, or help with avoiding liability. What I can do is set out what a provision of the BNS, BNSS or BSA says, which older provision it corresponds to, and how the First Schedule classifies it.";
+
+  function numbers(blob) {
+    const out = [];
+    blob.split(/\s*(?:,|and|&)\s*/).forEach((part) => {
+      const m = /^(\d+)([A-Za-z]{0,2})$/.exec(part.trim());
+      if (m && parseInt(m[1], 10) < 1000) out.push(m[1] + m[2].toUpperCase());
+    });
+    return out;
+  }
+
+  function extractRefs(text) {
+    const found = [];
+    const add = (act, nums) => {
+      const canon = ALIASES[act.toUpperCase().replace(/\.$/, "")];
+      if (!canon) return;
+      numbers(nums).forEach((n) => {
+        const key = canon + " " + n;
+        if (!found.includes(key)) found.push(key);
+      });
+    };
+    let m;
+    ACT_FIRST.lastIndex = 0;
+    while ((m = ACT_FIRST.exec(text))) add(m[1], m[2]);
+    SEC_FIRST.lastIndex = 0;
+    while ((m = SEC_FIRST.exec(text))) add(m[2], m[1]);
+    return found;
+  }
+
+  const label = (key) => {
+    const act = key.split(" ")[0], sec = key.slice(act.length + 1);
+    return (LAW.short[act] || act) + " \u00a7" + sec;
+  };
+  const titled = (key) => {
+    const s = LAW.sections[key];
+    return label(key) + (s && s.t ? " (" + s.t + ")" : "");
+  };
+  const isNew = (key) => ["BNS", "BNSS", "BSA"].includes(key.split(" ")[0]);
+
+  function findByWords(question) {
+    const stop = new Set(["what", "which", "does", "is", "are", "the", "of", "a",
+      "an", "under", "section", "still", "dealt", "with", "new", "law", "for",
+      "and", "to", "in", "on", "it", "was", "now", "bns", "bnss", "bsa", "ipc",
+      "crpc", "iea", "about", "covered", "cover", "say", "says", "tell", "me"]);
+    const words = question.toLowerCase().replace(/[^a-z\s]/g, " ").split(/\s+/)
+      .filter((w) => w.length > 2 && !stop.has(w));
+    if (!words.length) return [];
+    const scored = [];
+    for (const key in LAW.sections) {
+      const t = LAW.sections[key].t;
+      if (!t) continue;
+      const low = t.toLowerCase();
+      let score = 0;
+      words.forEach((w) => { if (low.includes(w)) score += w.length; });
+      if (score) scored.push([score + (isNew(key) ? 1 : 0), key]);
+    }
+    scored.sort((a, b) => b[0] - a[0]);
+    return scored.slice(0, 6).map((p) => p[1]);
+  }
+
+  // ---- answer composition, one branch per kind of question --------------
+  function answer(question) {
+    if (OUT_OF_SCOPE.test(question)) {
+      return { said: "I can't answer that.", parts: [REFUSAL], refs: [], refused: true };
+    }
+    const refs = extractRefs(question).filter((r) => LAW.sections[r]);
+    const q = question.toLowerCase();
+
+    if (!refs.length) {
+      const hits = findByWords(question);
+      if (!hits.length) {
+        return {
+          said: "I could not find that provision.",
+          parts: ["Name a section \u2014 \u201cIPC 302\u201d, \u201cBNSS Section 173\u201d \u2014 or use a word from its heading, such as \u201ctheft\u201d, \u201cmischief\u201d or \u201cbail\u201d."],
+          refs: []
+        };
+      }
+      return {
+        said: "Did you mean one of these?",
+        parts: ["Searching headings, since no section was named. This page matches on the words of a heading; the full project ranks passages by meaning instead."],
+        refs: hits, suggest: hits
+      };
+    }
+
+    const key = refs[0];
+    const sec = LAW.sections[key];
+    const fwd = LAW.fwd[key] || [];
+    const back = LAW.back[key] || [];
+    const gone = LAW.removed.includes(key);
+    const parts = [];
+    const cite = refs.slice();
+
+    const wantsClass = /bailab|cognizab|triable|which court|compound/.test(q);
+    const wantsText = /what does|cover|say|text of|explain|define/.test(q);
+    const wantsPair = refs.length > 1 &&
+      /same|both|differ|compare|equivalent|correspond/.test(q);
+
+    // Two provisions with the same number, one in each code.
+    if (wantsPair) {
+      const a = refs[0], b = refs[1];
+      const linked = (LAW.fwd[a] || []).includes(b) || (LAW.fwd[b] || []).includes(a);
+      if (linked) {
+        parts.push("Yes. " + titled(a) + " corresponds to " + titled(b) + ".");
+      } else {
+        parts.push("No \u2014 the number was reused.");
+        [a, b].forEach((k) => {
+          const to = (LAW.fwd[k] || []).concat(LAW.back[k] || []);
+          parts.push(titled(k) + (to.length
+            ? " corresponds to " + to.map(titled).join(", ") + "."
+            : " has no counterpart recorded in the correspondence table."));
+          to.forEach((t) => { if (!cite.includes(t)) cite.push(t); });
+        });
+      }
+      return { said: linked ? "Yes, the same subject." : "No, different provisions.",
+               parts, refs: cite };
+    }
+
+    if (wantsClass) {
+      const bnsKey = isNew(key) ? key : (fwd.find((f) => f.startsWith("BNS ")) || null);
+      const rows = bnsKey ? LAW.schedule[bnsKey] : null;
+      if (rows && rows.length) {
+        const r = rows[0];
+        return {
+          said: r.c + " \u00b7 " + r.b,
+          parts: ["Under the First Schedule to the BNSS, an offence under " +
+                  titled(bnsKey) + " is classified as follows."],
+          table: [["Offence", r.o], ["Punishment", r.p], ["Cognizable", r.c],
+                  ["Bailable", r.b], ["Triable by", r.tb]],
+          refs: bnsKey === key ? [key] : [key, bnsKey],
+          schedule: true
+        };
+      }
+      parts.push("The First Schedule to the BNSS classifies offences under the BNS. " +
+        (isNew(key) ? "No entry is recorded for " + label(key) + "."
+                    : titled(key) + " has no BNS counterpart carrying a classification."));
+      return { said: "Not classified in the First Schedule.", parts, refs: cite };
+    }
+
+    if (gone) {
+      return {
+        said: "None \u2014 it was not carried forward.",
+        parts: [titled(key) + " has no counterpart in the " +
+                LAW.acts[LAW.newOf[key.split(" ")[0]]] + ". The official " +
+                "correspondence table lists no equivalent for it, so any section " +
+                "number offered in reply is wrong by construction."],
+        refs: [key]
+      };
+    }
+
+    if (fwd.length) {
+      // The other old sections folded into the same new provision. Indexing
+      // `back` (this provision's own back-links) instead of LAW.back silently
+      // dropped them, which loses the whole point of a merged family.
+      const many = LAW.back[fwd[0]] || [];
+      if (fwd.length > 1) {
+        parts.push("There is no single one. " + titled(key) + " was split across " +
+                   fwd.map(titled).join(", ") + ". Citing only one of them states " +
+                   "the position incompletely.");
+      } else if (many.length > 1) {
+        parts.push("No \u2014 the " + LAW.acts[key.split(" ")[0]] +
+                   " was repealed with effect from 1 July 2024. " + titled(key) +
+                   " now corresponds to " + titled(fwd[0]) + ", which consolidates " +
+                   many.map(label).join(", ") + " into a single provision.");
+      } else {
+        parts.push(titled(key) + " corresponds to " + titled(fwd[0]) + ".");
+      }
+      fwd.concat(many).forEach((k) => { if (!cite.includes(k)) cite.push(k); });
+    } else if (back.length) {
+      parts.push(titled(key) + (back.length > 1
+        ? " consolidates " + back.map(titled).join(", ") + ". No single earlier section accounts for it."
+        : " corresponds to " + titled(back[0]) + "."));
+      back.forEach((k) => { if (!cite.includes(k)) cite.push(k); });
+    } else {
+      parts.push(titled(key) + " has no counterpart recorded in the correspondence table.");
+    }
+
+    const out = { said: fwd.length ? titled(fwd[0]) : (back.length ? titled(back[0]) : titled(key)),
+                  parts, refs: cite };
+    if (wantsText || !fwd.length) out.law = { key, text: sec.x };
+    if (fwd.length > 1) out.said = "No single section \u2014 it was split.";
+    if (back.length > 1 && !fwd.length) out.said = "Several sections were merged.";
+    return out;
+  }
+
+  // ---- rendering ---------------------------------------------------------
+  const outEl = document.getElementById("out");
+  const input = document.getElementById("q");
+  const goBtn = document.getElementById("go");
+
+  function render(question, a) {
+    const turn = document.createElement("div");
+    turn.className = "turn";
+
+    const asked = document.createElement("p");
+    asked.className = "asked";
+    asked.textContent = "You asked";
+    const qq = document.createElement("p");
+    qq.className = "said";
+    qq.textContent = question;
+    turn.append(asked, qq);
+
+    const said = document.createElement("span");
+    said.className = "verdict" + (a.refused || /^(No|None|There is no)/.test(a.said) ? " neg" : "");
+    said.textContent = a.said;
+    turn.appendChild(said);
+
+    const body = document.createElement("div");
+    body.className = "body";
+    (a.parts || []).forEach((p) => {
+      const el = document.createElement("p");
+      el.textContent = p;
+      body.appendChild(el);
+    });
+    turn.appendChild(body);
+
+    if (a.table) {
+      const dl = document.createElement("dl");
+      dl.className = "kv";
+      a.table.forEach(([k, v]) => {
+        if (!v) return;
+        const dt = document.createElement("dt"); dt.textContent = k;
+        const dd = document.createElement("dd"); dd.textContent = v;
+        dl.append(dt, dd);
+      });
+      turn.appendChild(dl);
+    }
+
+    if (a.law && a.law.text) {
+      const q2 = document.createElement("div");
+      q2.className = "quote-law";
+      q2.textContent = a.law.text.slice(0, 700) + (a.law.text.length > 700 ? " [\u2026]" : "");
+      turn.appendChild(q2);
+    }
+
+    if (a.suggest) {
+      const wrap = document.createElement("div");
+      wrap.className = "refs";
+      a.suggest.forEach((k) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "chip";
+        b.textContent = titled(k);
+        b.addEventListener("click", () => ask("What does " + label(k).replace("\u00a7", "Section ") + " cover?"));
+        wrap.appendChild(b);
+      });
+      turn.appendChild(wrap);
+    } else if (a.refs && a.refs.length) {
+      const wrap = document.createElement("div");
+      wrap.className = "refs";
+      a.refs.forEach((k) => {
+        const s = LAW.sections[k];
+        const el = s && s.u ? document.createElement("a") : document.createElement("span");
+        el.className = "ref " + (isNew(k) ? "new" : "old");
+        el.textContent = label(k);
+        if (s && s.u) {
+          el.href = s.u;
+          el.target = "_blank";
+          el.rel = "noopener noreferrer";
+          el.title = s.s || "";
+          el.style.textDecoration = "none";
+        }
+        wrap.appendChild(el);
+      });
+      if (a.schedule && LAW.scheduleUrl) {
+        const el = document.createElement("a");
+        el.className = "ref new";
+        el.textContent = "BNSS First Schedule";
+        el.href = LAW.scheduleUrl;
+        el.target = "_blank";
+        el.rel = "noopener noreferrer";
+        el.style.textDecoration = "none";
+        wrap.appendChild(el);
+      }
+      turn.appendChild(wrap);
+    }
+
+    const note = document.createElement("p");
+    note.className = "no-model";
+    note.textContent = "General information about the law, not legal advice.";
+    turn.appendChild(note);
+
+    const status = document.getElementById("status");
+    if (status) status.remove();
+    outEl.prepend(turn);
+  }
+
+  function ask(question) {
+    question = (question || "").trim();
+    if (!question || !LAW) return;
+    input.value = "";
+    render(question, answer(question));
+    outEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  goBtn.addEventListener("click", () => ask(input.value));
+  input.addEventListener("keydown", (e) => { if (e.key === "Enter") ask(input.value); });
+
+  const SUGGESTED = [
+    "Which BNS section replaced IPC Section 302?",
+    "Is an offence under BNS Section 303 bailable?",
+    "Which BNS section corresponds to IPC Section 124A?",
+    "Is mischief still dealt with under IPC Section 425?",
+    "What does BNS Section 103 cover?",
+    "Which CrPC section corresponds to BNSS Section 173?"
+  ];
+  const chips = document.getElementById("chips");
+  SUGGESTED.forEach((t) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip";
+    b.textContent = t;
+    b.addEventListener("click", () => ask(t));
+    chips.appendChild(b);
+  });
+
+  // Exposed so the headless test can render a suggestion the way the page does.
+  window.__engine = { answer, extractRefs, titled, label };
+
+  fetch("engine.json")
+    .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    .then((data) => {
+      LAW = data;
+      goBtn.disabled = false;
+      goBtn.textContent = "Ask";
+      const status = document.getElementById("status");
+      if (status) {
+        status.textContent = data.counts.sections.toLocaleString() +
+          " provisions \u00b7 " + data.counts.mapped.toLocaleString() +
+          " with a recorded counterpart \u00b7 " + data.counts.schedule +
+          " classified in the First Schedule. Ask a question, or pick one above.";
+      }
+    })
+    .catch((err) => {
+      const status = document.getElementById("status");
+      if (status) {
+        status.textContent = "Could not load the statute book (" + err.message +
+          "). The worked examples below still work; reload to try again.";
+      }
+    });
 
   // comparison bars, drawn to a single 0-100 scale
   const KINDS = [
