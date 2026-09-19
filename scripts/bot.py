@@ -279,6 +279,35 @@ class Bot:
             cut = cut[:stop + 1]
         return cut.rstrip() + " [...]"
 
+    def _generation(self):
+        """Settle every generation parameter here, not in the checkpoint.
+
+        The saved `generation_config.json` carries `max_length: 20` — the
+        Flan-T5 default, never overridden during training. transformers 4.x
+        lets a passed `max_new_tokens` win (with a warning); 5.x reconciles the
+        two differently, and the same checkpoint that answers correctly under
+        one can return an empty string under the other. Building the config
+        explicitly, and clearing `max_length`, makes the two agree.
+
+        `min_new_tokens=1` is the belt and braces: it forbids an immediate
+        end-of-sequence, which is what an empty answer actually is.
+        """
+        from transformers import GenerationConfig
+
+        if getattr(self, "_gen_cfg", None) is None:
+            self._gen_cfg = GenerationConfig(
+                max_new_tokens=MAX_TARGET_LENGTH,
+                min_new_tokens=1,
+                max_length=None,
+                num_beams=1,
+                do_sample=False,
+                no_repeat_ngram_size=3,
+                decoder_start_token_id=self.model.config.decoder_start_token_id,
+                eos_token_id=self.model.config.eos_token_id,
+                pad_token_id=self.model.config.pad_token_id,
+            )
+        return self._gen_cfg
+
     def build_prompt(self, question: str, context: str) -> str:
         prompt = TASK_PREFIX + question.strip()
         if context.strip():
@@ -311,9 +340,17 @@ class Bot:
         with torch.no_grad():
             enc = self.tokenizer(prompt, return_tensors="pt", truncation=True,
                                  max_length=MAX_SOURCE_LENGTH).to(self.model.device)
-            out = self.model.generate(**enc, max_new_tokens=MAX_TARGET_LENGTH,
-                                      num_beams=1, no_repeat_ngram_size=3)
-        text = self.tokenizer.decode(out[0], skip_special_tokens=True)
+            out = self.model.generate(**enc, generation_config=self._generation())
+        text = self.tokenizer.decode(out[0], skip_special_tokens=True).strip()
+
+        if not text:
+            # The model emitted nothing but an end-of-sequence token. Returning
+            # a blank answer above a list of sources is the worst outcome
+            # available: it reads as though the law itself had nothing to say.
+            text = ("The model did not produce an answer for this question. "
+                    "Here is the law that was retrieved for it:\n\n" + context)
+            return Answer(question=question, text=text, citations=citations,
+                          context=context, used_model=False)
 
         # Cite only the passages the answer actually refers to, where that can
         # be told from the provisions it names; otherwise cite everything shown.
