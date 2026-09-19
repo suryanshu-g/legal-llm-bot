@@ -1,83 +1,116 @@
-# Putting the bot online, free
+# Hosting the bot for free
 
-[Hugging Face Spaces](https://huggingface.co/spaces) hosts this at no cost: 2
-vCPU and 16 GB of RAM, no credit card, no time limit. A free Space goes to sleep
-after about 48 hours with no visitors and wakes on the next visit, taking a
-minute or so to start.
+Three options, cheapest effort first. **None costs money**, but Hugging Face
+changed its rules in a way that matters, so read the first section before
+starting.
 
-That is ample. The model is `flan-t5-small` — 77 million parameters — and answers
-on CPU in a couple of seconds.
+## What Hugging Face now charges for
 
-## 1. Make an account
+From the [Spaces documentation](https://huggingface.co/docs/hub/en/spaces-overview):
 
-1. Go to **https://huggingface.co/join** and sign up (email, no card)
-2. Confirm the email
+> Static Spaces are free for everyone. Gradio and Docker Spaces run on compute
+> and **require a paid plan to create**: PRO for personal accounts, Team or
+> Enterprise for organizations. Free personal accounts in good standing can still
+> host up to 2 Gradio Spaces running on ZeroGPU.
 
-## 2. Create the Space
+So a Gradio Space on the free "CPU basic" hardware is **no longer free to
+create**, even though the hardware itself is listed at no hourly cost. The free
+route is ZeroGPU, and it has an entry requirement:
 
-3. Go to **https://huggingface.co/new-space**
-4. **Space name**: `indian-criminal-law-2024` (or anything you like)
-5. **License**: MIT
-6. **Select the SDK**: **Gradio**
-7. **Space hardware**: **CPU basic — FREE**
-8. **Public**
-9. Click **Create Space**
+> Free personal accounts: accounts in good standing (**verified email, account
+> older than 30 days**) can host up to 2 ZeroGPU Spaces for free.
 
-## 3. Upload the three project files
+Free accounts also get **5 minutes of GPU time per day**, which sounds small but
+is generous here — this model answers in about a second, so that is a few hundred
+questions a day.
 
-10. On your new Space, click the **Files** tab, then **Add file → Upload files**
-11. Drag in `app.py`, `requirements.txt` and `README.md` from this `space/` folder
-12. **Commit changes to main**
+**If your account is less than 30 days old, skip to option 1.**
 
-The README matters: its top block tells the Space it is a Gradio app and which
-file to run.
+---
 
-## 4. Upload the model
+## Option 1 — a public link from Colab (works today, free)
 
-13. **Add file → Upload files** again
-14. Drag in the **contents** of `models/flan-t5-small-context-v3` —
-    `config.json`, `generation_config.json`, `model.safetensors`,
-    `tokenizer.json`, `tokenizer_config.json`
-15. In the **path** box above the file list, type `model/` so they land in a
-    folder called `model` rather than beside `app.py`
-16. **Commit changes to main**
+Free, no new accounts, live in about five minutes. Gradio opens a tunnel and
+gives you an `https://….gradio.live` address that works from any phone.
 
-`model.safetensors` is 308 MB, so this upload takes a while. Hugging Face handles
-large files automatically; there is nothing to configure.
+1. Open [`notebooks/serve_bot.ipynb`](../notebooks/serve_bot.ipynb) in Colab
+2. **Runtime → Run all**, allow Drive access
+3. Copy the `Running on public URL:` link from the last cell
 
-## 5. Watch it build
+The link lasts a week, or until the notebook stops — Colab disconnects an idle
+session after about 90 minutes. Start it before a demo, not the night before.
+Re-run the last cell for a fresh link.
 
-17. Click the **App** tab. It shows a build log while it installs PyTorch and
-    clones the datasets from GitHub — **five to ten minutes the first time**
-18. When the log ends with `Running on local URL`, the interface appears
+## Option 2 — the same thing from your own laptop
 
-Your public link is `https://huggingface.co/spaces/<your-username>/indian-criminal-law-2024`.
+If the model is already downloaded locally:
 
-## If something goes wrong
+```powershell
+cd "C:\Users\ACER\Desktop\Legal bot\legal-llm-bot"
+.\.venv\Scripts\python.exe -m pip install "gradio>=4.44,<6"
+.\.venv\Scripts\python.exe space\app.py --share
+```
 
-**"No application file"** — `app.py` is not at the top level of the Space, or the
-README's top block is missing or was pasted as ordinary text.
+Same kind of public link, running on your machine, for as long as the window
+stays open. Useful for a recording, where a dropped Colab session mid-take is the
+thing most likely to ruin it.
 
-**Answers look like "reheatreheat blackjack"** — the model files are in the wrong
-place, so it is running an untrained checkpoint. Check the Files tab shows
-`model/model.safetensors` and not `model.safetensors` at the root.
+## Option 3 — a permanent ZeroGPU Space (once the account is 30 days old)
 
-**"sources-only mode" in the log** — the Space cannot see the model folder at
-all. Same fix. The app still runs and returns the retrieved law, so this is a
-soft failure rather than a crash.
+1. **https://huggingface.co/join**, verify the email, and note the date — the
+   30-day clock starts now
+2. When eligible, go to **https://huggingface.co/new-space**
+3. Name it, license MIT, SDK **Gradio**, and choose **ZeroGPU** hardware
+4. **Files → Add file → Upload files**: `app.py`, `requirements.txt` and
+   `README.md` from this folder
+5. Upload again with `model/` typed in the path box, and drop in the five files
+   from `models/flan-t5-small-context-v3` — `config.json`,
+   `generation_config.json`, `model.safetensors`, `tokenizer.json`,
+   `tokenizer_config.json`
+6. Watch the **App** tab; the first build takes five to ten minutes
 
-**The build fails installing torch** — retry the build from the Settings tab;
-the free builder occasionally times out on the first large download.
+ZeroGPU needs two changes this repository's `app.py` does not make, because they
+are pointless without it: `import spaces`, and a `@spaces.GPU` decorator on the
+function that generates. Add `spaces` to `requirements.txt` and wrap `ask`:
+
+```python
+import spaces
+
+@spaces.GPU(duration=30)
+def ask(question: str):
+    ...
+```
+
+ZeroGPU also requires **PyTorch 2.8 or newer** and the Gradio SDK, so relax the
+`torch>=2.1` pin in `requirements.txt` to `torch>=2.8` for that deployment.
+
+### If it misbehaves
+
+**"No application file"** — `app.py` is not at the top level, or the block at the
+top of `README.md` was pasted as ordinary text rather than kept as the file's
+first lines.
+
+**Answers read like "reheatreheat blackjack"** — the model files landed beside
+`app.py` instead of inside `model/`, so it is running an untrained checkpoint.
+The Files tab should show `model/model.safetensors`.
+
+**The log says "sources-only mode"** — the Space cannot see the model folder at
+all. Same fix. The app still answers with the retrieved law, so this is a soft
+failure, not a crash.
+
+---
 
 ## What runs where
 
-| | The website | This Space |
-|---|---|---|
-| Hosting | GitHub Pages | Hugging Face |
-| Concordance and gazette lookup | yes | yes |
-| Retrieval over 2,819 passages | no | yes |
-| The fine-tuned model | no | **yes** |
-| Cost | free | free |
+| | The website | Colab / local link | ZeroGPU Space |
+|---|---|---|---|
+| Hosting | GitHub Pages | your session | Hugging Face |
+| Cost | free | free | free (30-day-old account) |
+| Concordance and gazette lookup | yes | yes | yes |
+| Retrieval over 2,819 passages | no | yes | yes |
+| The fine-tuned model | no | **yes** | **yes** |
+| Always on | **yes** | no | sleeps, wakes on visit |
 
-The website answers from the verified data only, which is why it needs no server.
-This Space is where the trained model actually runs.
+The website needs no server because it answers only from verified data, which is
+why it is the one that can be permanent for free. The other two are where the
+trained model actually runs.

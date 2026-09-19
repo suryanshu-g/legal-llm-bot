@@ -147,4 +147,9 @@ def build_ui():
   return demo
 
 if __name__ == "__main__":
-    build_ui().launch()
+    # --share opens a public https://....gradio.live tunnel, which is how this
+    # runs for free: Hugging Face now requires a paid plan to create a Gradio
+    # Space on CPU, and its free ZeroGPU exception needs an account over 30 days
+    # old. See space/SETUP.md.
+    share = "--share" in sys.argv
+    build_ui().launch(share=share, show_error=True)

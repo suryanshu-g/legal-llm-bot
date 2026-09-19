@@ -341,16 +341,27 @@ constituent section but the first.
 
 ## Hosting the model itself, free
 
-The website answers from verified data with no server. To put the **fine-tuned
-model** online, [`space/`](space/) is a ready-to-deploy Hugging Face Space:
-`app.py`, `requirements.txt` and the Space's own `README.md`. Free tier, 2 vCPU
-and 16 GB RAM, no card; it sleeps after about 48 idle hours and wakes on the next
-visit.
+The website needs no server, because it answers only from verified data. Putting
+the **fine-tuned model** online is a separate problem, and Hugging Face no longer
+makes it as easy as it was: creating a Gradio Space that runs on compute now
+requires a paid plan, and the free ZeroGPU exception is limited to accounts over
+30 days old.
 
-It shows the model's sentence and the retrieved passages side by side, labelled,
-because they are not equally trustworthy — and it clones the datasets and
-`scripts/` from this repository at startup, so only the checkpoint has to be
-uploaded. Click-by-click instructions: [`space/SETUP.md`](space/SETUP.md).
+Two routes that cost nothing, both in [`space/SETUP.md`](space/SETUP.md):
+
+* [`notebooks/serve_bot.ipynb`](notebooks/serve_bot.ipynb) — Colab plus Gradio's
+  share tunnel gives a public `https://….gradio.live` link in about five minutes,
+  good for a week or until the session stops. Nothing to sign up for.
+* `python space/app.py --share` — the same from your own machine, for as long as
+  the window is open.
+
+[`space/`](space/) also holds a ready-to-deploy Space (`app.py`,
+`requirements.txt`, and the Space's own `README.md`) for when the ZeroGPU
+requirement is met; it clones the datasets and `scripts/` from this repository at
+startup, so only the checkpoint has to be uploaded.
+
+All three show the model's sentence and the retrieved passages side by side and
+labelled, because they are not equally trustworthy.
 
 ## The interface
 
