@@ -159,7 +159,15 @@ class Retriever:
                 f"index has {self.index.ntotal} vectors but metadata has "
                 f"{len(self.meta)} rows - rebuild the index")
 
-        self.model = SentenceTransformer(model_name, device=device)
+        # Prefer the local cache. Without this, an offline run spends about a
+        # minute per file working through five backoff retries against a
+        # hostname it cannot resolve, before falling back to the same cached
+        # copy anyway - which looks, on a projector, exactly like a crash.
+        try:
+            self.model = SentenceTransformer(model_name, device=device,
+                                             local_files_only=True)
+        except Exception:
+            self.model = SentenceTransformer(model_name, device=device)
         self.model_name = model_name
 
         # provision -> the rows about it (the section chunk and, where one
