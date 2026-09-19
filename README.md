@@ -339,6 +339,19 @@ checks covering citation parsing, each answer branch, the scope refusals and
 malformed input. It caught a real bug: merged families were losing every
 constituent section but the first.
 
+## Hosting the model itself, free
+
+The website answers from verified data with no server. To put the **fine-tuned
+model** online, [`space/`](space/) is a ready-to-deploy Hugging Face Space:
+`app.py`, `requirements.txt` and the Space's own `README.md`. Free tier, 2 vCPU
+and 16 GB RAM, no card; it sleeps after about 48 idle hours and wakes on the next
+visit.
+
+It shows the model's sentence and the retrieved passages side by side, labelled,
+because they are not equally trustworthy — and it clones the datasets and
+`scripts/` from this repository at startup, so only the checkpoint has to be
+uploaded. Click-by-click instructions: [`space/SETUP.md`](space/SETUP.md).
+
 ## The interface
 
 [`frontend/index.html`](frontend/index.html) is a self-contained page presenting

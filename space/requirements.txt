@@ -1,0 +1,8 @@
+# Pinned because the checkpoint was trained under transformers 5.x but is loaded
+# here by 4.x: see load_model() in scripts/bot.py, which keeps the trained output
+# layer that 4.x would otherwise tie away.
+transformers>=4.40,<5
+torch>=2.1
+sentence-transformers>=3.0
+faiss-cpu>=1.8
+gradio>=4.44,<6
