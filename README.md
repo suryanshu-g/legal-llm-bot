@@ -61,8 +61,11 @@ the context assembly earns its keep on this set: 11 questions right with no
 context, 13 with a single retrieved passage, **27 with the bot's context**. Full
 numbers, the costs and the caveats in [`RESULTS.md`](RESULTS.md).
 
-Read [`data/DATA_REPORT.md`](data/DATA_REPORT.md) for how the data was verified and
-what is wrong with it. [`PROJECT_BRIEF.md`](PROJECT_BRIEF.md) holds the full
+[`PAPER.md`](PAPER.md) is the write-up: problem, data provenance, method,
+results, limitations and what I would do differently.
+[`RESULTS.md`](RESULTS.md) has every measurement including the failed runs,
+[`data/DATA_REPORT.md`](data/DATA_REPORT.md) covers how the data was verified and
+what is wrong with it, and [`PROJECT_BRIEF.md`](PROJECT_BRIEF.md) holds the full
 project context.
 
 - **Phase 2** — fine-tune Flan-T5-base on Colab (T4, ≤25 epochs) using
