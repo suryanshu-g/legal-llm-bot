@@ -348,11 +348,29 @@ defects the metrics do not capture:
 2. **Statutory titles are corrupted**, including in answers scored correct: "BNS
    §324 (Mizachief)", "BNS §303 (Trash)" for theft.
 3. **Correspondences are invented for repealed provisions**, ten times out of ten.
+4. **Statutory text is fabricated beneath a correct citation**, which is the most
+   serious of the four and was found by typing ordinary questions at the command
+   line rather than by any metric here. Asked about IPC §69 the model reproduces
+   the heading correctly, then states the imprisonment as proportional to "the
+   part of the *bail bond* still unpaid" where the provision says *fine*, and
+   appends an illustration that does not appear in the Act. Asked about BNS §72
+   it renders the heading as "*Divine* of identity of victim" and continues into
+   invented punishments. A wrong section number is checkable at a glance;
+   invented wording under a correct citation is not.
+5. **It discards answers the retrieval layer has already found.** Asked for the
+   BNS equivalent of IPC §69, the assembled context opens `IPC 1860, Section 69
+   … (replaced by BNS 2023 Section 8)`. The model never named BNS §8.
+   Sources-only mode returns it at once, with the eight IPC sections that BNS §8
+   consolidated.
 
 Consequently the retrieval and concordance layer is verified and sound while the
 model's sentences are not publishable as legal information, and the project's
 interface presents retrieved provisions and concordance results directly rather
-than model output.
+than model output. Points 4 and 5 together give the sharpest statement of what
+this project demonstrates: **the defensible configuration is the retrieval layer
+with the generator switched off.** `--sources-only` answers the same questions
+from gazette text, and on every example above it is correct where the generated
+prose is not.
 
 **One reported figure was a metric artifact.** The `removed` category scored 100%
 for both systems, which reads as a tie. The correct answer — "there is none" —
