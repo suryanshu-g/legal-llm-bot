@@ -240,13 +240,66 @@ page = os.path.join(REPO, "frontend", "index.html")
 with io.open(page, "w", encoding="utf-8", newline="\n") as fh:
     fh.write(html)
 
+# ---------------------------------------------------------------- GitHub Pages
+# The artifact host wraps the fragment above in its own document; a page served
+# from a plain static host has to bring one. Same body, so the published site
+# and the artifact cannot drift apart.
+SITE_URL = "https://suryanshu-g.github.io/legal-llm-bot/"
+REPO_URL = "https://github.com/suryanshu-g/legal-llm-bot"
+DESCRIPTION = ("A retrieval-grounded assistant for India's 2024 criminal-law "
+               "recodification. Every answer cites the gazette provision it "
+               "rests on.")
+
+title = html.split("<title>", 1)[1].split("</title>", 1)[0]
+standalone = f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="{DESCRIPTION}">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{title}">
+<meta property="og:description" content="{DESCRIPTION}">
+<meta property="og:url" content="{SITE_URL}">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="{SITE_URL}">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#9878;</text></svg>">
+<style>
+  :root {{
+    color-scheme: light dark;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }}
+  body {{ margin: 0; }}
+  img {{ max-width: 100%; }}
+  [hidden] {{ display: none !important; }}
+</style>
+{html}
+</body>
+</html>
+"""
+site_dir = os.path.join(REPO, "docs")
+os.makedirs(site_dir, exist_ok=True)
+site = os.path.join(site_dir, "index.html")
+with io.open(site, "w", encoding="utf-8", newline="\n") as fh:
+    fh.write(standalone)
+# GitHub Pages runs Jekyll by default, which skips files and folders whose names
+# begin with an underscore and can mangle braces in inline scripts. This opts out.
+with io.open(os.path.join(site_dir, ".nojekyll"), "w", encoding="utf-8") as fh:
+    fh.write("")
+
 missing = [(i["id"], len(i["sources"])) for i in items if not i["sources"]]
 print(f"wrote {OUT}: {len(items)} demo items")
 for i in items:
     print(f"  {i['id']:<10} {len(i['sources'])} sources  refs={len(i['refs'])}")
-print(f"wrote {page}: {len(html):,} bytes")
+print(f"wrote {page}: {len(html):,} bytes  (artifact fragment)")
+print(f"wrote {site}: {len(standalone):,} bytes  (standalone, for GitHub Pages)")
 if missing:
     raise SystemExit(f"items with no source: {missing}")
 for must in ("</style>", "</script>", "<title>"):
     if must not in html:
         raise SystemExit(f"template lost {must}")
+for must in ("<!doctype html>", "<meta charset", "</html>", "viewport-fit=cover"):
+    if must not in standalone:
+        raise SystemExit(f"standalone page is missing {must}")

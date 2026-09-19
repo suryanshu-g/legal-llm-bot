@@ -311,6 +311,14 @@ committed here is redistributable. Third-party page markup is cached locally but
 git-ignored; only extracted statutory text is committed. Crawling is rate
 limited and honours `robots.txt` per URL.
 
+## The website
+
+**https://suryanshu-g.github.io/legal-llm-bot/**
+
+Served from [`docs/`](docs/) by GitHub Pages. Eight example questions, each with
+its answer, the provisions it rests on, and a link to the gazette PDF or judgment
+behind every one; the ChatGPT comparison; and the limitations.
+
 ## The interface
 
 [`frontend/index.html`](frontend/index.html) is a self-contained page presenting
