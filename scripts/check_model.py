@@ -162,19 +162,37 @@ def main() -> None:
           f"generate nonsense. Expected about {expected / 1e6:.1f}M parameters.")
 
     if not args.no_drift:
-        base = AutoModelForSeq2SeqLM.from_pretrained(args.base)
-        a = dict(model.named_parameters())
-        b = dict(base.named_parameters())
-        key = next(k for k in a if "block.0" in k and "weight" in k and a[k].dim() == 2)
-        delta = (a[key] - b[key]).abs().mean().item()
-        scale = b[key].abs().mean().item()
-        pct = 100 * delta / scale if scale else 0.0
-        check(pct > 1.0,
-              f"weights differ from stock {args.base} by {pct:.1f}% "
-              f"(sampled {key.split('.weight')[0]})",
-              "" if pct > 1.0 else
-              "this looks like the untrained base model saved under a new name")
-        del base
+        # Needs the stock checkpoint, from the local cache or from the hub. With
+        # no network and nothing cached this is simply unavailable, which is not
+        # a fault in the model being checked - so it is reported as a skip, and
+        # the retry storm is cut short by asking for cache only first.
+        base = None
+        try:
+            base = AutoModelForSeq2SeqLM.from_pretrained(args.base,
+                                                         local_files_only=True)
+        except Exception:
+            try:
+                base = AutoModelForSeq2SeqLM.from_pretrained(args.base)
+            except Exception as exc:
+                first = str(exc).strip().splitlines()[0][:90]
+                note(f"skipped the comparison against stock {args.base}: {first}")
+                note("no network and nothing cached. Re-run with --no-drift to "
+                     "skip it quietly, or once you are online to include it.")
+
+        if base is not None:
+            a = dict(model.named_parameters())
+            b = dict(base.named_parameters())
+            key = next(k for k in a
+                       if "block.0" in k and "weight" in k and a[k].dim() == 2)
+            delta = (a[key] - b[key]).abs().mean().item()
+            scale = b[key].abs().mean().item()
+            pct = 100 * delta / scale if scale else 0.0
+            check(pct > 1.0,
+                  f"weights differ from stock {args.base} by {pct:.1f}% "
+                  f"(sampled {key.split('.weight')[0]})",
+                  "" if pct > 1.0 else
+                  "this looks like the untrained base model saved under a new name")
+            del base
 
     # ---- 3. known answers ------------------------------------------------
     from bot import Bot

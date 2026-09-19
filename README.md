@@ -127,6 +127,10 @@ cd "C:\Users\ACER\Desktop\Legal bot\legal-llm-bot"
 .\.venv\Scripts\python.exe scripts\check_model.py models\flan-t5-small-context-v3
 ```
 
+One check needs the stock Flan-T5 checkpoint, from the local cache or the hub. If
+you are offline and it is not cached, that single comparison is skipped with a
+note and everything else still runs; `--no-drift` skips it quietly.
+
 This confirms the files are complete, that the weights really differ from the
 stock Flan-T5 checkpoint (an untrained model loads and generates fluent English
 perfectly happily), that five known-answer probes come out right, that the scope
