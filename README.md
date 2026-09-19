@@ -137,6 +137,20 @@ ones on your copy.
 with no question, that opens a prompt you can type into. It runs on CPU — this is
 a 77M-parameter model, so a GPU is not needed.
 
+**Two version traps, both handled in `scripts/bot.py`, both worth knowing about
+if you load this checkpoint any other way.** Colab trained it under transformers
+5.17; loading it under 4.x hits these:
+
+* the tokenizer config writes `extra_special_tokens` as a list where 4.x expects
+  a dict, which raises `AttributeError: 'list' object has no attribute 'keys'`;
+* more dangerously, the checkpoint stores `shared.weight` *and* `lm_head.weight`
+  with different values while `config.json` says `tie_word_embeddings: true`.
+  transformers 5.x noticed the conflict and left them untied; 4.x obeys the
+  config, ties them and **silently discards the trained output layer**. The model
+  loads with no warning, reports 60.5M parameters instead of 77.0M, and generates
+  fluent nonsense. `load_model()` forces `tie_word_embeddings=False` and raises if
+  tying happened anyway, and `check_model.py` asserts the parameter count.
+
 ### Asking it something
 
 ```bash

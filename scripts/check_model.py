@@ -138,13 +138,28 @@ def main() -> None:
     # ---- 2. loads, and is trained ---------------------------------------
     print("\nLoading")
     import torch
-    from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+    from transformers import AutoModelForSeq2SeqLM
 
-    tok = AutoTokenizer.from_pretrained(md)
-    model = AutoModelForSeq2SeqLM.from_pretrained(md)
+    from bot import load_model, load_tokenizer
+
+    tok = load_tokenizer(md)
+    model = load_model(md)
     model.eval()
     n = sum(p.numel() for p in model.parameters())
     check(True, f"loaded: {n / 1e6:.1f}M parameters, {type(model).__name__}")
+
+    # A count short by roughly one embedding matrix means the trained output
+    # layer was tied away on load, which produces fluent nonsense with no
+    # warning. See load_model() in bot.py.
+    emb = model.config.vocab_size * model.config.d_model
+    expected = n + emb
+    tied = model.lm_head.weight.data_ptr() == model.shared.weight.data_ptr()
+    check(not tied,
+          f"output layer kept separate from the input embeddings "
+          f"({emb / 1e6:.1f}M parameters)",
+          "" if not tied else
+          f"tied on load, so the trained lm_head was discarded; the model would "
+          f"generate nonsense. Expected about {expected / 1e6:.1f}M parameters.")
 
     if not args.no_drift:
         base = AutoModelForSeq2SeqLM.from_pretrained(args.base)

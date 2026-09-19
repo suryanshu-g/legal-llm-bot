@@ -96,6 +96,61 @@ class Answer:
         return "\n".join(out)
 
 
+def load_tokenizer(model_dir: str):
+    """Load a saved tokenizer, tolerating a newer transformers' config format.
+
+    A tokenizer saved by transformers 5.x writes `extra_special_tokens` as a
+    list; 4.x expects a dict there and raises `AttributeError: 'list' object has
+    no attribute 'keys'`. This bites anyone training on Colab and running the
+    model locally, which is the normal workflow for this project.
+
+    The key only enumerates T5's 100 sentinel tokens, which `extra_ids` recreates
+    regardless, so overriding it with an empty dict loads the same tokenizer -
+    confirmed by checking that it encodes a prompt to byte-identical ids as the
+    stock `google/flan-t5-small` tokenizer.
+    """
+    from transformers import AutoTokenizer
+
+    try:
+        return AutoTokenizer.from_pretrained(model_dir)
+    except AttributeError:
+        return AutoTokenizer.from_pretrained(model_dir, extra_special_tokens={})
+
+
+def load_model(model_dir: str):
+    """Load a saved seq2seq model, keeping the output layer that was trained.
+
+    This checkpoint stores both `shared.weight` and `lm_head.weight`, with
+    different values, while `config.json` says `tie_word_embeddings: true`. The
+    transformers 5.x that trained it spotted the conflict and left the two
+    untied; transformers 4.x obeys the config, ties them, and **discards the
+    trained `lm_head`**, leaving the output projection effectively random. The
+    model then loads without a single warning and emits fluent nonsense -
+    "reheatreheatsynchronous blackjack multiplayer" - which is a far worse failure
+    than an error, because nothing announces it.
+
+    Two symptoms identify it, and the loader checks for both: the parameter count
+    comes out ~16.5M short (one embedding matrix), and generation degenerates.
+
+    Loading with `tie_word_embeddings=False` uses both matrices as saved and
+    reproduces the model that was evaluated on Colab.
+    """
+    from transformers import AutoModelForSeq2SeqLM
+
+    model = AutoModelForSeq2SeqLM.from_pretrained(model_dir,
+                                                  tie_word_embeddings=False)
+    shared = getattr(model, "shared", None)
+    head = getattr(model, "lm_head", None)
+    if shared is not None and head is not None:
+        if head.weight.data_ptr() == shared.weight.data_ptr():
+            # Tying was applied anyway; the trained output layer is gone.
+            raise RuntimeError(
+                f"{model_dir}: the output layer was tied to the input embeddings "
+                f"on load, which discards the trained lm_head and produces "
+                f"degenerate output. Check the transformers version.")
+    return model
+
+
 def load_counterparts() -> dict[str, list[str]]:
     """provision -> the provisions it corresponds to, both directions.
 
@@ -137,10 +192,9 @@ class Bot:
         self.tokenizer = tokenizer
         if model_dir:
             import torch
-            from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
-            self.tokenizer = AutoTokenizer.from_pretrained(model_dir)
-            self.model = AutoModelForSeq2SeqLM.from_pretrained(model_dir)
+            self.tokenizer = load_tokenizer(model_dir)
+            self.model = load_model(model_dir)
             self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
             self.model.to(self.device).eval()
 
