@@ -31,7 +31,12 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-GREEN, RED, DIM, OFF = "\033[32m", "\033[31m", "\033[2m", "\033[0m"
+# Colour only when writing to a terminal, so redirected output stays readable.
+if sys.stdout.isatty():
+    GREEN, RED, DIM, OFF = "\033[32m", "\033[31m", "\033[2m", "\033[0m"
+else:
+    GREEN = RED = DIM = OFF = ""
+
 results: list[tuple[bool, str]] = []
 
 
@@ -43,6 +48,11 @@ def check(ok: bool, msg: str, detail: str = "") -> bool:
         for line in detail.splitlines():
             print(f"       {DIM}{line}{OFF}")
     return ok
+
+
+def note(msg: str) -> None:
+    """Something worth printing that is not a pass or a failure."""
+    print(f"  {DIM}--  {msg}{OFF}")
 
 
 # Questions whose answers are settled by the concordance and the gazette.
@@ -110,10 +120,15 @@ def main() -> None:
     weights = [f for f in os.listdir(md)
                if f.endswith((".safetensors", ".bin"))]
     check(bool(weights), f"weights present ({', '.join(weights) or 'none'})")
-    for need in ("config.json", "tokenizer.json", "spiece.model"):
-        present = os.path.exists(os.path.join(md, need))
-        check(present or need == "tokenizer.json",
-              f"{need}" + ("" if present else " (absent, may be fine)"))
+    check(os.path.exists(os.path.join(md, "config.json")), "config.json")
+    # A T5 tokenizer may ship as tokenizer.json, as spiece.model, or both, so
+    # neither one alone is required - only that at least one is there.
+    tok_files = [f for f in ("tokenizer.json", "spiece.model", "tokenizer_config.json")
+                 if os.path.exists(os.path.join(md, f))]
+    check(bool(tok_files), f"tokenizer files ({', '.join(tok_files) or 'none found'})")
+    for f in ("tokenizer.json", "spiece.model"):
+        if f not in tok_files:
+            note(f"{f} absent - fine as long as the tokenizer loads below")
     if weights:
         mb = max(os.path.getsize(os.path.join(md, w)) for w in weights) / 1e6
         # flan-t5-small is ~77M parameters in fp32, so ~300 MB.
